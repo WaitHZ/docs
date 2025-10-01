@@ -174,8 +174,8 @@ def main(args):
                                                             function_name = function_name[0]
                                                         else:
                                                             function_name = "-".join(function_name)
-                                                    # dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
-                                                    dst.write(f"🛠 `{server_name} {function_name}`\n\n")
+                                                    dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
+                                                    # dst.write(f"🛠 `{server_name} {function_name}`\n\n")
                                                     dst.write(f"```json\n")
                                                     argu_s = msg_tool_call['function']['arguments'].strip()[1:-1].split(",")
                                                     if len(argu_s) == 1 and argu_s[0] == "":
