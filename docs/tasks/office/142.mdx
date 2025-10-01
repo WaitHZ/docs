@@ -1,0 +1,25 @@
+---
+title: "Game Statistics"
+description: "Process end-of-day player scores by generating a top-100 leaderboard in a date-named table and updating daily stats for all players into the historical master table for long-term analysis."
+---
+
+<Columns cols={2}>
+  <Card title="MCP Server" icon="cloud">
+    google-cloud, terminal
+  </Card>
+  <Card title="Local Tool" icon="terminal">
+    python_execute, claim_done, handle_overlong_tool_outputs
+  </Card>
+</Columns>
+
+## Instruction
+
+The end-of-day settlement time for the game has arrived, and we need to process the player score data for the current day in the `daily_scores_stream` table. First, generate the final leaderboard for the day by selecting the top 100 players with the highest scores and storing the results in an independent table named after the day's date, `leaderboard_YYYYMMDD`(Must include player_id, total_score and rank fields). Second, for long-term player behavior analysis, update the statistical data for all players on the day into the master table `player_historical_stats`, inserting a new record for each player containing their ID, the day's date, the day's total score, and the number of games played on the day.
+
+## Initial State
+
+### Google Cloud
+
+The table `daily_scores_stream` is randomly generated during each test; you can review [here](https://github.com/hkust-nlp/mcpbench_dev/blob/finalpool_dev/tasks/finalpool/game-statistics/preprocess/main.py) to understand the data generation method.
+
+## Model Trajectory

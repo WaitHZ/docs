@@ -1,43 +1,10 @@
-# Mintlify Starter Kit
+# Mintlify Docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+- 如果需要更新文档内容，可以直接修改docs目录下对应的文件。如果涉及文档增加和删除，需要更新docs.json中的索引
+- 对于每个任务，你只需要在以_.mdx结尾的文件中修改即可，执行traj.py会添加traj后构建成最终使用的.mdx。可以参考34_.mdx和34.mdx
+- 当你需要添加traj时，可以直接放置在trajs目录下，并对应修改prepare.py开头的字典，随后执行prepare.py (trajs太大上传不方便，现在我本地目录下有你之前发给我的三个模型，但似乎有一些任务有缺失)
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Need to do
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
-
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
-
-## Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
-npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
-mint dev
-```
-
-View your local preview at `http://localhost:3000`.
-
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+- 编写脚本去除traj内的个人信息和api，以及修正可能的html错误（重要但较麻烦）
+- traj内图标还没有全部改过来（有一些会报错，还在逐个排查）

@@ -1,0 +1,25 @@
+---
+title: "Live Transactions"
+description: "Archive a suspicious transaction’s full data as a JSON file named by its ID and log a critical fraud alert for investigation."
+---
+
+<Columns cols={2}>
+  <Card title="MCP Server" icon="cloud">
+    filesystem, google-cloud
+  </Card>
+  <Card title="Local Tool" icon="terminal">
+    claim_done, handle_overlong_tool_outputs
+  </Card>
+</Columns>
+
+## Instruction
+
+A suspicious transaction (ID: T8492XJ3) has been detected in the live_transactions table. Please query all data related to this transaction ID from the transactions_analytics dataset and consolidate the results into a single JSON object, where each table name serves as a key containing its corresponding data. Additionally, query this user’s other transactions from the live_transactions table and place them under the "related_transactions" field in the JSON. Store the complete JSON object in the workspace, then upload it to our secure mcp-fraud-investigation-archive storage bucket, using the transaction ID as the filename (T8492XJ3.json). After archiving, you must immediately write a CRITICAL-level alert log entry to the Trading_Logging log bucket, with the structured payload: \{'alert_type': 'Fraud', 'transaction_id': 'T8492XJ3', 'status': 'Pending_Investigation'\}
+
+## Initial State
+
+### BigQuery
+
+You can view the raw data of the transactions_analytics dataset [here](https://github.com/hkust-nlp/mcpbench_dev/tree/finalpool_dev/tasks/finalpool/live-transactions/preprocess/transactions_analytics).
+
+## Model Trajectory

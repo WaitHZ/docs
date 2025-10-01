@@ -1,0 +1,32 @@
+---
+title: "A/B Testing"
+description: "Determine A/B test winner by mean per-scenario conversion rate."
+---
+
+<Columns cols={2}>
+  <Card title="MCP Server" icon="cloud">
+    google-cloud, filesystem
+  </Card>
+  <Card title="Local Tool" icon="terminal">
+    claim_done, python_execute, handle_overlong_tool_outputs
+  </Card>
+</Columns>
+
+## Instruction
+
+The A/B test for our new homepage has concluded, and the raw clickstream data has been stored in the `ab_testing` dataset in BigQuery. Analyze the data and fill the `record.csv`, determine which version ('A' or 'B') has the highest overall conversion rate, i.e., the overall conversion rate is defined as the arithmetic mean of the per-scenario conversion rates. If version B outperforms, immediately create a new Cloud Storage bucket named `promo-assets-for-b` for the full promotion, and you do not need to write any log entry in this process. If version A wins or the results are a tie, no bucket creation is required, but a log entry with the message `{'status': 'AB_Test_Concluded', 'winner': 'A', 'action': 'No_Change'}` must be written to the `abtesting_logging` bucket. 
+
+## Initial State
+
+### Local Workspace
+
+<div className="file-tree">
+<a href="https://github.com/hkust-nlp/mcpbench_dev/tree/finalpool_dev/tasks/finalpool/ab-testing/initial_workspace">workspace</a>/
+└── record.csv
+</div>
+
+### BigQuery
+
+You can view the raw data of the `ab_testing` dataset [here](https://github.com/hkust-nlp/mcpbench_dev/tree/finalpool_dev/tasks/finalpool/ab-testing/files).
+
+## Model Trajectory
