@@ -1149,7 +1149,7 @@ The semantic analysis phase is characterized by the maintenance of **symbol tabl
 
 ### 2.1 Basic Hash Table Structure (Imperative Style)
 
-```c
+`*3c
 struct bucket { 
     string key; 
     void *binding; 
@@ -1158,13 +1158,13 @@ struct bucket {
 
 #define SIZE 109
 struct bucket *table[SIZE];
-```
+`*3
 
 **Explanation**: This defines the basic structure for a hash table with external chaining. Each bucket contains a key-value pair and a pointer to the next bucket in the chain.
 
 ### 2.2 Hash Function
 
-```c
+`*3c
 unsigned int hash(char *s0)
 { 
     unsigned int h=0; 
@@ -1173,13 +1173,13 @@ unsigned int hash(char *s0)
         h=h*65599 + *s; 
     return h; 
 }
-```
+`*3
 
 **Explanation**: This hash function computes a hash value for a string by iterating through each character and using the polynomial rolling hash formula: h = (h * 65599 + character). The constant 65599 is chosen to minimize collisions.
 
 ### 2.3 Bucket Creation
 
-```c
+`*3c
 struct bucket *Bucket (string key, void *binding, struct bucket *next) {
     struct bucket *b=checked_malloc(sizeof(*b));
     b->key = key; 
@@ -1187,24 +1187,24 @@ struct bucket *Bucket (string key, void *binding, struct bucket *next) {
     b->next = next;
     return b; 
 }
-```
+`*3
 
 **Explanation**: This function creates a new bucket node for the hash table. It allocates memory, initializes the fields, and returns the new bucket. The `next` parameter allows chaining for collision resolution.
 
 ### 2.4 Hash Table Operations
 
 #### Insert Operation
-```c
+`*3c
 void insert(string key, void *binding) {
     int index=hash(key)%SIZE;
     table[index]=Bucket(key, binding, table[index]); 
 }
-```
+`*3
 
 **Explanation**: Inserts a new key-value pair at the head of the collision chain. This implements a stack-like behavior where newer bindings shadow older ones with the same key.
 
 #### Lookup Operation
-```c
+`*3c
 void *lookup(string key) {
     int index=hash(key)%SIZE;
     struct bucket *b;
@@ -1213,36 +1213,36 @@ void *lookup(string key) {
             return b->binding; 
     return NULL; 
 }
-```
+`*3
 
 **Explanation**: Searches through the collision chain at the computed hash index. Returns the first matching binding (most recent due to head insertion) or NULL if not found.
 
 #### Pop Operation
-```c
+`*3c
 void pop(string key) { 
     int index=hash(key)%SIZE;
     table[index]=table[index].next; 
 }
-```
+`*3
 
 **Explanation**: Removes the head element from the collision chain. This is used to "undo" the most recent binding for a key when exiting a scope.
 
 ### 2.5 Symbol Implementation
 
 #### Symbol Creation
-```c
+`*3c
 static S_symbol mksymbol (string name , S_symbol next) {
     S_symbol s = checked_malloc(sizeof(*s));
     s->name = name; 
     s->next = next;
     return s;
 }
-```
+`*3
 
 **Explanation**: Creates a new symbol structure. Symbols are used to optimize string operations by converting strings to unique objects that can be compared by pointer equality.
 
 #### Symbol Lookup/Creation
-```c
+`*3c
 S_symbol S_symbol (string name) {
     int index = hash(name)%SIZE;
     S_symbol syms = hashtable[index], sym;
@@ -1252,23 +1252,23 @@ S_symbol S_symbol (string name) {
     hashtable[index] = sym;
     return sym;
 }
-```
+`*3
 
 **Explanation**: This function implements symbol interning. If a symbol for the given string already exists, it returns the existing symbol. Otherwise, it creates a new symbol and adds it to the symbol table. This ensures each unique string has exactly one symbol object.
 
 #### Symbol Name Retrieval
-```c
+`*3c
 string S_name (S_symbol sym) {
     return sym->name;
 }
-```
+`*3
 
 **Explanation**: Simple accessor function to get the string name from a symbol object.
 
 ### 2.6 Symbol Table Interface
 
 #### Symbol Table Operations
-```c
+`*3c
 // make a new S_Table
 S_table S_empty(void) {
     return TAB_empty(); 
@@ -1283,54 +1283,54 @@ void S_enter(S_table t, S_symbol sym, void *value){
 void *S_look(S_table t, S_symbol sym) { 
     return TAB_look(t,sym); 
 }
-```
+`*3
 
 **Explanation**: These functions provide a high-level interface to symbol tables, wrapping the lower-level TAB (table) operations. They work with symbols instead of raw strings for efficiency.
 
 ### 2.7 Scope Management
 
 #### Scope Marker
-```c
+`*3c
 static struct S_symbol_ marksym = { "<mark>", 0 };
-```
+`*3
 
 **Explanation**: A special symbol used as a marker to indicate scope boundaries in the symbol table.
 
 #### Begin Scope
-```c
+`*3c
 void S_beginScope ( S_table t) { 
     S_enter(t, &marksym, NULL); 
 }
-```
+`*3
 
 **Explanation**: Marks the beginning of a new scope by inserting a special marker symbol. This allows the system to know where to stop when undoing bindings.
 
 #### End Scope
-```c
+`*3c
 void S_endScope( S_table t) {
     S_symbol s;
     do 
         s= TAB_pop(t); 
     while (s != &marksym);
 }
-```
+`*3
 
 **Explanation**: Restores the symbol table to its state before the most recent `beginScope`. It pops symbols off the table until it finds the scope marker.
 
 ### 2.8 Advanced Implementation with Integrated Stack
 
 #### Enhanced Table Structure
-```c
+`*3c
 struct TAB_table_ {
     binder table[TABSIZE];
     void *top;
 };
-```
+`*3
 
 **Explanation**: This structure integrates the auxiliary stack into the table itself using a `top` pointer that tracks the most recently bound symbol.
 
 #### Enhanced Binder Creation
-```c
+`*3c
 static binder Binder(void *key, void *value, binder next, void *prevtop) {
     binder b = checked_malloc(sizeof(*b));
     b->key = key; 
@@ -1339,14 +1339,14 @@ static binder Binder(void *key, void *value, binder next, void *prevtop) {
     b->prevtop = prevtop;
     return b;
 }
-```
+`*3
 
 **Explanation**: Creates a binder that includes a `prevtop` field, which maintains a linked list of all bindings in the order they were created. This eliminates the need for a separate auxiliary stack.
 
 #### Enhanced Insertion
-```c
+`*3c
 t->table[index] = Binder(key, value, t->table[index], t->top);
-```
+`*3
 
 **Explanation**: When inserting, the current `top` is stored in the new binder's `prevtop` field, creating a chain that can be traversed to undo operations.
 
