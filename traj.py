@@ -136,18 +136,24 @@ def main(args):
                                                         arg_s = msg_tool_call['function']['arguments']
                                                     dst.write(f"```python {arg_s['filename'] if 'filename' in arg_s else ''}\n")
                                                     try:
-                                                        code = arg_s['code'].replace("@", "@")
-                                                        # code = code.replace('{', r'\{')
-                                                        # code = code.replace('}', r'\}')
-                                                        # code = code.replace('<', r'\<')
-                                                        # code = code.replace('>', r'\>')
+                                                        code = arg_s['code']
                                                     except:
-                                                        code = arg_s.replace("@", "@")
-                                                        # code = code.replace('{', r'\{')
-                                                        # code = code.replace('}', r'\}')
-                                                        # code = code.replace('<', r'\<')
-                                                        # code = code.replace('>', r'\>')
+                                                        code = arg_s
                                                     dst.write(f"{code if 'code' in arg_s else ''}\n")
+                                                    dst.write(f"```\n")
+                                                    dst.write(f"</div>\n\n")
+                                                elif "overlong" in msg_tool_call['function']['name']:
+                                                    dst.write(f"<div className=\"tool-call-box\">\n")
+                                                    dst.write(f"{icon_map['overlong_tool_output']} `{msg_tool_call['function']['name']}`\n\n")
+                                                    dst.write(f"```json\n")
+                                                    argu_s = json.loads(msg_tool_call['function']['arguments'])
+                                                    dst.write("{\n")
+                                                    for i, arg in enumerate(argu_s):
+                                                        if i == 0:
+                                                            dst.write(f"\t{arg.replace("@", "@")}")
+                                                        else:
+                                                            dst.write(f",\n\t{arg.replace("@", "@")}")
+                                                    dst.write("\n}\n")
                                                     dst.write(f"```\n")
                                                     dst.write(f"</div>\n\n")
                                                 elif msg_tool_call['function']['name'] == "filesystem-write_file":
