@@ -177,6 +177,9 @@ def main(args):
                                                     elif server_function_name.startswith("google-cloud"):
                                                         server_name = "google cloud"
                                                         function_name = "".join(server_function_name.split("-")[2:])
+                                                    elif server_function_name.startswith("yahoo-finance"):
+                                                        server_name = "yahoo finance"
+                                                        function_name = "".join(server_function_name.split("-")[2:])
                                                     elif server_function_name.startswith("pdf-tools"):
                                                         server_name = "pdf-tools"
                                                         function_name = "".join(server_function_name.split("-")[2:])
