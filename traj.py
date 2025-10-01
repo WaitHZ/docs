@@ -240,7 +240,7 @@ def main(args):
                                         # tool_res = tool_res.replace('<', r'\<')
                                         # tool_res = tool_res.replace('>', r'\>')
                                         dst.write(f"<div className=\"result-box\">\n")
-                                        dst.write(f"🔍`tool result`\n```json\n{tool_res}\n```\n</div>\n\n")
+                                        dst.write(f"🔍`tool result`\n```json\n{tool_res.replace("$", "")}\n```\n</div>\n\n")
                                     else:
                                         raise NotImplementedError("tool result doesn't have content")
                                         # dst.write(f"<div className=\"result-box\">\n")
