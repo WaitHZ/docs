@@ -223,10 +223,10 @@ def main(args):
                                                 tool_res = tool_res.replace('}, {', '},\n{')
                                                 tool_res = tool_res.replace(r'\n', ' ')
 
-                                        def replace_angle_brackets(s):
-                                            return re.sub(r'<(.*?)>', r'《\1》', s)
-                                        tool_res = replace_angle_brackets(tool_res)
-                                        tool_res = tool_res.replace('@', '@')
+                                        # def replace_angle_brackets(s):
+                                        #     return re.sub(r'<(.*?)>', r'《\1》', s)
+                                        # tool_res = replace_angle_brackets(tool_res)
+                                        # tool_res = tool_res.replace('@', '@')
                                         # tool_res = tool_res.replace('{', r'\{')
                                         # tool_res = tool_res.replace('}', r'\}')
                                         # tool_res = tool_res.replace('<', r'\<')
