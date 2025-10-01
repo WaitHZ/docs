@@ -146,13 +146,13 @@ def main(args):
                                                     dst.write(f"<div className=\"tool-call-box\">\n")
                                                     dst.write(f"{icon_map['overlong_tool_output']} `{msg_tool_call['function']['name'].replace("local-", "").replace("tooloutput", "tool_output")}`\n\n")
                                                     dst.write(f"```json\n")
-                                                    argu_s = json.loads(msg_tool_call['function']['arguments'])
+                                                    argu_s = msg_tool_call['function']['arguments'].strip()[1:-1].split(",")
                                                     dst.write("{\n")
                                                     for i, arg in enumerate(argu_s):
                                                         if i == 0:
-                                                            dst.write(f"\t{arg.replace("@", "@")}")
+                                                            dst.write(f"\t{arg}")
                                                         else:
-                                                            dst.write(f",\n\t{arg.replace("@", "@")}")
+                                                            dst.write(f",\n\t{arg}")
                                                     dst.write("\n}\n")
                                                     dst.write(f"```\n")
                                                     dst.write(f"</div>\n\n")
