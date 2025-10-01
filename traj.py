@@ -144,7 +144,7 @@ def main(args):
                                                     dst.write(f"</div>\n\n")
                                                 elif "overlong" in msg_tool_call['function']['name']:
                                                     dst.write(f"<div className=\"tool-call-box\">\n")
-                                                    dst.write(f"{icon_map['overlong_tool_output']} `{msg_tool_call['function']['name']}`\n\n")
+                                                    dst.write(f"{icon_map['overlong_tool_output']} `{msg_tool_call['function']['name'].replace("local-", "").replace("tooloutput", "tool_output")}`\n\n")
                                                     dst.write(f"```json\n")
                                                     argu_s = json.loads(msg_tool_call['function']['arguments'])
                                                     dst.write("{\n")
