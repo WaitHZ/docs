@@ -61,7 +61,7 @@ def raw_json_str_to_python(obj: str) -> dict:
 
 
 def main(args):
-    checked_tasks = {34, 37, 10, 38, 39, 49, 125}
+    checked_tasks = {34, 37, 10, 38, 39, 49, 125, 149}
 
     task_dir = args.task_dir
 
