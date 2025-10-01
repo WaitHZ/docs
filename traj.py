@@ -62,7 +62,7 @@ def raw_json_str_to_python(obj: str) -> dict:
 
 def main(args):
     checked_tasks = {34, 37, 10, 38, 39, 49, 125, 149, 161, 162, 165, 183, 188, 189, 190, 196, 197, 306, 404,
-        16, 78, 133, 155, 156, 159, 169, 181, 182, 201, 209, 210, 313,
+        16, 78, 133, 155, 156, 159, 169, 181, 182, 201, 209, 210, 313, 316,
     }
 
     task_dir = args.task_dir
@@ -175,10 +175,10 @@ def main(args):
                                                         server_name = ''.join(server_function_name.split("-")[1:])
                                                         function_name = ""
                                                     elif server_function_name.startswith("google-cloud"):
-                                                        server_name = "google cloud"
+                                                        server_name = "google-cloud"
                                                         function_name = "".join(server_function_name.split("-")[2:])
                                                     elif server_function_name.startswith("yahoo-finance"):
-                                                        server_name = "yahoo finance"
+                                                        server_name = "yahoo-finance"
                                                         function_name = "".join(server_function_name.split("-")[2:])
                                                     elif server_function_name.startswith("pdf-tools"):
                                                         server_name = "pdf-tools"
