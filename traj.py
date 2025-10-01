@@ -168,9 +168,13 @@ def main(args):
                                                 else:
                                                     dst.write(f"<div className=\"tool-call-box\">\n")
                                                     server_function_name = msg_tool_call['function']['name']
+
                                                     if server_function_name.startswith("local"):
                                                         server_name = ''.join(server_function_name.split("-")[1:])
                                                         function_name = ""
+                                                    elif server_function_name.startswith("google-cloud"):
+                                                        server_name = "google cloud"
+                                                        function_name = "".join(server_function_name.split("-")[2:])
                                                     elif server_function_name.startswith("pdf-tools"):
                                                         server_name = "pdf-tools"
                                                         function_name = "".join(server_function_name.split("-")[2:])
