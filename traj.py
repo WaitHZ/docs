@@ -153,8 +153,8 @@ def main(args):
                                                 elif msg_tool_call['function']['name'] == "filesystem-write_file":
                                                     arg_s = json.loads(msg_tool_call['function']['arguments'])
                                                     dst.write(f"<div className=\"tool-call-box\">\n")
-                                                    # dst.write(f"{icon_map['filesystem']} `{msg_tool_call['function']['name']}`\n\n")
-                                                    dst.write(f"🛠 `{msg_tool_call['function']['name']}`\n\n")
+                                                    dst.write(f"{icon_map['filesystem']} `{msg_tool_call['function']['name']}`\n\n")
+                                                    # dst.write(f"🛠 `{msg_tool_call['function']['name']}`\n\n")
                                                     dst.write(f"```text workspace/{arg_s['path'].split('/')[-1].replace("@", "@")}\n")
                                                     dst.write(f"{arg_s['content'].replace("@", "@")}\n")
                                                     dst.write(f"```\n")
