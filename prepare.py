@@ -4,7 +4,7 @@ import json
 
 trajs = {
     "claude4-sonnet": "trajs/claude-4-sonnet-0514_09210140_1/finalpool",
-    # "gemini-2.5-pro": "trajs/gemini-2.5-pro_09210140_1/finalpool",
+    "gemini-2.5-pro": "trajs/gemini-2.5-pro_09210140_1/finalpool",
     # "grok-4": "trajs/grok-4_09210140_1/finalpool",
 }
 

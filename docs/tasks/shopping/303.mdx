@@ -4782,4 +4782,164 @@ you have claimed the task is done!
 
 </Accordion>
 
+<Accordion title="gemini-2.5-pro">
+
+<Columns cols={3}>
+<Card title="Task Completion" icon="x">
+Failed
+</Card>
+<Card title="Tool Calls" icon="wrench">
+3
+</Card>
+<Card title="Turns" icon="arrows-rotate">
+4
+</Card>
+</Columns>
+
+<div className="thinking-box">
+🧐`Agent`
+
+OK. I will start by listing the files in the current directory to find the templates.
+</div>
+
+<div className="tool-call-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/><path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/></svg> `filesystem list_directory`
+
+```json
+{
+	"path":"."
+}
+```
+</div>
+
+<div className="result-box">
+🔍`tool result`
+```json
+Error: Access denied - path outside allowed directories: /workspace not in /workspace/dumps/workspace
+```
+</div>
+
+<div className="tool-call-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/><path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/></svg> `filesystem list_directory`
+
+```json
+{
+	"path":"/workspace/dumps/workspace"
+}
+```
+</div>
+
+<div className="result-box">
+🔍`tool result`
+```json
+[FILE] recall_email_template.md
+[FILE] recall_form_template.json
+```
+</div>
+
+<div className="tool-call-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/><path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/></svg> `filesystem read_file`
+
+```json
+{
+	"path":"/workspace/dumps/workspace/recall_form_template.json"
+}
+```
+</div>
+
+<div className="result-box">
+🔍`tool result`
+```json
+{
+  "form_title": "Product Recall Information Confirmation Form",
+  "form_description": "Thank you for cooperating with our product recall process. Please fill out the following information so we can assist you accordingly.",
+  "fields": [
+    {
+      "name": "Customer Name",
+      "type": "text",
+      "required": true,
+      "description": "Please enter your real name"
+    },
+    {
+      "name": "Contact Email", 
+      "type": "email",
+      "required": true,
+      "description": "Email address for further contact"
+    },
+    {
+      "name": "Contact Phone Number",
+      "type": "text",
+      "required": false,
+      "description": "Alternative contact number"
+    },
+    {
+      "name": "Product Model",
+      "type": "text", 
+      "required": true,
+      "description": "Please confirm the model of the product you purchased"
+    },
+    {
+      "name": "Product ID",
+      "type": "text",
+      "required": true,
+      "description": "Product identifier, can be found on the product packaging"
+    },
+    {
+      "name": "Order Number",
+      "type": "text",
+      "required": true,
+      "description": "Your purchase order number"
+    },
+    {
+      "name": "Purchase Date",
+      "type": "date",
+      "required": true,
+      "description": "The specific date of purchase"
+    },
+    {
+      "name": "Current Product Status",
+      "type": "choice",
+      "required": false,
+      "choices": ["Not Used", "In Normal Use", "Has Issues", "Discarded"],
+      "description": "Please select the current status of the product"
+    },
+    {
+      "name": "Return Preference",
+      "type": "choice", 
+      "required": false,
+      "choices": ["Full Refund", "Product Replacement", "Store Credit"],
+      "description": "Please select your preferred resolution option"
+    },
+    {
+      "name": "Problem Description",
+      "type": "paragraph",
+      "required": false,
+      "description": "Please describe in detail the issues you encountered with the product or any other relevant information"
+    },
+    {
+      "name": "Agreement to Terms of Processing",
+      "type": "checkbox",
+      "required": true,
+      "description": "I agree to proceed according to the recall processing procedure"
+    }
+  ],
+  "settings": {
+    "collect_email": true,
+    "allow_response_editing": true,
+    "limit_to_one_response": true,
+    "show_progress_bar": true
+  }
+}
+
+```
+</div>
+
+<div className="thinking-box">
+🧐`Agent`
+
+I have read the content of the `recall_form_template.json` file. I will now proceed to create a Google Form based on this template. After that, I will read the content of `recall_email_template.md`. However, I need you to provide the product model that needs to be recalled so I can proceed with the next steps.
+</div>
+
+</Accordion>
+
 </AccordionGroup>
