@@ -3,6 +3,7 @@ import re
 with open("map.txt") as f:
     for line in f:
         name, task_id, task_cat = line.split()
+        name = name.lower()
         
         print(name, task_id, task_cat)
 
@@ -11,6 +12,11 @@ with open("map.txt") as f:
 
         with open(f"../mcpbench_dev/tasks/finalpool/{name}/docs/task.md", encoding="utf-8") as ins:
             inst = ins.read()
+        
+        # 转义所有反斜杠，避免正则表达式错误
+        inst = inst.replace("\\", "\\\\")
+        inst = inst.replace("{", r"\{")
+        inst = inst.replace("}", r"\}")
 
         # 使用正则表达式匹配 ## Instruction 到下一个 ## 标题或文件结尾之间的内容
         new_content = re.sub(
@@ -23,5 +29,3 @@ with open("map.txt") as f:
         # 写回文件
         with open(f"docs/tasks/{task_cat}/{task_id}_.mdx", "w", encoding="utf-8") as mdx:
             mdx.write(new_content)
-            
-        break
