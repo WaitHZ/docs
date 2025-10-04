@@ -66,6 +66,3 @@ with open("map.txt") as f:
 
         with open(f"docs/tasks/{task_cat}/{task_id}_.mdx", "w", encoding="utf-8") as mdx:
             mdx.write(new_content)
-
-        break
-
