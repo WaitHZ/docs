@@ -32,6 +32,10 @@ with open("map.txt") as f:
             servers = config_data['needed_mcp_servers']
             local_tools = config_data['needed_local_tools']
 
+            # Sort by string length (shortest to longest)
+            servers = sorted(servers, key=len)
+            local_tools = sorted(local_tools, key=len)
+
             card_str = '<Card>\n<div className="tools-container">\n<div className="mcp-servers-container">\n<div className="mcp-servers-title">\nMCP Servers\n</div>\n<div className="mcp-servers-grid">\n'
             
             for server in servers:
