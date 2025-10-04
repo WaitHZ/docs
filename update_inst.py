@@ -61,7 +61,7 @@ with open("map.txt") as f:
 
         # Replace the first <Columns cols={2}>...</Columns> with card_str
         new_content = re.sub(
-            r'<Columns cols=\{2\}>.*?</Columns>',
+            r'<Card>.*?</Card>',
             card_str,
             content,
             count=1,
