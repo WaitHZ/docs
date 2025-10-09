@@ -245,9 +245,9 @@ def main(args):
                                         # tool_res = tool_res.replace('>', r'\>')
                                         dst.write(f"<div className=\"result-box\">\n")
                                         dst.write(f"🔍`tool result`\n")
-                                        dst.write(f"<Accordion title=\"full return\">\n")
+                                        dst.write(f"<Expandable title=\"full return\">\n")
                                         dst.write(f"```json\n{tool_res}\n```\n")
-                                        dst.write(f"</Accordion>\n")
+                                        dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     else:
                                         raise NotImplementedError("tool result doesn't have content")
