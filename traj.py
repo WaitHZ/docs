@@ -13,6 +13,18 @@ if "web_search" in icon_map:
 if "playwright_with_chunk" in icon_map:
     icon_map["playwright"] = icon_map["playwright_with_chunk"]
 
+def categorize_tool_output(tool_output_str):
+    tooloutput_type = None
+    if tool_output_str.strip().startswith("Error running tool"):
+        tooloutput_type = "error_in_tool_call"
+    if tool_output_str.strip().endswith("Please check this file carefully, as it may be very long!)"):
+        tooloutput_type = "overlong_tool_output"
+    if "not found in agent" in tool_output_str.strip():
+        tooloutput_type = "tool_name_not_found"
+    if tooloutput_type is None:
+        tooloutput_type = "normal_tool_output"
+    return tooloutput_type
+
 
 def find_mdx_files_with_underscore(dir_path):
     mdx_files = []
@@ -218,10 +230,9 @@ def main(args):
                                         dst.write(f"<div className=\"thinking-box\">\n")
                                         dst.write(f"🧐`Agent`\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}")}\n</div>\n\n")
                                 elif msg["role"] == "tool":
-                                    if msg['content'] is not None:
+                                    tooloutput_type = categorize_tool_output(msg['content'])
+                                    if tooloutput_type == "normal_tool_output":
                                         try:
-                                            # tool_res.replace(r'\"', r'"')
-                                            # tool_res.replace(r'\\n', r'\n')
                                             with open("_tmp", "w", encoding="utf-8") as f:
                                                 print(msg['content'], file=f)
                                             tool_res = json.load(open("_tmp", "r", encoding="utf-8"))
@@ -235,24 +246,17 @@ def main(args):
                                                 tool_res = tool_res.replace('}, {', '},\n{')
                                                 tool_res = tool_res.replace(r'\n', ' ')
 
-                                        # def replace_angle_brackets(s):
-                                        #     return re.sub(r'<(.*?)>', r'《\1》', s)
-                                        # tool_res = replace_angle_brackets(tool_res)
-                                        # tool_res = tool_res.replace('@', '@')
-                                        # tool_res = tool_res.replace('{', r'\{')
-                                        # tool_res = tool_res.replace('}', r'\}')
-                                        # tool_res = tool_res.replace('<', r'\<')
-                                        # tool_res = tool_res.replace('>', r'\>')
                                         dst.write(f"<div className=\"result-box\">\n")
                                         dst.write(f"🔍`tool result`\n")
-                                        dst.write(f"<Expandable title=\"result\">\n")
+                                        dst.write(f"<Expandable title=\"Result\">\n")
                                         dst.write(f"```json\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     else:
-                                        raise NotImplementedError("tool result doesn't have content")
-                                        # dst.write(f"<div className=\"result-box\">\n")
-                                        # dst.write("🔍`tool result`\n```json\n{}\n```\n</div>\n\n")
+                                        dst.write(f"<div className=\"error-box\">\n")
+                                        dst.write(f"❌ `tool calling error`\n")
+                                        dst.write(f"```\n{msg['content']}\n```\n")
+                                        dst.write(f"</div>\n\n")
                                 else:
                                     raise NotImplementedError(f"Unsupported message role: {msg['role']}")
 
