@@ -252,11 +252,23 @@ def main(args):
                                         dst.write(f"```json\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
-                                    else:
+                                    elif tooloutput_type == "error_in_tool_call":
                                         dst.write(f"<div className=\"error-box\">\n")
                                         dst.write(f"❌ `tool calling error`\n")
+                                        dst.write(f"```\n{msg['content'].split(":")[0]}\n```\n")
+                                        dst.write(f"</div>\n\n")
+                                    elif tooloutput_type == "overlong_tool_output":
+                                        dst.write(f"<div className=\"error-box\">\n")
+                                        dst.write(f"⚠️ `tool output overlong`\n")
                                         dst.write(f"```\n{msg['content']}\n```\n")
                                         dst.write(f"</div>\n\n")
+                                    elif tooloutput_type == "tool_name_not_found":
+                                        dst.write(f"<div className=\"error-box\">\n")
+                                        dst.write(f"❓ `tool name not found`\n")
+                                        dst.write(f"```\n{msg['content']}\n```\n")
+                                        dst.write(f"</div>\n\n")
+                                    else:
+                                        raise NotImplementedError(f"Unsupported tool output type: {tooloutput_type}")
                                 else:
                                     raise NotImplementedError(f"Unsupported message role: {msg['role']}")
 
