@@ -104,16 +104,13 @@ I'll help you study the Compiler Principles presentation and create comprehensiv
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 [DIR] .pdf_tools_tempfiles
 [FILE] Compile.pptx
 [FILE] HW.pdf
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="thinking-box">
@@ -134,10 +131,7 @@ Great! I can see both files are available. Let me first open and examine the Pow
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 {
   "presentation_id": "presentation_1",
@@ -145,7 +139,7 @@ Click to expand result
   "slide_count": 26
 }
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="thinking-box">
@@ -166,10 +160,7 @@ Now let me get information about the presentation and extract all the text conte
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 {
   "success": true,
@@ -1014,7 +1005,7 @@ Click to expand result
   "all_presentation_text_combined": "=== SLIDE 1 ===\nSemantic Analysis\u000bChapter 5\nSemantic Analysis\u000bChapter 5\n\n=== SLIDE 2 ===\nSemantic Analysis\nSemantic Analysis\nThe semantic analysis phase of a compiler:\nconnects variable definitions to their uses\nchecks that each expression has a correct type\ntranslates the abstract syntax into a simpler representation suitable for generating machine code\n\n=== SLIDE 3 ===\nOutline\nOutline\nSymbol Tables\nBindings for the Tiger Compiler\nType Checking\n\n=== SLIDE 4 ===\n5.1 Symbol Tables\n5.1 Symbol Tables\nThe semantic analysis phase is characterized by the maintenance of symbol tables (also called environments) mapping identiﬁers to their types and locations.\nDeclarations of identifiers: IDs are bound to “meanings” in the symbol tables\nUses of identifiers: look up IDs in the symbol tables. \nAn environment is a set of bindings denoted by the ↦ arrow.\nE.g., σ0 = {g ↦ string, a ↦ int}\n1 function f(a:int,b:int,c:int)=\n2\t(print_int (a+c);\n3\tlet var j:= a+b\n4\t\t var a:= “hello”\n5\t in print(a); print_int(j)\n6\tend;\n7\tprint_int(b)\n8\t)\nline 1: 1 = 0 + {a ↦ int, b ↦ int, c ↦ int}\nline 3: 2 = 1 + {j ↦ int}\nline 4: 3 = 2 + {a ↦ string}\nhow do the compiler know the type of j?\n\n=== SLIDE 5 ===\nSymbol Tables\nSymbol Tables\n2 contains a ↦ int\nWhat is the binding of a in 3?\nBindings in the right-hand table override those in the left.\nX + Y for tables is not the same as Y + X.\n1 function f(a:int,b:int,c:int)=\n2\t(print_int (a+c);\n3\tlet var j:= a+b\n4\t\t var a:= “hello”\n5\t in print(a); print_int(j)\n6\tend;\n7\tprint_int(b)\n8\t)\nline 4: 3 = 2 + {a ↦ string}\n\n=== SLIDE 6 ===\nSymbol Tables\nSymbol Tables\nEach local variable in a program has a scope in which it is visible.\nAs the semantic analysis reaches the end of each scope, the identiﬁer bindings local to that scope are discarded.\n1 function f(a:int,b:int,c:int)=\n2\t(print_int (a+c);\n3\tlet var j:= a+b\n4\t\t var a:= “hello”\n5\t in print(a); print_int(j)\n6\tend;\n7\tprint_int(b)\n8\t)\nline 6: discard 3, go back to 1 (line 1)\nline 8: discard 1, go back to 0\nSymbol table: add/lookup/undo bindings\nHow should symbol tables be implemented?\nline 7: look up b in 1\n\n=== SLIDE 7 ===\nSymbol Tables\nSymbol Tables\nFunctional Style\nKeep 1 in pristine condition while creating 2 and 3\nEasy to restore 1 \n\nImperative Style\nmodify 1 until it becomes 2\nwhile 2 exists, we cannot look things up in 1\nwhen we are done with 2, we can undo the modification to get 1 back again\nHow?\na single global environment  + an undo stack\n\n=== SLIDE 8 ===\nMultiple Symbol Tables\nMultiple Symbol Tables\nIn some languages there can be several active environments at once: Each module, or class, or record in the program has a symbol table  of its own.\npackage M;   \nclass E {   \n     static int a = 5;   \n}  \nclass N {   \n     static int b = 10;   \n     static int a = E.a + b;  \n }   \nclass D {   \n     static int d = E.a + N.a;  \n }\n1 = { a ↦ int }\n2 = { E ↦ 1 }\n3= {b ↦ int , a ↦ int }\n4= { N ↦ 3 }\n5= { d ↦ int }\n6= { D ↦ 5 }\n7 = 2 +4+ 6\nJava\nIn Java, forward reference is allowed. so E, N, and D are all compiled in the environment 7. The result of the analysis is {M ↦  7}.\n\n=== SLIDE 9 ===\nMultiple Symbol Tables\nMultiple Symbol Tables\nstructure M = struct \n   structure E = struct \n      val a = 5; \n   end \n   structure N = struct \n      val b = 10 \n      val a = E.a + b \n   end \n   structure D = struct \n      val d = E.a + N.a \n   end \nend\nML\nN is compiled using environment 0 + 2. D is compiled using  0 + 2 + 4.  \nThe result of the analysis is also {M ↦  7}.\n1 = { a ↦ int }\n2 = { E ↦ 1 }\n3= {b ↦ int , a ↦ int }\n4= { N ↦ 3 }\n5= { d ↦ int }\n6= { D ↦ 5 }\n7 = 2 +4+ 6\nEach class/structure has its own symbol table.\n\n=== SLIDE 10 ===\nEfficient Imperative Symbol Tables\nEfficient Imperative Symbol Tables\nImperative Style\nBecause a large program may contain thousands of distinct identiﬁers, symbol tables must permit efﬁcient lookup.\nHow?\nHash Table\n’ =  + {a ↦ int}\ninsert <a, int> in the hash table\nSymbol tables need to support deletion easily.\nHow?\nHash Table with external chaining\ne.g., hash(a) -> <a, int> -> <a, string>\n\n=== SLIDE 11 ===\nEfficient Imperative Symbol Tables\nEfficient Imperative Symbol Tables\nstruct bucket { string key; void *binding; struct bucket *next; };\n\u000b#define SIZE 109\n\u000bstruct bucket *table[SIZE];\n\u000bunsigned int hash(char *s0)\n{ unsigned int h=0; char *s;\n  for(s=s0; *s; s++)\n    h=h*65599 + *s; \n  return h; \n}\n\u000bstruct bucket *Bucket (string key, void *binding, struct bucket *next) {\n  struct bucket *b=checked_malloc(sizeof(*b));\n  b->key = key; b->binding = binding; b->next = next;\n  return b; \n}\nh = (n-1c1+n-2c2 +…..+  cn-1+ cn)\n\n=== SLIDE 12 ===\nEfficient Imperative Symbol Tables\nEfficient Imperative Symbol Tables\nvoid insert(string key, void *binding) {\n  int index=hash(key)%SIZE;\n  table[index]=Bucket(key, binding, table[index]); \n}\n\u000bvoid *lookup(string key) {\n  int index=hash(key)%SIZE \n  struct bucket *b;\n  for (b = table[index]; b; b=b->next) \n    if (0==strcmp(b->key,key)) \n      return b->binding; \n  return NULL; \n}\n\u000bvoid pop(string key) { \n  int index=hash(key)%SIZE\n  table[index]=table[index].next; \n}\n\n=== SLIDE 13 ===\nEffective Imperative Symbol Tables\nEffective Imperative Symbol Tables\nConsider  + {a ↦ τ2} when  contains a ↦ τ1 already.\n\n The insert function leaves a ↦ τ1 in the bucket and puts a ↦ τ2 earlier in the list. \nhash(a) -> <a, τ2 > -> <a, τ1>\n\nwhen pop(a) is done at the end of a's scope,  is restored. (insertion and pop work in a stack-like fashion.)\nhash(a) -> <a, τ1>\n\n=== SLIDE 14 ===\nEfficient Functional Symbol Tables\nEfficient Functional Symbol Tables\nFunctional Style\nWe wish to compute ′ =  + {a ↦ τ} in such a way that we still have  available to look up identifiers. \ndo not change \n\nWe create a new table by computing the \"sum\" of an existing table and a new binding.\n\nCan we achieve this with hash tables?\n\n=== SLIDE 15 ===\nEfficient Functional Symbol Tables\nEfficient Functional Symbol Tables\nm2 = m1 + {mouse ↦ 4}\nm1 = {bat ↦ 1,camel ↦ 2,dog ↦ 3}, suppose index(camel) = index(mouse) = 5\nHash(mouse) -> <mouse, 4>: no longer have m1\nmouse\n4\nX\n\n=== SLIDE 16 ===\nEfficient Functional Symbol Tables\nEfficient Functional Symbol Tables\nm2 = m1 + {mouse ↦ 4}\nm1 = {bat ↦ 1,camel ↦ 2,dog ↦ 3}, suppose index(camel) = index(mouse) = 5\nHash(mouse) -> <mouse, 4>: no longer have m1\nCopy the array, but share all the old buckets: not efficient\nThe array in a hash table should be quite large\n\n=== SLIDE 17 ===\nEfficient Functional Symbol Table\nEfficient Functional Symbol Table\nWe can perform such “functional” additions to search trees efﬁciently by using binary search trees.\nIf we add a new node at depth d of the tree, we must create d new nodes – but we don’t need to copy the whole tree.\nCopy the nodes from the root to the parent of the inserted node.\n\nm1 keeps unchanged.\n\nLooking up an element: log(n) for a balanced tree of n nodes.\ndog\n3\nbat\n1\ncamel\n2\nmouse\n4\nm1\ndog\n3\nm2\n\n=== SLIDE 18 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nstruct bucket { string key; void *binding; struct bucket *next; };\n\u000b#define SIZE 109\n\u000bstruct bucket *table[SIZE];\n\u000bunsigned int hash(char *s0)\n{ unsigned int h=0; char *s;\n  for(s=s0; *s; s++)\n    h=h*65599 + *s; \n  return h; \n}\n\n\u000bstruct bucket *Bucket (string key, void *binding, struct bucket *next) {\n  struct bucket *b=checked_malloc(sizeof(*b));\n  b->key = key; b->binding = binding; b->next = next;\n  return b; }\nh = (n-1c1+n-2c2 +…..+  cn-1+ cn)\n\n=== SLIDE 19 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nvoid insert(string key, void *binding) {\n  int index=hash(key)%SIZE;\n  table[index]=Bucket(key, binding, table[index]); \n}\n\u000bvoid *lookup(string key) {\n  int index=hash(key)%SIZE \n  struct bucket *b;\n  for (b = table[index]; b; b=b->next) \n    if (0==strcmp(b->key,key)) \n      return b->binding; \n  return NULL; \n}\n\u000bvoid pop(string key) { \n  int index=hash(key)%SIZE\n  table[index]=table[index].next; \n}\n\n=== SLIDE 20 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nIn Program 5.2: \nmust examine every character of the string s for the hash operation\neach time it compares s against a string in the ith bucket\nHow to improve?\nConvert each string to a symbol\nThe Symbol module has these important properties:\nExtracting an integer hash-key is very fast: use the Symbol-pointer itself as the integer hash-key. (for hash tables)\nComparing symbols for equality is fast (just pointer or integer comparison).\nComparing two symbols for “greater-than” (in some arbitrary ordering) is very fast  (for binary search trees)\n\n=== SLIDE 21 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nThe interface of symbols and symbol tables\nvoid *: We want different notions of binding for different purposes in the compiler – type bindings for types, value bindings for variables and functions\ntypedef struct S_symbol_ *S_symbol;\nS_symbol S_symbol (string);\nstring S_name(S_symbol);\n\u000btypedef struct TAB_table_ *S_table;\nS_table S_empty( void);\nvoid S_enter( S_table t,S_symbol sym, void *value); \nvoid *S_look( S_table t, S_symbol sym);\nvoid S_beginScope( S_table t); \nvoid S_endScope( S_table t);\n\n=== SLIDE 22 ===\nThe Implementation of Symbols\nThe Implementation of Symbols\nstatic S_symbol mksymbol (string name , S_symbol next) {\n  S_symbol s = checked_malloc(sizeof(*s));\n  s->name = name; s->next = next;\n  return s;\n}\n\u000bS_symbol S_symbol (string name) {\n\tint index = hash(name)%SIZE;\n\tS_symbol syms = hashtable[index], sym;\n\tfor ( sym = syms; sym; sym = sym->next)\n\t  if (0 == strcmp(sym->name, name)) return sym;\n\tsym = mksymbol(name,syms);\n\thashtable[index] = sym;\n   return sym;\n}\n\u000bstring S_name (S_symbol sym) {\n  return sym->name;\n}\n\n=== SLIDE 23 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nThe Tiger compiler in C uses destructive-update environments.\nAn imperative table is implemented using a hash table.\nTAB: a generic hash table module\n// make a new S_Table\nS_table S_empty(void) {\n  return TAB_empty(); \n}\n// insert a binding\nvoid S_enter(S_table t, S_symbol sym, void *value){ \n  TAB_enter(t,sym,value);\n} \n// look up a symbol\nvoid *S_look(S_table t, S_symbol sym) { \n  return TAB_look(t,sym); \n}\n\n=== SLIDE 24 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nFor destructive-update environments:\nS_beginScope: Remembers the current state of the table\nS_endScope: Restores the table to where it was at the most recent beginScope that has not already been ended.\nstatic struct S_symbol_ marksym = { “<mark>”, 0 };\n\u000bvoid S_beginScope ( S_table t) { \n  S_enter(t, &marksym, NULL); \n}\n\u000bvoid S_endScope( S_table t) {\n  S_symbol s;\n  do \n    s= TAB_pop(t); \n  while (s != &marksym);\n}\n\n=== SLIDE 25 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nHow can we exactly pop those bindings after enterScope?\n\nAuxiliary stack:\nShowing in what order the symbols  were “pushed” into the symbol table. \nAs each symbol in this stack is popped, the head binding in its bucket is removed.\nbeginScope: pushes a special marker onto the stack\nendScope: pops symbols off the stack until finds the topmost marker.\n\n=== SLIDE 26 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nThe auxiliary stack can be integrated into the Binder by having a global variable top showing the most recent Symbol bound in the table. \nPushing: copy top into the prevtop field of the Binder.\nstruct TAB_table_ {\n  binder table[TABSIZE];\n  void *top;\n};\n\nt->table[index] = Binder(key, value,t->table[index], t->top);\u000b\nstatic binder Binder(void *key, void *value, binder next, void *prevtop) {\n  binder b = checked_malloc(sizeof(*b));\n  b->key = key; b->value=value; b->next=next; \n  b->prevtop = prevtop;\n  return b;\n}\n"
 }
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="thinking-box">
@@ -1035,10 +1026,7 @@ Now let me examine the homework PDF to understand the assignments.
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 PDF file information:
 Total pages: 2
@@ -1048,7 +1036,7 @@ Creator: Typora
 Creation date: 20250707010226
 
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -1065,10 +1053,7 @@ Creation date: 20250707010226
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 PDF total pages: 2
 Extracted page range: 1-2
@@ -1155,7 +1140,7 @@ class D { static int d = E.a + N.a; }1
 4
 
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="thinking-box">
@@ -1527,14 +1512,11 @@ This comprehensive understanding of symbol tables will be essential for implemen
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 Successfully wrote to /workspace/dumps/workspace/NOTE.md
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -1547,14 +1529,11 @@ Successfully wrote to /workspace/dumps/workspace/NOTE.md
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 you have claimed the task is done!
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="thinking-box">
@@ -1621,16 +1600,13 @@ Failed
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 {
   "error": "File not found: Compile.pptx"
 }
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -1645,14 +1621,11 @@ Click to expand result
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 Error: Access denied - path outside allowed directories: /workspace not in /workspace/dumps/workspace
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -1667,16 +1640,13 @@ Error: Access denied - path outside allowed directories: /workspace not in /work
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 [DIR] .pdf_tools_tempfiles
 [FILE] Compile.pptx
 [FILE] HW.pdf
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -1691,10 +1661,7 @@ Click to expand result
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 {
   "presentation_id": "presentation_1",
@@ -1702,7 +1669,7 @@ Click to expand result
   "slide_count": 26
 }
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -1717,10 +1684,7 @@ Click to expand result
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 {
   "success": true,
@@ -2565,7 +2529,7 @@ Click to expand result
   "all_presentation_text_combined": "=== SLIDE 1 ===\nSemantic Analysis\u000bChapter 5\nSemantic Analysis\u000bChapter 5\n\n=== SLIDE 2 ===\nSemantic Analysis\nSemantic Analysis\nThe semantic analysis phase of a compiler:\nconnects variable definitions to their uses\nchecks that each expression has a correct type\ntranslates the abstract syntax into a simpler representation suitable for generating machine code\n\n=== SLIDE 3 ===\nOutline\nOutline\nSymbol Tables\nBindings for the Tiger Compiler\nType Checking\n\n=== SLIDE 4 ===\n5.1 Symbol Tables\n5.1 Symbol Tables\nThe semantic analysis phase is characterized by the maintenance of symbol tables (also called environments) mapping identiﬁers to their types and locations.\nDeclarations of identifiers: IDs are bound to “meanings” in the symbol tables\nUses of identifiers: look up IDs in the symbol tables. \nAn environment is a set of bindings denoted by the ↦ arrow.\nE.g., σ0 = {g ↦ string, a ↦ int}\n1 function f(a:int,b:int,c:int)=\n2\t(print_int (a+c);\n3\tlet var j:= a+b\n4\t\t var a:= “hello”\n5\t in print(a); print_int(j)\n6\tend;\n7\tprint_int(b)\n8\t)\nline 1: 1 = 0 + {a ↦ int, b ↦ int, c ↦ int}\nline 3: 2 = 1 + {j ↦ int}\nline 4: 3 = 2 + {a ↦ string}\nhow do the compiler know the type of j?\n\n=== SLIDE 5 ===\nSymbol Tables\nSymbol Tables\n2 contains a ↦ int\nWhat is the binding of a in 3?\nBindings in the right-hand table override those in the left.\nX + Y for tables is not the same as Y + X.\n1 function f(a:int,b:int,c:int)=\n2\t(print_int (a+c);\n3\tlet var j:= a+b\n4\t\t var a:= “hello”\n5\t in print(a); print_int(j)\n6\tend;\n7\tprint_int(b)\n8\t)\nline 4: 3 = 2 + {a ↦ string}\n\n=== SLIDE 6 ===\nSymbol Tables\nSymbol Tables\nEach local variable in a program has a scope in which it is visible.\nAs the semantic analysis reaches the end of each scope, the identiﬁer bindings local to that scope are discarded.\n1 function f(a:int,b:int,c:int)=\n2\t(print_int (a+c);\n3\tlet var j:= a+b\n4\t\t var a:= “hello”\n5\t in print(a); print_int(j)\n6\tend;\n7\tprint_int(b)\n8\t)\nline 6: discard 3, go back to 1 (line 1)\nline 8: discard 1, go back to 0\nSymbol table: add/lookup/undo bindings\nHow should symbol tables be implemented?\nline 7: look up b in 1\n\n=== SLIDE 7 ===\nSymbol Tables\nSymbol Tables\nFunctional Style\nKeep 1 in pristine condition while creating 2 and 3\nEasy to restore 1 \n\nImperative Style\nmodify 1 until it becomes 2\nwhile 2 exists, we cannot look things up in 1\nwhen we are done with 2, we can undo the modification to get 1 back again\nHow?\na single global environment  + an undo stack\n\n=== SLIDE 8 ===\nMultiple Symbol Tables\nMultiple Symbol Tables\nIn some languages there can be several active environments at once: Each module, or class, or record in the program has a symbol table  of its own.\npackage M;   \nclass E {   \n     static int a = 5;   \n}  \nclass N {   \n     static int b = 10;   \n     static int a = E.a + b;  \n }   \nclass D {   \n     static int d = E.a + N.a;  \n }\n1 = { a ↦ int }\n2 = { E ↦ 1 }\n3= {b ↦ int , a ↦ int }\n4= { N ↦ 3 }\n5= { d ↦ int }\n6= { D ↦ 5 }\n7 = 2 +4+ 6\nJava\nIn Java, forward reference is allowed. so E, N, and D are all compiled in the environment 7. The result of the analysis is {M ↦  7}.\n\n=== SLIDE 9 ===\nMultiple Symbol Tables\nMultiple Symbol Tables\nstructure M = struct \n   structure E = struct \n      val a = 5; \n   end \n   structure N = struct \n      val b = 10 \n      val a = E.a + b \n   end \n   structure D = struct \n      val d = E.a + N.a \n   end \nend\nML\nN is compiled using environment 0 + 2. D is compiled using  0 + 2 + 4.  \nThe result of the analysis is also {M ↦  7}.\n1 = { a ↦ int }\n2 = { E ↦ 1 }\n3= {b ↦ int , a ↦ int }\n4= { N ↦ 3 }\n5= { d ↦ int }\n6= { D ↦ 5 }\n7 = 2 +4+ 6\nEach class/structure has its own symbol table.\n\n=== SLIDE 10 ===\nEfficient Imperative Symbol Tables\nEfficient Imperative Symbol Tables\nImperative Style\nBecause a large program may contain thousands of distinct identiﬁers, symbol tables must permit efﬁcient lookup.\nHow?\nHash Table\n’ =  + {a ↦ int}\ninsert <a, int> in the hash table\nSymbol tables need to support deletion easily.\nHow?\nHash Table with external chaining\ne.g., hash(a) -> <a, int> -> <a, string>\n\n=== SLIDE 11 ===\nEfficient Imperative Symbol Tables\nEfficient Imperative Symbol Tables\nstruct bucket { string key; void *binding; struct bucket *next; };\n\u000b#define SIZE 109\n\u000bstruct bucket *table[SIZE];\n\u000bunsigned int hash(char *s0)\n{ unsigned int h=0; char *s;\n  for(s=s0; *s; s++)\n    h=h*65599 + *s; \n  return h; \n}\n\u000bstruct bucket *Bucket (string key, void *binding, struct bucket *next) {\n  struct bucket *b=checked_malloc(sizeof(*b));\n  b->key = key; b->binding = binding; b->next = next;\n  return b; \n}\nh = (n-1c1+n-2c2 +…..+  cn-1+ cn)\n\n=== SLIDE 12 ===\nEfficient Imperative Symbol Tables\nEfficient Imperative Symbol Tables\nvoid insert(string key, void *binding) {\n  int index=hash(key)%SIZE;\n  table[index]=Bucket(key, binding, table[index]); \n}\n\u000bvoid *lookup(string key) {\n  int index=hash(key)%SIZE \n  struct bucket *b;\n  for (b = table[index]; b; b=b->next) \n    if (0==strcmp(b->key,key)) \n      return b->binding; \n  return NULL; \n}\n\u000bvoid pop(string key) { \n  int index=hash(key)%SIZE\n  table[index]=table[index].next; \n}\n\n=== SLIDE 13 ===\nEffective Imperative Symbol Tables\nEffective Imperative Symbol Tables\nConsider  + {a ↦ τ2} when  contains a ↦ τ1 already.\n\n The insert function leaves a ↦ τ1 in the bucket and puts a ↦ τ2 earlier in the list. \nhash(a) -> <a, τ2 > -> <a, τ1>\n\nwhen pop(a) is done at the end of a's scope,  is restored. (insertion and pop work in a stack-like fashion.)\nhash(a) -> <a, τ1>\n\n=== SLIDE 14 ===\nEfficient Functional Symbol Tables\nEfficient Functional Symbol Tables\nFunctional Style\nWe wish to compute ′ =  + {a ↦ τ} in such a way that we still have  available to look up identifiers. \ndo not change \n\nWe create a new table by computing the \"sum\" of an existing table and a new binding.\n\nCan we achieve this with hash tables?\n\n=== SLIDE 15 ===\nEfficient Functional Symbol Tables\nEfficient Functional Symbol Tables\nm2 = m1 + {mouse ↦ 4}\nm1 = {bat ↦ 1,camel ↦ 2,dog ↦ 3}, suppose index(camel) = index(mouse) = 5\nHash(mouse) -> <mouse, 4>: no longer have m1\nmouse\n4\nX\n\n=== SLIDE 16 ===\nEfficient Functional Symbol Tables\nEfficient Functional Symbol Tables\nm2 = m1 + {mouse ↦ 4}\nm1 = {bat ↦ 1,camel ↦ 2,dog ↦ 3}, suppose index(camel) = index(mouse) = 5\nHash(mouse) -> <mouse, 4>: no longer have m1\nCopy the array, but share all the old buckets: not efficient\nThe array in a hash table should be quite large\n\n=== SLIDE 17 ===\nEfficient Functional Symbol Table\nEfficient Functional Symbol Table\nWe can perform such “functional” additions to search trees efﬁciently by using binary search trees.\nIf we add a new node at depth d of the tree, we must create d new nodes – but we don’t need to copy the whole tree.\nCopy the nodes from the root to the parent of the inserted node.\n\nm1 keeps unchanged.\n\nLooking up an element: log(n) for a balanced tree of n nodes.\ndog\n3\nbat\n1\ncamel\n2\nmouse\n4\nm1\ndog\n3\nm2\n\n=== SLIDE 18 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nstruct bucket { string key; void *binding; struct bucket *next; };\n\u000b#define SIZE 109\n\u000bstruct bucket *table[SIZE];\n\u000bunsigned int hash(char *s0)\n{ unsigned int h=0; char *s;\n  for(s=s0; *s; s++)\n    h=h*65599 + *s; \n  return h; \n}\n\n\u000bstruct bucket *Bucket (string key, void *binding, struct bucket *next) {\n  struct bucket *b=checked_malloc(sizeof(*b));\n  b->key = key; b->binding = binding; b->next = next;\n  return b; }\nh = (n-1c1+n-2c2 +…..+  cn-1+ cn)\n\n=== SLIDE 19 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nvoid insert(string key, void *binding) {\n  int index=hash(key)%SIZE;\n  table[index]=Bucket(key, binding, table[index]); \n}\n\u000bvoid *lookup(string key) {\n  int index=hash(key)%SIZE \n  struct bucket *b;\n  for (b = table[index]; b; b=b->next) \n    if (0==strcmp(b->key,key)) \n      return b->binding; \n  return NULL; \n}\n\u000bvoid pop(string key) { \n  int index=hash(key)%SIZE\n  table[index]=table[index].next; \n}\n\n=== SLIDE 20 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nIn Program 5.2: \nmust examine every character of the string s for the hash operation\neach time it compares s against a string in the ith bucket\nHow to improve?\nConvert each string to a symbol\nThe Symbol module has these important properties:\nExtracting an integer hash-key is very fast: use the Symbol-pointer itself as the integer hash-key. (for hash tables)\nComparing symbols for equality is fast (just pointer or integer comparison).\nComparing two symbols for “greater-than” (in some arbitrary ordering) is very fast  (for binary search trees)\n\n=== SLIDE 21 ===\nSymbols in The Tiger Compiler\nSymbols in The Tiger Compiler\nThe interface of symbols and symbol tables\nvoid *: We want different notions of binding for different purposes in the compiler – type bindings for types, value bindings for variables and functions\ntypedef struct S_symbol_ *S_symbol;\nS_symbol S_symbol (string);\nstring S_name(S_symbol);\n\u000btypedef struct TAB_table_ *S_table;\nS_table S_empty( void);\nvoid S_enter( S_table t,S_symbol sym, void *value); \nvoid *S_look( S_table t, S_symbol sym);\nvoid S_beginScope( S_table t); \nvoid S_endScope( S_table t);\n\n=== SLIDE 22 ===\nThe Implementation of Symbols\nThe Implementation of Symbols\nstatic S_symbol mksymbol (string name , S_symbol next) {\n  S_symbol s = checked_malloc(sizeof(*s));\n  s->name = name; s->next = next;\n  return s;\n}\n\u000bS_symbol S_symbol (string name) {\n\tint index = hash(name)%SIZE;\n\tS_symbol syms = hashtable[index], sym;\n\tfor ( sym = syms; sym; sym = sym->next)\n\t  if (0 == strcmp(sym->name, name)) return sym;\n\tsym = mksymbol(name,syms);\n\thashtable[index] = sym;\n   return sym;\n}\n\u000bstring S_name (S_symbol sym) {\n  return sym->name;\n}\n\n=== SLIDE 23 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nThe Tiger compiler in C uses destructive-update environments.\nAn imperative table is implemented using a hash table.\nTAB: a generic hash table module\n// make a new S_Table\nS_table S_empty(void) {\n  return TAB_empty(); \n}\n// insert a binding\nvoid S_enter(S_table t, S_symbol sym, void *value){ \n  TAB_enter(t,sym,value);\n} \n// look up a symbol\nvoid *S_look(S_table t, S_symbol sym) { \n  return TAB_look(t,sym); \n}\n\n=== SLIDE 24 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nFor destructive-update environments:\nS_beginScope: Remembers the current state of the table\nS_endScope: Restores the table to where it was at the most recent beginScope that has not already been ended.\nstatic struct S_symbol_ marksym = { “<mark>”, 0 };\n\u000bvoid S_beginScope ( S_table t) { \n  S_enter(t, &marksym, NULL); \n}\n\u000bvoid S_endScope( S_table t) {\n  S_symbol s;\n  do \n    s= TAB_pop(t); \n  while (s != &marksym);\n}\n\n=== SLIDE 25 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nHow can we exactly pop those bindings after enterScope?\n\nAuxiliary stack:\nShowing in what order the symbols  were “pushed” into the symbol table. \nAs each symbol in this stack is popped, the head binding in its bucket is removed.\nbeginScope: pushes a special marker onto the stack\nendScope: pops symbols off the stack until finds the topmost marker.\n\n=== SLIDE 26 ===\nThe Implementation of Symbol Tables\nThe Implementation of Symbol Tables\nThe auxiliary stack can be integrated into the Binder by having a global variable top showing the most recent Symbol bound in the table. \nPushing: copy top into the prevtop field of the Binder.\nstruct TAB_table_ {\n  binder table[TABSIZE];\n  void *top;\n};\n\nt->table[index] = Binder(key, value,t->table[index], t->top);\u000b\nstatic binder Binder(void *key, void *value, binder next, void *prevtop) {\n  binder b = checked_malloc(sizeof(*b));\n  b->key = key; b->value=value; b->next=next; \n  b->prevtop = prevtop;\n  return b;\n}\n"
 }
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -2762,14 +2726,11 @@ static binder Binder(void *key, void *value, binder next, void *prevtop) {
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 Successfully wrote to /workspace/dumps/workspace/NOTE.md
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -2784,10 +2745,7 @@ Successfully wrote to /workspace/dumps/workspace/NOTE.md
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 PDF file information:
 Total pages: 2
@@ -2797,7 +2755,7 @@ Creator: Typora
 Creation date: 20250707010226
 
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -2814,10 +2772,7 @@ Creation date: 20250707010226
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 PDF total pages: 2
 Extracted page range: 1-2
@@ -2904,7 +2859,7 @@ class D { static int d = E.a + N.a; }1
 4
 
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="tool-call-box">
@@ -2939,10 +2894,7 @@ class D { static int d = E.a + N.a; }1
 
 <div className="result-box">
 🔍`tool result`
-<details>
-<summary className="tool-result-summary">
-Click to expand result
-</summary>
+<Accordion title="Click to expand result">
 ```json
 diff
 Index: /workspace/dumps/workspace/NOTE.md
@@ -2997,7 +2949,7 @@ Index: /workspace/dumps/workspace/NOTE.md
 
 
 ```
-</details>
+</Accordion>
 </div>
 
 <div className="thinking-box">
