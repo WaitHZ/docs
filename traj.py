@@ -245,7 +245,7 @@ def main(args):
                                         # tool_res = tool_res.replace('>', r'\>')
                                         dst.write(f"<div className=\"result-box\">\n")
                                         dst.write(f"🔍`tool result`\n")
-                                        dst.write(f"<Accordion title=\"Click to expand result\">\n")
+                                        dst.write(f"<Accordion title=\"full return\">\n")
                                         dst.write(f"```json\n{tool_res}\n```\n")
                                         dst.write(f"</Accordion>\n")
                                         dst.write(f"</div>\n\n")
