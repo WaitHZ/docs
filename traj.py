@@ -243,17 +243,11 @@ def main(args):
                                         # tool_res = tool_res.replace('}', r'\}')
                                         # tool_res = tool_res.replace('<', r'\<')
                                         # tool_res = tool_res.replace('>', r'\>')
-                                        # 获取第一行内容用于预览
-                                        first_line = tool_res.split('\n')[0] if tool_res else ""
-                                        # 如果第一行太长，截断到100个字符
-                                        if len(first_line) > 100:
-                                            first_line = first_line[:100] + "..."
-                                        
                                         dst.write(f"<div className=\"result-box\">\n")
                                         dst.write(f"🔍`tool result`\n")
                                         dst.write(f"<details>\n")
                                         dst.write(f"<summary className=\"tool-result-summary\">\n")
-                                        dst.write(f"```json\n{first_line}\n```\n")
+                                        dst.write(f"Click to expand result\n")
                                         dst.write(f"</summary>\n")
                                         dst.write(f"```json\n{tool_res}\n```\n")
                                         dst.write(f"</details>\n")
