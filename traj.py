@@ -73,16 +73,19 @@ def raw_json_str_to_python(obj: str) -> dict:
 
 
 def main(args):
-    checked_tasks = {
-        34, 37, 38, 39, 49, 125, 149, 161, 162, 165, 183, 188, 189, 190, 196, 197, 306, 404,
-        16, 78, 133, 155, 156, 159, 169, 181, 182, 201, 209, 210, 313, 316, 319, 351, 371,
-        126, 141, 143, 179, 223, 267, 275, 284, 345, 352,
-        23, 24, 108, 109, 116, 127, 131, 142, 144, 147, 150, 163, 235, 237, 292, 327, 331, 368,
-        2, 3, 4, 5, 9, 10, 30, 32, 66, 88, 152, 158, 229, 290, 372,
-        95, 113, 266, 279, 285, 299, 300, 301, 303, 304, 305,
-        17, 18, 19, 42, 47, 93, 94, 146, 160, 173, 241,  242, 244, 245, 248, 280, 286, 294, 295,
-    }
+    # checked_tasks = {
+    #     34, 37, 38, 39, 49, 125, 149, 161, 162, 165, 183, 188, 189, 190, 196, 197, 306, 404,
+    #     16, 78, 133, 155, 156, 159, 169, 181, 182, 201, 209, 210, 313, 316, 319, 351, 371,
+    #     126, 141, 143, 179, 223, 267, 275, 284, 345, 352,
+    #     23, 24, 108, 109, 116, 127, 131, 142, 144, 147, 150, 163, 235, 237, 292, 327, 331, 368,
+    #     2, 3, 4, 5, 9, 10, 30, 32, 66, 88, 152, 158, 229, 290, 372,
+    #     95, 113, 266, 279, 285, 299, 300, 301, 303, 304, 305,
+    #     17, 18, 19, 42, 47, 93, 94, 146, 160, 173, 241,  242, 244, 245, 248, 280, 286, 294, 295,
+    # }
+    checked_tasks = {34,}
     print(len(checked_tasks))
+
+    tool_calls = dict()
 
     task_dir = args.task_dir
 
@@ -164,47 +167,63 @@ def main(args):
                                         for msg_tool_call in msg["tool_calls"]:
                                             if msg_tool_call['type'] == "function":
                                                 if msg_tool_call['function']['name'] == "local-python-execute":
-                                                    dst.write(f"<div className=\"tool-call-box\">\n")
-                                                    dst.write(f"{icon_map["python-execute"]} `python-execute`\n\n")
+                                                    # dst.write(f"<div className=\"tool-call-box\">\n")
+                                                    # dst.write(f"{icon_map["python-execute"]} `python-execute`\n\n")
                                                     # dst.write(f"🛠 `python-execute`\n\n")
                                                     try:
                                                         arg_s = json.loads(msg_tool_call['function']['arguments'])
                                                     except:
                                                         print("aaa")
                                                         arg_s = msg_tool_call['function']['arguments']
-                                                    dst.write(f"```python {arg_s['filename'] if 'filename' in arg_s else ''}\n")
+                                                    # dst.write(f"```python {arg_s['filename'] if 'filename' in arg_s else ''}\n")
                                                     try:
                                                         code = arg_s['code']
                                                     except:
                                                         code = arg_s
-                                                    dst.write(f"{code if 'code' in arg_s else ''}\n")
-                                                    dst.write(f"```\n")
-                                                    dst.write(f"</div>\n\n")
+                                                    # dst.write(f"{code if 'code' in arg_s else ''}\n")
+                                                    # dst.write(f"```\n")
+                                                    # dst.write(f"</div>\n\n")
+                                                    tool_call_id = msg_tool_call['id']
+                                                    tool_calls[tool_call_id] = {
+                                                        "name": "python-execute",
+                                                        "code": code,
+                                                    }
                                                 elif "overlong" in msg_tool_call['function']['name']:
-                                                    dst.write(f"<div className=\"tool-call-box\">\n")
-                                                    dst.write(f"{icon_map['overlong_tool_output']} `{msg_tool_call['function']['name'].replace("local-", "").replace("tooloutput", "tool_output")}`\n\n")
-                                                    dst.write(f"```json\n")
+                                                    # dst.write(f"<div className=\"tool-call-box\">\n")
+                                                    # dst.write(f"{icon_map['overlong_tool_output']} `{msg_tool_call['function']['name'].replace("local-", "").replace("tooloutput", "tool_output")}`\n\n")
+                                                    # dst.write(f"```json\n")
                                                     argu_s = msg_tool_call['function']['arguments'].strip()[1:-1].split(",")
-                                                    dst.write("{\n")
+                                                    arg_str = "{\n"
+                                                    # dst.write("{\n")
                                                     for i, arg in enumerate(argu_s):
                                                         if i == 0:
-                                                            dst.write(f"\t{arg}")
+                                                            # dst.write(f"\t{arg}")
+                                                            arg_str += f"\t{arg}"
                                                         else:
-                                                            dst.write(f",\n\t{arg}")
-                                                    dst.write("\n}\n")
-                                                    dst.write(f"```\n")
-                                                    dst.write(f"</div>\n\n")
+                                                            # dst.write(f",\n\t{arg}")
+                                                            arg_str += f",\n\t{arg}"
+                                                    arg_str += "\n}\n"
+                                                    tool_call_id = msg_tool_call['id']
+                                                    tool_calls[tool_call_id] = {
+                                                        "name": msg_tool_call['function']['name'].replace("local-", "").replace("tooloutput", "tool_output"),
+                                                        "arguments": arg_str,
+                                                    }
+                                                    # dst.write(f"```\n")
+                                                    # dst.write(f"</div>\n\n")
                                                 elif msg_tool_call['function']['name'] == "filesystem-write_file":
                                                     arg_s = json.loads(msg_tool_call['function']['arguments'])
-                                                    dst.write(f"<div className=\"tool-call-box\">\n")
-                                                    dst.write(f"{icon_map['filesystem']} `{msg_tool_call['function']['name']}`\n\n")
+                                                    # dst.write(f"<div className=\"tool-call-box\">\n")
+                                                    # dst.write(f"{icon_map['filesystem']} `{msg_tool_call['function']['name']}`\n\n")
                                                     # dst.write(f"🛠 `{msg_tool_call['function']['name']}`\n\n")
-                                                    dst.write(f"```text workspace/{arg_s['path'].split('/')[-1].replace("@", "@")}\n")
-                                                    dst.write(f"{arg_s['content'].replace("```", "`*3")}\n")
-                                                    dst.write(f"```\n")
-                                                    dst.write(f"</div>\n\n")
+                                                    arg_str = f"workspace/{arg_s['path'].split('/')[-1].replace("@", "@")}\n{arg_s['content'].replace("```", "`*3")}\n"
+                                                    tool_call_id = msg_tool_call['id']
+                                                    tool_calls[tool_call_id] = {
+                                                        "name": "filesystem-write_file",
+                                                        "arguments": arg_str,
+                                                    }
+                                                    # dst.write(f"```\n")
+                                                    # dst.write(f"</div>\n\n")
                                                 else:
-                                                    dst.write(f"<div className=\"tool-call-box\">\n")
                                                     server_function_name = msg_tool_call['function']['name']
 
                                                     if server_function_name.startswith("local"):
@@ -225,22 +244,32 @@ def main(args):
                                                             function_name = function_name[0]
                                                         else:
                                                             function_name = "-".join(function_name)
-                                                    dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
+                                                    # dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
                                                     # dst.write(f"🛠 `{server_name} {function_name}`\n\n")
-                                                    dst.write(f"```json\n")
+                                                    # dst.write(f"```json\n")
                                                     argu_s = msg_tool_call['function']['arguments'].strip()[1:-1].split(",")
+
                                                     if len(argu_s) == 1 and argu_s[0] == "":
-                                                        dst.write("{}\n")
+                                                        # dst.write("{}\n")
+                                                        arg_str = "{}\n"
                                                     else:
-                                                        dst.write("{\n")
+                                                        arg_str = "{\n"
+                                                        # dst.write("{\n")
                                                         for i, arg in enumerate(argu_s):
                                                             if i == 0:
-                                                                dst.write(f"\t{arg.replace("@", "@")}")
+                                                                # dst.write(f"\t{arg.replace("@", "@")}")
+                                                                arg_str += f"\t{arg.replace("@", "@")}"
                                                             else:
-                                                                dst.write(f",\n\t{arg.replace("@", "@")}")
-                                                        dst.write("\n}\n")
-                                                    dst.write(f"```\n")
-                                                    dst.write(f"</div>\n\n")
+                                                                arg_str += f",\n\t{arg.replace("@", "@")}"
+                                                                # dst.write(f",\n\t{arg.replace("@", "@")}")
+                                                        # dst.write("\n}\n")
+                                                    # dst.write(f"```\n")
+                                                    # dst.write(f"</div>\n\n")
+                                                    tool_call_id = msg_tool_call['id']
+                                                    tool_calls[tool_call_id] = {
+                                                        "name": f"{server_name} {function_name}",
+                                                        "arguments": arg_str
+                                                    }
                                             else:
                                                 raise NotImplementedError(f"Unsupported tool call type: {msg_tool_call['type']}")
                                     else:
@@ -248,6 +277,8 @@ def main(args):
                                         dst.write(f"🧐`Agent`\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}")}\n</div>\n\n")
                                 elif msg["role"] == "tool":
                                     tooloutput_type = categorize_tool_output(msg['content'])
+                                    tool_call_id = msg["tool_call_id"]
+                                    tool_call = tool_calls[tool_call_id]
                                     if tooloutput_type == "normal_tool_output":
                                         try:
                                             with open("_tmp", "w", encoding="utf-8") as f:
@@ -264,24 +295,34 @@ def main(args):
                                                 tool_res = tool_res.replace(r'\n', ' ')
 
                                         dst.write(f"<div className=\"result-box\">\n")
-                                        dst.write(f"🔍`tool result`\n")
+                                        # dst.write(f"🔍`tool result`\n")
+                                        dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
                                         dst.write(f"<Expandable title=\"Result\">\n")
+                                        if tool_call["name"] == "python-execute":
+                                            dst.write("`code`\n")
+                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                        else:
+                                            dst.write("`arguments`\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
+
+                                        dst.write("`output result`")
+
                                         dst.write(f"```json\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "error_in_tool_call":
                                         dst.write(f"<div className=\"error-box\">\n")
-                                        dst.write(f"❌ `tool calling error`\n")
+                                        dst.write(f"❌ `{server_name} {function_name}`\n")
                                         dst.write(f"```\n{msg['content'].split(":")[0]}\n```\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "overlong_tool_output":
                                         dst.write(f"<div className=\"error-box\">\n")
-                                        dst.write(f"⚠️ `tool output overlong`\n")
+                                        dst.write(f"⚠️ `{server_name} {function_name}`\n")
                                         dst.write(f"```\n{msg['content']}\n```\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "tool_name_not_found":
                                         dst.write(f"<div className=\"error-box\">\n")
-                                        dst.write(f"❓ `tool name not found`\n")
+                                        dst.write(f"❓ `{server_name} {function_name}`\n")
                                         dst.write(f"```\n{msg['content']}\n```\n")
                                         dst.write(f"</div>\n\n")
                                     else:
