@@ -295,7 +295,7 @@ def main(args):
                                                 tool_res = tool_res.replace('}, {', '},\n{')
                                                 tool_res = tool_res.replace(r'\n', ' ')
 
-                                        dst.write(f"<div className=\"result-box\">\n")
+                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         # dst.write(f"🔍`tool result`\n")
                                         dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
@@ -308,7 +308,7 @@ def main(args):
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "error_in_tool_call":
-                                        dst.write(f"<div className=\"error-box\">\n")
+                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         dst.write(f"❌ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
@@ -319,7 +319,7 @@ def main(args):
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "overlong_tool_output":
-                                        dst.write(f"<div className=\"error-box\">\n")
+                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         dst.write(f"⚠️ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
@@ -330,7 +330,7 @@ def main(args):
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "tool_name_not_found":
-                                        dst.write(f"<div className=\"error-box\">\n")
+                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         dst.write(f"❓ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
