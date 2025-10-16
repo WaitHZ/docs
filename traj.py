@@ -106,14 +106,14 @@ def main(args):
                     # 在 frontmatter 中添加 hideTableOfContents
                     frontmatter = content[3:end_frontmatter]
                     if "hideTableOfContents" not in frontmatter:
-                        frontmatter += "\nhideTableOfContents: true"
+                        frontmatter += "\nmode: wide\n"
                     dst.write("---" + frontmatter + "\n---" + content[end_frontmatter + 3:])
                 else:
                     # 如果 frontmatter 格式不正确，直接添加
                     dst.write(content)
             else:
                 # 如果没有 frontmatter，添加一个
-                dst.write("---\nhideTableOfContents: true\n---\n\n" + content)
+                dst.write("---\nmode: wide\n---\n\n" + content)
 
             log_dir = f_prefix + "/"
 
