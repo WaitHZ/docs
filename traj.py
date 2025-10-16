@@ -302,8 +302,7 @@ def main(args):
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
-                                            dst.write("`arguments`\n")
-                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
+                                            dst.write(f"```json arguments\n{tool_call["arguments"]} arguments\n```\n")
 
                                         dst.write(f"```json output_result\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
@@ -315,8 +314,7 @@ def main(args):
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
-                                            dst.write("`arguments`\n")
-                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
+                                            dst.write(f"```json arguments\n{tool_call["arguments"]} arguments\n```\n")
                                         dst.write(f"```json error_message\n{msg['content'].split(":")[0]}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
@@ -327,7 +325,7 @@ def main(args):
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
-                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
+                                            dst.write(f"```json arguments\n{tool_call["arguments"]} arguments\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
@@ -338,7 +336,7 @@ def main(args):
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
-                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
+                                            dst.write(f"```json arguments\n{tool_call["arguments"]} arguments\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
