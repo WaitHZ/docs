@@ -305,7 +305,7 @@ def main(args):
                                             dst.write("`arguments`\n")
                                             dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
 
-                                        dst.write("`output result`")
+                                        dst.write("`output result`\n")
 
                                         dst.write(f"```json\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
@@ -313,16 +313,37 @@ def main(args):
                                     elif tooloutput_type == "error_in_tool_call":
                                         dst.write(f"<div className=\"error-box\">\n")
                                         dst.write(f"❌ `{server_name} {function_name}`\n")
+                                        if tool_call["name"] == "python-execute":
+                                            dst.write("`code`\n")
+                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                        else:
+                                            dst.write("`arguments`\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
+                                        dst.write("`error message`\n")
                                         dst.write(f"```\n{msg['content'].split(":")[0]}\n```\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "overlong_tool_output":
                                         dst.write(f"<div className=\"error-box\">\n")
                                         dst.write(f"⚠️ `{server_name} {function_name}`\n")
+                                        if tool_call["name"] == "python-execute":
+                                            dst.write("`code`\n")
+                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                        else:
+                                            dst.write("`arguments`\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
+                                        dst.write("`error message`\n")
                                         dst.write(f"```\n{msg['content']}\n```\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "tool_name_not_found":
                                         dst.write(f"<div className=\"error-box\">\n")
                                         dst.write(f"❓ `{server_name} {function_name}`\n")
+                                        if tool_call["name"] == "python-execute":
+                                            dst.write("`code`\n")
+                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                        else:
+                                            dst.write("`arguments`\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
+                                        dst.write("`error message`\n")
                                         dst.write(f"```\n{msg['content']}\n```\n")
                                         dst.write(f"</div>\n\n")
                                     else:
