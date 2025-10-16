@@ -282,6 +282,7 @@ def main(args):
                                     tooloutput_type = categorize_tool_output(msg['content'])
                                     tool_call_id = msg["tool_call_id"]
                                     tool_call = tool_calls[tool_call_id]
+                                    del tool_calls[tool_call_id]
 
                                     if not in_tool_box:
                                         dst.write(f"<div className=\"tool-call-box\">\n")
@@ -341,7 +342,6 @@ def main(args):
                                         dst.write(f"</Expandable>\n")
                                     else:
                                         raise NotImplementedError(f"Unsupported tool output type: {tooloutput_type}")
-                                    del tool_calls[tool_call_id]
                                     if len(tool_calls) == 0:
                                         in_tool_box = False
                                         dst.write(f"</div>\n\n")
