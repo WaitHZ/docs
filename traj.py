@@ -89,6 +89,8 @@ def main(args):
 
     task_dir = args.task_dir
 
+    in_tool_box =False
+
     clear(task_dir)
 
     mdx_files = find_mdx_files_with_underscore(task_dir)
@@ -280,6 +282,11 @@ def main(args):
                                     tooloutput_type = categorize_tool_output(msg['content'])
                                     tool_call_id = msg["tool_call_id"]
                                     tool_call = tool_calls[tool_call_id]
+
+                                    if not in_tool_box:
+                                        dst.write(f"<div className=\"tool-call-box\">\n")
+                                        in_tool_box = True
+
                                     if tooloutput_type == "normal_tool_output":
                                         try:
                                             with open("_tmp", "w", encoding="utf-8") as f:
@@ -295,7 +302,6 @@ def main(args):
                                                 tool_res = tool_res.replace('}, {', '},\n{')
                                                 tool_res = tool_res.replace(r'\n', ' ')
 
-                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         # dst.write(f"🔍`tool result`\n")
                                         dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
@@ -306,9 +312,7 @@ def main(args):
 
                                         dst.write(f"```json output_result\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
-                                        dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "error_in_tool_call":
-                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         dst.write(f"❌ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
@@ -317,9 +321,7 @@ def main(args):
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content'].split(":")[0]}\n```\n")
                                         dst.write(f"</Expandable>\n")
-                                        dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "overlong_tool_output":
-                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         dst.write(f"⚠️ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
@@ -328,9 +330,7 @@ def main(args):
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n")
                                         dst.write(f"</Expandable>\n")
-                                        dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "tool_name_not_found":
-                                        dst.write(f"<div className=\"tool-call-box\">\n")
                                         dst.write(f"❓ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
@@ -339,9 +339,12 @@ def main(args):
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n")
                                         dst.write(f"</Expandable>\n")
-                                        dst.write(f"</div>\n\n")
                                     else:
                                         raise NotImplementedError(f"Unsupported tool output type: {tooloutput_type}")
+                                    del tool_calls[tool_call_id]
+                                    if len(tool_calls) == 0:
+                                        in_tool_box = False
+                                        dst.write(f"</div>\n\n")
                                 else:
                                     raise NotImplementedError(f"Unsupported message role: {msg['role']}")
 
