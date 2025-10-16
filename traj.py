@@ -284,9 +284,7 @@ def main(args):
                                     tool_call = tool_calls[tool_call_id]
                                     del tool_calls[tool_call_id]
 
-                                    if not in_tool_box:
-                                        dst.write(f"<div className=\"tool-call-box\">\n")
-                                        in_tool_box = True
+                                    dst.write(f"<div className=\"result-box\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\">\n")
 
                                     if tooloutput_type == "normal_tool_output":
                                         try:
@@ -304,7 +302,7 @@ def main(args):
                                                 tool_res = tool_res.replace(r'\n', ' ')
 
                                         # dst.write(f"🔍`tool result`\n")
-                                        dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}` <i class=\"fa-solid fa-circle-check\"></i>\n\n")
+                                        dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n\n")
@@ -343,8 +341,6 @@ def main(args):
                                     else:
                                         raise NotImplementedError(f"Unsupported tool output type: {tooloutput_type}")
 
-
-                                    in_tool_box = False
                                     dst.write(f"</div>\n\n")
                                 else:
                                     raise NotImplementedError(f"Unsupported message role: {msg['role']}")
