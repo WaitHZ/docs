@@ -300,15 +300,12 @@ def main(args):
                                         dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
-                                            dst.write("`code`\n")
-                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                            dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
                                             dst.write("`arguments`\n")
-                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
 
-                                        dst.write("`output result`\n")
-
-                                        dst.write(f"```json\n{tool_res}\n```\n")
+                                        dst.write(f"```json output_result\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "error_in_tool_call":
@@ -316,13 +313,11 @@ def main(args):
                                         dst.write(f"❌ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
-                                            dst.write("`code`\n")
-                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                            dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
                                             dst.write("`arguments`\n")
-                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
-                                        dst.write("`error message`\n")
-                                        dst.write(f"```\n{msg['content'].split(":")[0]}\n```\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
+                                        dst.write(f"```json error_message\n{msg['content'].split(":")[0]}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "overlong_tool_output":
@@ -330,13 +325,10 @@ def main(args):
                                         dst.write(f"⚠️ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
-                                            dst.write("`code`\n")
-                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                            dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
-                                            dst.write("`arguments`\n")
-                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
-                                        dst.write("`error message`\n")
-                                        dst.write(f"```\n{msg['content']}\n```\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
+                                        dst.write(f"```json error_message\n{msg['content']}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     elif tooloutput_type == "tool_name_not_found":
@@ -344,13 +336,10 @@ def main(args):
                                         dst.write(f"❓ `{server_name} {function_name}`\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
-                                            dst.write("`code`\n")
-                                            dst.write(f"```python\n{tool_call["code"]}\n```\n")
+                                            dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
-                                            dst.write("`arguments`\n")
-                                            dst.write(f"```json\n{tool_call["arguments"]}\n```\n")
-                                        dst.write("`error message`\n")
-                                        dst.write(f"```\n{msg['content']}\n```\n")
+                                            dst.write(f"```json\n{tool_call["arguments"]} arguments\n```\n")
+                                        dst.write(f"```json error_message\n{msg['content']}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                         dst.write(f"</div>\n\n")
                                     else:
