@@ -263,6 +263,7 @@ def main(args):
                                                                 arg_str += f",\n\t{arg.replace("@", "@")}"
                                                                 # dst.write(f",\n\t{arg.replace("@", "@")}")
                                                         # dst.write("\n}\n")
+                                                        arg_s += "\n}\n"
                                                     # dst.write(f"```\n")
                                                     # dst.write(f"</div>\n\n")
                                                     tool_call_id = msg_tool_call['id']
