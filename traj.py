@@ -96,7 +96,24 @@ def main(args):
         target_md = f_prefix + ".mdx"
 
         with open(f, "r", encoding="utf-8") as src, open(target_md, "w", encoding="utf-8") as dst:
-            dst.write(src.read())
+            content = src.read()
+            
+            # 检查是否已经有 frontmatter
+            if content.startswith("---"):
+                # 找到 frontmatter 的结束位置
+                end_frontmatter = content.find("---", 3)
+                if end_frontmatter != -1:
+                    # 在 frontmatter 中添加 hideTableOfContents
+                    frontmatter = content[3:end_frontmatter]
+                    if "hideTableOfContents" not in frontmatter:
+                        frontmatter += "\nhideTableOfContents: true"
+                    dst.write("---" + frontmatter + "\n---" + content[end_frontmatter + 3:])
+                else:
+                    # 如果 frontmatter 格式不正确，直接添加
+                    dst.write(content)
+            else:
+                # 如果没有 frontmatter，添加一个
+                dst.write("---\nhideTableOfContents: true\n---\n\n" + content)
 
             log_dir = f_prefix + "/"
 
