@@ -343,11 +343,9 @@ def main(args):
                                     else:
                                         raise NotImplementedError(f"Unsupported tool output type: {tooloutput_type}")
 
-                                    if len(tool_calls) == 0:
-                                        in_tool_box = False
-                                        dst.write(f"</div>\n\n")
-                                    else:
-                                        dst.write(f"\n\n")
+
+                                    in_tool_box = False
+                                    dst.write(f"</div>\n\n")
                                 else:
                                     raise NotImplementedError(f"Unsupported message role: {msg['role']}")
 
