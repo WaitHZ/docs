@@ -106,7 +106,7 @@ def main(args):
                     # 在 frontmatter 中添加 hideTableOfContents
                     frontmatter = content[3:end_frontmatter]
                     if "hideTableOfContents" not in frontmatter:
-                        frontmatter += "\nmode: wide\n"
+                        frontmatter += "mode: wide"
                     dst.write("---" + frontmatter + "\n---" + content[end_frontmatter + 3:])
                 else:
                     # 如果 frontmatter 格式不正确，直接添加
