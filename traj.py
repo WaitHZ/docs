@@ -304,7 +304,7 @@ def main(args):
                                                 tool_res = tool_res.replace(r'\n', ' ')
 
                                         # dst.write(f"🔍`tool result`\n")
-                                        dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}`\n\n")
+                                        dst.write(f"{icon_map[server_name]} `{server_name} {function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_name} {function_name}` <i class=\"fa-solid fa-circle-check\"></i>\n\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
@@ -314,7 +314,7 @@ def main(args):
                                         dst.write(f"```json output_result\n{tool_res}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                     elif tooloutput_type == "error_in_tool_call":
-                                        dst.write(f"❌ `{server_name} {function_name}`\n")
+                                        dst.write(f"❌ `{server_name} {function_name}` <i class=\"fa-solid fa-circle-xmark\"></i>\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
@@ -323,7 +323,7 @@ def main(args):
                                         dst.write(f"```json error_message\n{msg['content'].split(":")[0]}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                     elif tooloutput_type == "overlong_tool_output":
-                                        dst.write(f"⚠️ `{server_name} {function_name}`\n")
+                                        dst.write(f"⚠️ `{server_name} {function_name}` <i class=\"fa-solid fa-circle-exclamation\"></i>\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
@@ -332,7 +332,7 @@ def main(args):
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n")
                                         dst.write(f"</Expandable>\n")
                                     elif tooloutput_type == "tool_name_not_found":
-                                        dst.write(f"❓ `{server_name} {function_name}`\n")
+                                        dst.write(f"❓ `{server_name} {function_name}` <i class=\"fa-solid fa-circle-question\"></i>\n")
                                         dst.write(f"<Expandable title=\"Details\">\n")
                                         if tool_call["name"] == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
