@@ -154,6 +154,9 @@ def main(args):
                             dst.write(f"</Card>\n")
                             dst.write(f"</Columns>\n\n")
 
+                            print(type(msgs))
+                            exit()
+
                             for msg in msgs:
                                 if msg["role"] == "user":
                                     continue
