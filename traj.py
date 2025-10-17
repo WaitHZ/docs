@@ -283,7 +283,15 @@ def main(args):
                                     del tool_calls[tool_call_id]
 
                                     # dst.write(f"<div className=\"result-box\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\">\n")
-                                    dst.write(f"<div className=\"tool-call-box\">\n")
+                                    def is_tool_box(msg):
+                                        if msg["role"] == "tool":
+                                            return True
+                                        elif msg["role"] == "assistant":
+                                            return "tool_calls" in msg
+                                        return False
+
+                                    if i == 0 or not is_tool_box(msgs[i-1]):
+                                        dst.write(f"<div className=\"tool-call-box\">\n")
 
                                     if tooloutput_type == "normal_tool_output":
                                         try:
@@ -339,8 +347,8 @@ def main(args):
                                         dst.write(f"</Expandable>\n")
                                     else:
                                         raise NotImplementedError(f"Unsupported tool output type: {tooloutput_type}")
-
-                                    dst.write(f"</div>\n\n")
+                                    if i == len(msgs) - 1 or not is_tool_box(msgs[i+1]):
+                                        dst.write(f"</div>\n\n")
                                 else:
                                     raise NotImplementedError(f"Unsupported message role: {msg['role']}")
 
