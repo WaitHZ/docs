@@ -282,7 +282,8 @@ def main(args):
                                     tool_call = tool_calls[tool_call_id]
                                     del tool_calls[tool_call_id]
 
-                                    dst.write(f"<div className=\"result-box\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\">\n")
+                                    # dst.write(f"<div className=\"result-box\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\">\n")
+                                    dst.write(f"<div className=\"tool-call-box\">\n")
 
                                     if tooloutput_type == "normal_tool_output":
                                         try:
