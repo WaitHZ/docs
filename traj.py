@@ -211,11 +211,17 @@ def main(args):
                                                     # dst.write(f"```\n")
                                                     # dst.write(f"</div>\n\n")
                                                 elif msg_tool_call['function']['name'] == "filesystem-write_file":
-                                                    arg_s = json.loads(msg_tool_call['function']['arguments'])
+                                                    try:
+                                                        arg_s = json.loads(msg_tool_call['function']['arguments'])
+                                                        arg_str = f"workspace/{arg_s['path'].split('/')[-1].replace("@", "@")}\n{arg_s['content'].replace("```", "`*3")}\n"
+                                                    except:
+                                                        print("bbb")
+                                                        arg_s = msg_tool_call['function']['arguments']
+                                                        arg_str = arg_s
                                                     # dst.write(f"<div className=\"tool-call-box\">\n")
                                                     # dst.write(f"{icon_map['filesystem']} `{msg_tool_call['function']['name']}`\n\n")
                                                     # dst.write(f"🛠 `{msg_tool_call['function']['name']}`\n\n")
-                                                    arg_str = f"workspace/{arg_s['path'].split('/')[-1].replace("@", "@")}\n{arg_s['content'].replace("```", "`*3")}\n"
+                                                    
                                                     tool_call_id = msg_tool_call['id']
                                                     tool_calls[tool_call_id] = {
                                                         "name": "filesystem-write_file",
