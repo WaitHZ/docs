@@ -224,7 +224,7 @@ Command completed with return code: 0
 ```json arguments
 {
 	"database": "SLA_MONITOR",
-	 "schema": "PUBLIC"
+	"schema": "PUBLIC"
 }
 
 ```
@@ -453,8 +453,8 @@ Now let me read the SLA manual to understand the response time requirements and 
 ```json arguments
 {
 	"pdf_file_path": "/workspace/dumps/workspace/sla_manual.pdf",
-	 "start_page": 1,
-	 "end_page": 5
+	"start_page": 1,
+	"end_page": 5
 }
 
 ```
@@ -531,11 +531,11 @@ stating that the next reply will be sent within this time frame.
 6.2 Templates
 Note: The Placeholder in this section should be replaced to real values.
 6.2.1 Customer Apology Email Template
-Subject: Update on Your Service Request {TICKET_NUMBER}
+Subject: Update on Your Service Request \{TICKET_NUMBER\}
 Dear Customer,
-We sincerely apologize for not responding to your service request {TICKET_NUMBER} within the
+We sincerely apologize for not responding to your service request \{TICKET_NUMBER\} within the
 promised timeframe.
-We commit to providing an initial solution or the latest status update within {SECOND_REPLY_TIME}
+We commit to providing an initial solution or the latest status update within \{SECOND_REPLY_TIME\}
 hours, and will continue following up until the issue is fully resolved.
 For urgent matters, please contact us directly:
  Phone: 400-772-1234
@@ -550,9 +550,9 @@ Dear Manager,
 === Page 4 ===
 Page 4 of 5The following tickets have exceeded the SLA  rst reply time. Please prioritize and coordinate
 processing:
-{TICKET_NUMBER}: {Level}
- {TICKET_NUMBER}: {Level}
- {TICKET_NUMBER}: {Level}
+\{TICKET_NUMBER\}: \{Level\}
+ \{TICKET_NUMBER\}: \{Level\}
+ \{TICKET_NUMBER\}: \{Level\}
 Best,
  MCP Inc., Customer Support Team
 7. Additional Operational Metrics (Non-SLA)
@@ -611,8 +611,8 @@ Perfect! Now let me check the other SLA manual as well:
 ```json arguments
 {
 	"pdf_file_path": "/workspace/dumps/workspace/slamanual.pdf",
-	 "start_page": 1,
-	 "end_page": 2
+	"start_page": 1,
+	"end_page": 2
 }
 
 ```
@@ -685,9 +685,9 @@ Good! The valid SLA manual is `sla_manual.pdf`. Now let me query the database to
 	\n    CASE \n        WHEN u.SERVICE_LEVEL = 'Basic' THEN 72\n        WHEN u.SERVICE_LEVEL = 'Pro' THEN 36\n        WHEN u.SERVICE_LEVEL = 'Max' THEN 24\n    END as FIRST_REPLY_TIME_HOURS,
 	\n    CASE \n        WHEN u.SERVICE_LEVEL = 'Basic' THEN 72\n        WHEN u.SERVICE_LEVEL = 'Pro' THEN 36\n        WHEN u.SERVICE_LEVEL = 'Max' THEN 18\n    END as SECOND_REPLY_TIME_HOURS,
 	\n    TIMESTAMPDIFF(HOUR,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nORDER BY u.SERVICE_LEVEL DESC,
-	 t.CREATED_AT ASC\n"
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nORDER BY u.SERVICE_LEVEL DESC,
+	t.CREATED_AT ASC\n"
 }
 
 ```
@@ -997,10 +997,10 @@ Now I need to filter only the tickets that have exceeded their SLA first respons
 	\n    CASE \n        WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 72\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 36\n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 24\n    END as FIRST_REPLY_TIME_HOURS,
 	\n    CASE \n        WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 72\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 36\n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 18\n    END as SECOND_REPLY_TIME_HOURS,
 	\n    TIMESTAMPDIFF(HOUR,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\n  AND TIMESTAMPDIFF(HOUR,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > \n      CASE \n          WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 72\n          WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 36\n          WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 24\n      END\nORDER BY \n    CASE \n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 1\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 2\n        WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 3\n    END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\n  AND TIMESTAMPDIFF(HOUR,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > \n      CASE \n          WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 72\n          WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 36\n          WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 24\n      END\nORDER BY \n    CASE \n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 1\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 2\n        WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 3\n    END,
 	\n    t.CREATED_AT ASC\n"
 }
 
@@ -1200,8 +1200,8 @@ Perfect! Now I have identified 9 tickets that have exceeded their first response
 ```json arguments
 {
 	"query": "\nSELECT DISTINCT CUSTOMER_MANAGER\nFROM SLA_MONITOR.PUBLIC.USERS u\nWHERE u.ID IN (\n    SELECT t.USER_ID\n    FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\n    JOIN SLA_MONITOR.PUBLIC.USERS u2 ON t.USER_ID = u2.ID\n    WHERE t.FIRST_RESPONSE_AT IS NULL\n      AND TIMESTAMPDIFF(HOUR,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > \n          CASE \n              WHEN UPPER(u2.SERVICE_LEVEL) = 'BASIC' THEN 72\n              WHEN UPPER(u2.SERVICE_LEVEL) = 'PRO' THEN 36\n              WHEN UPPER(u2.SERVICE_LEVEL) = 'MAX' THEN 24\n          END\n)\n"
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > \n          CASE \n              WHEN UPPER(u2.SERVICE_LEVEL) = 'BASIC' THEN 72\n              WHEN UPPER(u2.SERVICE_LEVEL) = 'PRO' THEN 36\n              WHEN UPPER(u2.SERVICE_LEVEL) = 'MAX' THEN 24\n          END\n)\n"
 }
 
 ```
@@ -1238,13 +1238,13 @@ Let me send apology emails to all customers first:
 ```json arguments
 {
 	"to": "raymondm713@mcp.com",
-	 "subject": "Update on Your Service Request TK-1011",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1011",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1011 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1263,13 +1263,13 @@ Email sent successfully to raymondm713@mcp.com
 ```json arguments
 {
 	"to": "donald_castillo@mcp.com",
-	 "subject": "Update on Your Service Request TK-1001",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1001",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1001 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1288,13 +1288,13 @@ Email sent successfully to donald_castillo@mcp.com
 ```json arguments
 {
 	"to": "anna.wright@mcp.com",
-	 "subject": "Update on Your Service Request TK-1013",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1013",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1013 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1313,13 +1313,13 @@ Email sent successfully to anna.wright@mcp.com
 ```json arguments
 {
 	"to": "rbennett78@mcp.com",
-	 "subject": "Update on Your Service Request TK-1010",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1010",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1010 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1338,13 +1338,13 @@ Email sent successfully to rbennett78@mcp.com
 ```json arguments
 {
 	"to": "ramosb@mcp.com",
-	 "subject": "Update on Your Service Request TK-1002",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1002",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1002 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1363,13 +1363,13 @@ Email sent successfully to ramosb@mcp.com
 ```json arguments
 {
 	"to": "awilson@mcp.com",
-	 "subject": "Update on Your Service Request TK-1006",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1006",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1006 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1388,13 +1388,13 @@ Email sent successfully to awilson@mcp.com
 ```json arguments
 {
 	"to": "ortiza2@mcp.com",
-	 "subject": "Update on Your Service Request TK-1003",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1003",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1003 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1413,13 +1413,13 @@ Email sent successfully to ortiza2@mcp.com
 ```json arguments
 {
 	"to": "hernandezj@mcp.com",
-	 "subject": "Update on Your Service Request TK-1008",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1008",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1008 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1438,13 +1438,13 @@ Email sent successfully to hernandezj@mcp.com
 ```json arguments
 {
 	"to": "dsanders@mcp.com",
-	 "subject": "Update on Your Service Request TK-1014",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1014",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1014 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1469,11 +1469,11 @@ Excellent! All 9 apology emails have been sent to customers. Now let me send the
 ```json arguments
 {
 	"to": "dhall@mcp.com",
-	 "subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
-	 "body": "Dear Manager,
+	"subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
+	"body": "Dear Manager,
 	\n\nThe following tickets have exceeded the SLA first reply time. Please prioritize and coordinate processing:\n\nTK-1011: Max\nTK-1001: Max\nTK-1010: Pro\nTK-1014: Basic\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1492,11 +1492,11 @@ Email sent successfully to dhall@mcp.com
 ```json arguments
 {
 	"to": "andersonp@mcp.com",
-	 "subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
-	 "body": "Dear Manager,
+	"subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
+	"body": "Dear Manager,
 	\n\nThe following tickets have exceeded the SLA first reply time. Please prioritize and coordinate processing:\n\nTK-1013: Pro\nTK-1002: Pro\nTK-1006: Pro\nTK-1003: Basic\nTK-1008: Basic\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -1636,7 +1636,7 @@ data:
 ```json arguments
 {
 	"database": "SLA_MONITOR",
-	 "schema": "PUBLIC"
+	"schema": "PUBLIC"
 }
 
 ```
@@ -1829,7 +1829,7 @@ Now let me check if there are any documentation files in the workspace that migh
 ```json arguments
 {
 	"path": "/workspace/dumps/workspace",
-	 "pattern": "documentation"
+	"pattern": "documentation"
 }
 
 ```
@@ -1848,7 +1848,7 @@ No matches found
 ```json arguments
 {
 	"path": "/workspace/dumps/workspace",
-	 "pattern": "manual"
+	"pattern": "manual"
 }
 
 ```
@@ -1867,7 +1867,7 @@ No matches found
 ```json arguments
 {
 	"path": "/workspace/dumps/workspace",
-	 "pattern": "template"
+	"pattern": "template"
 }
 
 ```
@@ -1971,8 +1971,8 @@ Great! I found the SLA manual. Let me examine it to understand the response time
 ```json arguments
 {
 	"pdf_file_path": "/workspace/dumps/workspace/sla_manual.pdf",
-	 "start_page": 1,
-	 "end_page": 10
+	"start_page": 1,
+	"end_page": 10
 }
 
 ```
@@ -2049,11 +2049,11 @@ stating that the next reply will be sent within this time frame.
 6.2 Templates
 Note: The Placeholder in this section should be replaced to real values.
 6.2.1 Customer Apology Email Template
-Subject: Update on Your Service Request {TICKET_NUMBER}
+Subject: Update on Your Service Request \{TICKET_NUMBER\}
 Dear Customer,
-We sincerely apologize for not responding to your service request {TICKET_NUMBER} within the
+We sincerely apologize for not responding to your service request \{TICKET_NUMBER\} within the
 promised timeframe.
-We commit to providing an initial solution or the latest status update within {SECOND_REPLY_TIME}
+We commit to providing an initial solution or the latest status update within \{SECOND_REPLY_TIME\}
 hours, and will continue following up until the issue is fully resolved.
 For urgent matters, please contact us directly:
  Phone: 400-772-1234
@@ -2068,9 +2068,9 @@ Dear Manager,
 === Page 4 ===
 Page 4 of 5The following tickets have exceeded the SLA  rst reply time. Please prioritize and coordinate
 processing:
-{TICKET_NUMBER}: {Level}
- {TICKET_NUMBER}: {Level}
- {TICKET_NUMBER}: {Level}
+\{TICKET_NUMBER\}: \{Level\}
+ \{TICKET_NUMBER\}: \{Level\}
+ \{TICKET_NUMBER\}: \{Level\}
 Best,
  MCP Inc., Customer Support Team
 7. Additional Operational Metrics (Non-SLA)
@@ -2139,15 +2139,15 @@ Perfect! Now I have the SLA requirements and email templates. Let me query the d
 	\n    u.CUSTOMER_MANAGER,
 	\n    CASE \n        WHEN u.SERVICE_LEVEL = 'Basic' THEN 72\n        WHEN u.SERVICE_LEVEL = 'Pro' THEN 36\n        WHEN u.SERVICE_LEVEL = 'Max' THEN 24\n    END as EXPECTED_RESPONSE_HOURS,
 	\n    DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION,
 	\n    CASE \n        WHEN u.SERVICE_LEVEL = 'Basic' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 72 THEN 'OVERDUE'\n        WHEN u.SERVICE_LEVEL = 'Pro' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 36 THEN 'OVERDUE'\n        WHEN u.SERVICE_LEVEL = 'Max' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 24 THEN 'OVERDUE'\n        ELSE 'ON_TIME'\n    END as SLA_STATUS\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nORDER BY \n    CASE u.SERVICE_LEVEL \n        WHEN 'Max' THEN 1\n        WHEN 'Pro' THEN 2\n        WHEN 'Basic' THEN 3\n    END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 72 THEN 'OVERDUE'\n        WHEN u.SERVICE_LEVEL = 'Pro' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 36 THEN 'OVERDUE'\n        WHEN u.SERVICE_LEVEL = 'Max' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 24 THEN 'OVERDUE'\n        ELSE 'ON_TIME'\n    END as SLA_STATUS\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nORDER BY \n    CASE u.SERVICE_LEVEL \n        WHEN 'Max' THEN 1\n        WHEN 'Pro' THEN 2\n        WHEN 'Basic' THEN 3\n    END,
 	\n    t.CREATED_AT"
 }
 
@@ -2318,15 +2318,15 @@ I notice there's an issue with the query - the SERVICE_LEVEL values in the datab
 	\n    u.CUSTOMER_MANAGER,
 	\n    CASE \n        WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 72\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 36\n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 24\n    END as EXPECTED_RESPONSE_HOURS,
 	\n    DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) as HOURS_SINCE_CREATION,
 	\n    CASE \n        WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 72 THEN 'OVERDUE'\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 36 THEN 'OVERDUE'\n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 24 THEN 'OVERDUE'\n        ELSE 'ON_TIME'\n    END as SLA_STATUS\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nORDER BY \n    CASE UPPER(u.SERVICE_LEVEL) \n        WHEN 'MAX' THEN 1\n        WHEN 'PRO' THEN 2\n        WHEN 'BASIC' THEN 3\n    END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 72 THEN 'OVERDUE'\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 36 THEN 'OVERDUE'\n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 24 THEN 'OVERDUE'\n        ELSE 'ON_TIME'\n    END as SLA_STATUS\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nORDER BY \n    CASE UPPER(u.SERVICE_LEVEL) \n        WHEN 'MAX' THEN 1\n        WHEN 'PRO' THEN 2\n        WHEN 'BASIC' THEN 3\n    END,
 	\n    t.CREATED_AT"
 }
 
@@ -2489,14 +2489,14 @@ Perfect! Now I have identified 9 overdue tickets. Let me group them by manager t
 	"query": "SELECT \n    u.CUSTOMER_MANAGER,
 	\n    COUNT(*) as OVERDUE_TICKETS,
 	\n    STRING_AGG(t.TICKET_NUMBER || ': ' || UPPER(u.SERVICE_LEVEL),
-	 ',
-	 ') as TICKET_LIST\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nAND (\n    (UPPER(u.SERVICE_LEVEL) = 'BASIC' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 24)\n)\nGROUP BY u.CUSTOMER_MANAGER\nORDER BY COUNT(*) DESC"
+	',
+	') as TICKET_LIST\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nAND (\n    (UPPER(u.SERVICE_LEVEL) = 'BASIC' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 24)\n)\nGROUP BY u.CUSTOMER_MANAGER\nORDER BY COUNT(*) DESC"
 }
 
 ```
@@ -2523,12 +2523,12 @@ Let me use a different approach to group the tickets:
 {
 	"query": "SELECT \n    u.CUSTOMER_MANAGER,
 	\n    COUNT(*) as OVERDUE_TICKETS\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nAND (\n    (UPPER(u.SERVICE_LEVEL) = 'BASIC' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 24)\n)\nGROUP BY u.CUSTOMER_MANAGER\nORDER BY COUNT(*) DESC"
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 24)\n)\nGROUP BY u.CUSTOMER_MANAGER\nORDER BY COUNT(*) DESC"
 }
 
 ```
@@ -2562,12 +2562,12 @@ Now let me get the detailed list of overdue tickets for each manager:
 	"query": "SELECT \n    u.CUSTOMER_MANAGER,
 	\n    t.TICKET_NUMBER,
 	\n    UPPER(u.SERVICE_LEVEL) as SERVICE_LEVEL\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nAND (\n    (UPPER(u.SERVICE_LEVEL) = 'BASIC' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 24)\n)\nORDER BY \n    CASE UPPER(u.SERVICE_LEVEL) \n        WHEN 'MAX' THEN 1\n        WHEN 'PRO' THEN 2\n        WHEN 'BASIC' THEN 3\n    END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 24)\n)\nORDER BY \n    CASE UPPER(u.SERVICE_LEVEL) \n        WHEN 'MAX' THEN 1\n        WHEN 'PRO' THEN 2\n        WHEN 'BASIC' THEN 3\n    END,
 	\n    t.CREATED_AT"
 }
 
@@ -2623,11 +2623,11 @@ Now I have all the information needed. Let me send the reminder emails to the ma
 ```json arguments
 {
 	"to": "andersonp@mcp.com",
-	 "subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
-	 "body": "Dear Manager,
+	"subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
+	"body": "Dear Manager,
 	\n\nThe following tickets have exceeded the SLA first reply time. Please prioritize and coordinate processing:\nTK-1011: MAX\nTK-1001: MAX\nTK-1013: PRO\nTK-1010: PRO\nTK-1002: PRO\nTK-1006: PRO\nTK-1003: BASIC\nTK-1008: BASIC\nTK-1014: BASIC\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2652,11 +2652,11 @@ Now let me send the reminder email to the second manager:
 ```json arguments
 {
 	"to": "dhall@mcp.com",
-	 "subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
-	 "body": "Dear Manager,
+	"subject": "[Overdue Alert] Tickets Exceeding First Reply SLA",
+	"body": "Dear Manager,
 	\n\nThe following tickets have exceeded the SLA first reply time. Please prioritize and coordinate processing:\nTK-1011: MAX\nTK-1001: MAX\nTK-1013: PRO\nTK-1010: PRO\nTK-1002: PRO\nTK-1006: PRO\nTK-1003: BASIC\nTK-1008: BASIC\nTK-1014: BASIC\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2685,12 +2685,12 @@ Now let me send apology emails to all users with overdue tickets. First, let me 
 	\n    u.EMAIL as USER_EMAIL,
 	\n    UPPER(u.SERVICE_LEVEL) as SERVICE_LEVEL,
 	\n    CASE \n        WHEN UPPER(u.SERVICE_LEVEL) = 'BASIC' THEN 72\n        WHEN UPPER(u.SERVICE_LEVEL) = 'PRO' THEN 36\n        WHEN UPPER(u.SERVICE_LEVEL) = 'MAX' THEN 18\n    END as SECOND_REPLY_TIME\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON t.USER_ID = u.ID\nWHERE t.FIRST_RESPONSE_AT IS NULL\nAND t.STATUS = 'open'\nAND (\n    (UPPER(u.SERVICE_LEVEL) = 'BASIC' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) > 24)\n)"
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 72) OR\n    (UPPER(u.SERVICE_LEVEL) = 'PRO' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 36) OR\n    (UPPER(u.SERVICE_LEVEL) = 'MAX' AND DATEDIFF(hour,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) > 24)\n)"
 }
 
 ```
@@ -2763,13 +2763,13 @@ Now I'll send apology emails to each user following the template from the SLA ma
 ```json arguments
 {
 	"to": "donald_castillo@mcp.com",
-	 "subject": "Update on Your Service Request TK-1001",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1001",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1001 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2788,13 +2788,13 @@ Email sent successfully to donald_castillo@mcp.com
 ```json arguments
 {
 	"to": "ramosb@mcp.com",
-	 "subject": "Update on Your Service Request TK-1002",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1002",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1002 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2813,13 +2813,13 @@ Email sent successfully to ramosb@mcp.com
 ```json arguments
 {
 	"to": "ortiza2@mcp.com",
-	 "subject": "Update on Your Service Request TK-1003",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1003",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1003 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2838,13 +2838,13 @@ Email sent successfully to ortiza2@mcp.com
 ```json arguments
 {
 	"to": "awilson@mcp.com",
-	 "subject": "Update on Your Service Request TK-1006",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1006",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1006 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2863,13 +2863,13 @@ Email sent successfully to awilson@mcp.com
 ```json arguments
 {
 	"to": "hernandezj@mcp.com",
-	 "subject": "Update on Your Service Request TK-1008",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1008",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1008 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2888,13 +2888,13 @@ Email sent successfully to hernandezj@mcp.com
 ```json arguments
 {
 	"to": "rbennett78@mcp.com",
-	 "subject": "Update on Your Service Request TK-1010",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1010",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1010 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2913,13 +2913,13 @@ Email sent successfully to rbennett78@mcp.com
 ```json arguments
 {
 	"to": "raymondm713@mcp.com",
-	 "subject": "Update on Your Service Request TK-1011",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1011",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1011 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2938,13 +2938,13 @@ Email sent successfully to raymondm713@mcp.com
 ```json arguments
 {
 	"to": "anna.wright@mcp.com",
-	 "subject": "Update on Your Service Request TK-1013",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1013",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1013 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -2963,13 +2963,13 @@ Email sent successfully to anna.wright@mcp.com
 ```json arguments
 {
 	"to": "dsanders@mcp.com",
-	 "subject": "Update on Your Service Request TK-1014",
-	 "body": "Dear Customer,
+	"subject": "Update on Your Service Request TK-1014",
+	"body": "Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1014 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -3099,55 +3099,55 @@ Error: ENOENT: no such file or directory, scandir '/workspace/dumps/workspace/mc
 
 ```json output_result
 [
-  {
+  \{
     "name": ".pdf_tools_tempfiles",
     "type": "directory",
     "children": []
-  },
-  {
+  \},
+  \{
     "name": "api.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "branding.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "employeehandbook.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "mcpincdocs.tar.gz",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "onboarding.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "org.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "product.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "profile.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "sales.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "sla_manual.pdf",
     "type": "file"
-  },
-  {
+  \},
+  \{
     "name": "slamanual.pdf",
     "type": "file"
-  }
+  \}
 ]
 ```
 
@@ -3257,11 +3257,11 @@ stating that the next reply will be sent within this time frame.
 6.2 Templates
 Note: The Placeholder in this section should be replaced to real values.
 6.2.1 Customer Apology Email Template
-Subject: Update on Your Service Request {TICKET_NUMBER}
+Subject: Update on Your Service Request \{TICKET_NUMBER\}
 Dear Customer,
-We sincerely apologize for not responding to your service request {TICKET_NUMBER} within the
+We sincerely apologize for not responding to your service request \{TICKET_NUMBER\} within the
 promised timeframe.
-We commit to providing an initial solution or the latest status update within {SECOND_REPLY_TIME}
+We commit to providing an initial solution or the latest status update within \{SECOND_REPLY_TIME\}
 hours, and will continue following up until the issue is fully resolved.
 For urgent matters, please contact us directly:
  Phone: 400-772-1234
@@ -3503,10 +3503,10 @@ data:
 ```json arguments
 {
 	"query":"SELECT st.TICKET_NUMBER,
-	 st.CREATED_AT,
-	 u.SERVICE_LEVEL,
-	 u.EMAIL AS USER_EMAIL,
-	 u.CUSTOMER_MANAGER FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS st JOIN SLA_MONITOR.PUBLIC.USERS u ON st.USER_ID = u.ID WHERE st.FIRST_RESPONSE_AT IS NULL ORDER BY u.SERVICE_LEVEL DESC"
+	st.CREATED_AT,
+	u.SERVICE_LEVEL,
+	u.EMAIL AS USER_EMAIL,
+	u.CUSTOMER_MANAGER FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS st JOIN SLA_MONITOR.PUBLIC.USERS u ON st.USER_ID = u.ID WHERE st.FIRST_RESPONSE_AT IS NULL ORDER BY u.SERVICE_LEVEL DESC"
 }
 
 ```
@@ -3600,10 +3600,10 @@ data:
 	"subject":"Update on Your Service Request TK-1001",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1001 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"to":"donald_castillo@mcp.com"
 }
 
@@ -3625,10 +3625,10 @@ Email sent successfully to donald_castillo@mcp.com
 	"to":"raymondm713@mcp.com",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1011 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"subject":"Update on Your Service Request TK-1011"
 }
 
@@ -3651,10 +3651,10 @@ Email sent successfully to raymondm713@mcp.com
 	"subject":"Update on Your Service Request TK-1002",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1002 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -3674,10 +3674,10 @@ Email sent successfully to ramosb@mcp.com
 {
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1006 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"subject":"Update on Your Service Request TK-1006",
 	"to":"awilson@mcp.com"
 }
@@ -3700,10 +3700,10 @@ Email sent successfully to awilson@mcp.com
 	"subject":"Update on Your Service Request TK-1010",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1010 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"to":"rbennett78@mcp.com"
 }
 
@@ -3726,10 +3726,10 @@ Email sent successfully to rbennett78@mcp.com
 	"to":"anna.wright@mcp.com",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1013 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -3750,10 +3750,10 @@ Email sent successfully to anna.wright@mcp.com
 	"subject":"Update on Your Service Request TK-1003",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1003 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"to":"ortiza2@mcp.com"
 }
 
@@ -3775,10 +3775,10 @@ Email sent successfully to ortiza2@mcp.com
 	"subject":"Update on Your Service Request TK-1008",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1008 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"to":"hernandezj@mcp.com"
 }
 
@@ -3801,10 +3801,10 @@ Email sent successfully to hernandezj@mcp.com
 	"to":"dsanders@mcp.com",
 	"body":"Dear Customer,
 	\nWe sincerely apologize for not responding to your service request TK-1014 within the promised timeframe.\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\nFor urgent matters,
-	 please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
+	and will continue following up until the issue is fully resolved.\nFor urgent matters,
+	please contact us directly:\nPhone: 400-772-1234\nWe apologize again for any inconvenience this may have caused.\nBest,
 	\nMCP Inc.,
-	 Customer Support Team"
+	Customer Support Team"
 }
 
 ```
@@ -4304,11 +4304,11 @@ stating that the next reply will be sent within this time frame.
 6.2 Templates
 Note: The Placeholder in this section should be replaced to real values.
 6.2.1 Customer Apology Email Template
-Subject: Update on Your Service Request {TICKET_NUMBER}
+Subject: Update on Your Service Request \{TICKET_NUMBER\}
 Dear Customer,
-We sincerely apologize for not responding to your service request {TICKET_NUMBER} within the
+We sincerely apologize for not responding to your service request \{TICKET_NUMBER\} within the
 promised timeframe.
-We commit to providing an initial solution or the latest status update within {SECOND_REPLY_TIME}
+We commit to providing an initial solution or the latest status update within \{SECOND_REPLY_TIME\}
 hours, and will continue following up until the issue is fully resolved.
 For urgent matters, please contact us directly:
  Phone: 400-772-1234
@@ -4323,9 +4323,9 @@ Dear Manager,
 === Page 4 ===
 Page 4 of 5The following tickets have exceeded the SLA  rst reply time. Please prioritize and coordinate
 processing:
-{TICKET_NUMBER}: {Level}
- {TICKET_NUMBER}: {Level}
- {TICKET_NUMBER}: {Level}
+\{TICKET_NUMBER\}: \{Level\}
+ \{TICKET_NUMBER\}: \{Level\}
+ \{TICKET_NUMBER\}: \{Level\}
 Best,
  MCP Inc., Customer Support Team
 7. Additional Operational Metrics (Non-SLA)
@@ -4378,12 +4378,12 @@ Version Date Changes Author
 ```json arguments
 {
 	"query":"WITH slas AS (\n  SELECT 'Basic' AS level,
-	 72 AS first_hours,
-	 72 AS second_hours\n  UNION ALL SELECT 'Pro',
-	 36,
-	 36\n  UNION ALL SELECT 'Max',
-	 24,
-	 18\n),
+	72 AS first_hours,
+	72 AS second_hours\n  UNION ALL SELECT 'Pro',
+	36,
+	36\n  UNION ALL SELECT 'Max',
+	24,
+	18\n),
 	\njoined AS (\n  SELECT \n    t.ID AS ticket_id,
 	\n    t.TICKET_NUMBER,
 	\n    t.CREATED_AT,
@@ -4396,12 +4396,12 @@ Version Date Changes Author
 	\n    s.first_hours,
 	\n    s.second_hours,
 	\n    IFF(t.FIRST_RESPONSE_AT IS NULL,
-	 DATEDIFF('hour',
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()),
-	 DATEDIFF('hour',
-	 t.CREATED_AT,
-	 t.FIRST_RESPONSE_AT)) AS hours_to_first_response\n  FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\n  JOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\n  JOIN slas s ON s.level = u.SERVICE_LEVEL\n)\nSELECT \n  ticket_id,
+	DATEDIFF('hour',
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()),
+	DATEDIFF('hour',
+	t.CREATED_AT,
+	t.FIRST_RESPONSE_AT)) AS hours_to_first_response\n  FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\n  JOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\n  JOIN slas s ON s.level = u.SERVICE_LEVEL\n)\nSELECT \n  ticket_id,
 	\n  TICKET_NUMBER,
 	\n  SERVICE_LEVEL,
 	\n  user_id,
@@ -4442,10 +4442,10 @@ Error: Calls to read_query should not contain write operations
 	\n  CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 24 END AS first_hours,
 	\n  CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 18 END AS second_hours,
 	\n  CASE WHEN t.FIRST_RESPONSE_AT IS NULL THEN DATEDIFF('hour',
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
-	 t.CREATED_AT,
-	 t.FIRST_RESPONSE_AT) END AS hours_to_first_response\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\nQUALIFY hours_to_first_response > first_hours\nORDER BY \n  CASE u.SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
+	t.CREATED_AT,
+	t.FIRST_RESPONSE_AT) END AS hours_to_first_response\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\nQUALIFY hours_to_first_response > first_hours\nORDER BY \n  CASE u.SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
 	\n  t.CREATED_AT"
 }
 
@@ -4477,10 +4477,10 @@ found QUALIFY clause but no window function.
 	\n    CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 24 END AS first_hours,
 	\n    CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 18 END AS second_hours,
 	\n    CASE WHEN t.FIRST_RESPONSE_AT IS NULL THEN DATEDIFF('hour',
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
-	 t.CREATED_AT,
-	 t.FIRST_RESPONSE_AT) END AS hours_to_first_response\n  FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\n  JOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\n)\nSELECT *\nFROM joined\nWHERE hours_to_first_response > first_hours\nORDER BY \n  CASE SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
+	t.CREATED_AT,
+	t.FIRST_RESPONSE_AT) END AS hours_to_first_response\n  FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\n  JOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\n)\nSELECT *\nFROM joined\nWHERE hours_to_first_response > first_hours\nORDER BY \n  CASE SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
 	\n  CREATED_AT;"
 }
 
@@ -4511,10 +4511,10 @@ Error: Calls to read_query should not contain write operations
 	\n    CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 24 END AS first_hours,
 	\n    CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 18 END AS second_hours,
 	\n    CASE WHEN t.FIRST_RESPONSE_AT IS NULL THEN DATEDIFF('hour',
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
-	 t.CREATED_AT,
-	 t.FIRST_RESPONSE_AT) END AS hours_to_first_response\n  FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\n  JOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\n) AS joined\nWHERE hours_to_first_response > first_hours\nORDER BY \n  CASE SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
+	t.CREATED_AT,
+	t.FIRST_RESPONSE_AT) END AS hours_to_first_response\n  FROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\n  JOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\n) AS joined\nWHERE hours_to_first_response > first_hours\nORDER BY \n  CASE SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
 	\n  CREATED_AT"
 }
 
@@ -4550,10 +4550,10 @@ data:
 	\n  CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 24 END AS first_hours,
 	\n  CASE u.SERVICE_LEVEL WHEN 'Basic' THEN 72 WHEN 'Pro' THEN 36 WHEN 'Max' THEN 18 END AS second_hours,
 	\n  CASE WHEN t.FIRST_RESPONSE_AT IS NULL THEN DATEDIFF('hour',
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
-	 t.CREATED_AT,
-	 t.FIRST_RESPONSE_AT) END AS hours_to_first_response\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\nORDER BY \n  CASE u.SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
+	t.CREATED_AT,
+	t.FIRST_RESPONSE_AT) END AS hours_to_first_response\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\nORDER BY \n  CASE u.SERVICE_LEVEL WHEN 'Max' THEN 1 WHEN 'Pro' THEN 2 WHEN 'Basic' THEN 3 ELSE 4 END,
 	\n  t.CREATED_AT"
 }
 
@@ -4767,14 +4767,14 @@ data:
 	\n  CASE UPPER(u.SERVICE_LEVEL) WHEN 'BASIC' THEN 72 WHEN 'PRO' THEN 36 WHEN 'MAX' THEN 24 END AS first_hours,
 	\n  CASE UPPER(u.SERVICE_LEVEL) WHEN 'BASIC' THEN 72 WHEN 'PRO' THEN 36 WHEN 'MAX' THEN 18 END AS second_hours,
 	\n  CASE WHEN t.FIRST_RESPONSE_AT IS NULL THEN DATEDIFF('hour',
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
-	 t.CREATED_AT,
-	 t.FIRST_RESPONSE_AT) END AS hours_to_first_response\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\nWHERE (CASE WHEN t.FIRST_RESPONSE_AT IS NULL THEN DATEDIFF('hour',
-	 t.CREATED_AT,
-	 CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
-	 t.CREATED_AT,
-	 t.FIRST_RESPONSE_AT) END) > \n      (CASE UPPER(u.SERVICE_LEVEL) WHEN 'BASIC' THEN 72 WHEN 'PRO' THEN 36 WHEN 'MAX' THEN 24 END)\nORDER BY \n  CASE UPPER(u.SERVICE_LEVEL) WHEN 'MAX' THEN 1 WHEN 'PRO' THEN 2 WHEN 'BASIC' THEN 3 ELSE 4 END,
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
+	t.CREATED_AT,
+	t.FIRST_RESPONSE_AT) END AS hours_to_first_response\nFROM SLA_MONITOR.PUBLIC.SUPPORT_TICKETS t\nJOIN SLA_MONITOR.PUBLIC.USERS u ON u.ID = t.USER_ID\nWHERE (CASE WHEN t.FIRST_RESPONSE_AT IS NULL THEN DATEDIFF('hour',
+	t.CREATED_AT,
+	CURRENT_TIMESTAMP()) ELSE DATEDIFF('hour',
+	t.CREATED_AT,
+	t.FIRST_RESPONSE_AT) END) > \n      (CASE UPPER(u.SERVICE_LEVEL) WHEN 'BASIC' THEN 72 WHEN 'PRO' THEN 36 WHEN 'MAX' THEN 24 END)\nORDER BY \n  CASE UPPER(u.SERVICE_LEVEL) WHEN 'MAX' THEN 1 WHEN 'PRO' THEN 2 WHEN 'BASIC' THEN 3 ELSE 4 END,
 	\n  t.CREATED_AT"
 }
 
@@ -4909,7 +4909,7 @@ data:
 	"body":"Dear Manager,
 	\n\nThe following tickets have exceeded the SLA first reply time. Please prioritize and coordinate processing:\nTK-1011: Max\nTK-1001: Max\nTK-1010: Pro\nTK-1014: Basic\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -4936,7 +4936,7 @@ Email sent successfully to dhall@mcp.com
 	"body":"Dear Manager,
 	\n\nThe following tickets have exceeded the SLA first reply time. Please prioritize and coordinate processing:\nTK-1013: Pro\nTK-1002: Pro\nTK-1006: Pro\nTK-1003: Basic\nTK-1008: Basic\n\nBest,
 	\nMCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -4962,10 +4962,10 @@ Email sent successfully to andersonp@mcp.com
 	"subject":"Update on Your Service Request TK-1011",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1011 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -4991,10 +4991,10 @@ Email sent successfully to raymondm713@mcp.com
 	"subject":"Update on Your Service Request TK-1001",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1001 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 18 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -5020,10 +5020,10 @@ Email sent successfully to donald_castillo@mcp.com
 	"subject":"Update on Your Service Request TK-1013",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1013 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -5049,10 +5049,10 @@ Email sent successfully to anna.wright@mcp.com
 	"subject":"Update on Your Service Request TK-1010",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1010 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -5078,10 +5078,10 @@ Email sent successfully to rbennett78@mcp.com
 	"subject":"Update on Your Service Request TK-1002",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1002 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -5107,10 +5107,10 @@ Email sent successfully to ramosb@mcp.com
 	"subject":"Update on Your Service Request TK-1006",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1006 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 36 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -5136,10 +5136,10 @@ Email sent successfully to awilson@mcp.com
 	"subject":"Update on Your Service Request TK-1003",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1003 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -5165,10 +5165,10 @@ Email sent successfully to ortiza2@mcp.com
 	"subject":"Update on Your Service Request TK-1008",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1008 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",
@@ -5194,10 +5194,10 @@ Email sent successfully to hernandezj@mcp.com
 	"subject":"Update on Your Service Request TK-1014",
 	"body":"Dear Customer,
 	\n\nWe sincerely apologize for not responding to your service request TK-1014 within the promised timeframe.\n\nWe commit to providing an initial solution or the latest status update within 72 hours,
-	 and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
-	 please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
+	and will continue following up until the issue is fully resolved.\n\nFor urgent matters,
+	please contact us directly:\n Phone: 400-772-1234\n\nWe apologize again for any inconvenience this may have caused.\n\nBest,
 	\n MCP Inc.,
-	 Customer Support Team",
+	Customer Support Team",
 	"html_body":"",
 	"cc":"",
 	"bcc":"",

@@ -164,7 +164,7 @@ data:
 ```json arguments
 {
 	"database": "LANDING_TASK_REMINDER",
-	 "schema": "PUBLIC"
+	"schema": "PUBLIC"
 }
 
 ```
@@ -1171,11 +1171,11 @@ Now I need to understand the group assignments for the new employees. Let me che
 ```json arguments
 {
 	"query": "\nSELECT DISTINCT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\n"
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (9001,
+	9002,
+	9003)\n"
 }
 
 ```
@@ -1215,13 +1215,13 @@ Let me check the supervisor information and see if there's a pattern in group as
 ```json arguments
 {
 	"query": "\nSELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
 	\n       CASE WHEN bt.EMPLOYEE_ID IS NOT NULL THEN 'Backend'\n            WHEN ft.EMPLOYEE_ID IS NOT NULL THEN 'Frontend'\n            WHEN dt.EMPLOYEE_ID IS NOT NULL THEN 'Data'\n            WHEN tt.EMPLOYEE_ID IS NOT NULL THEN 'Testing'\n            ELSE 'Unknown' END as GROUP_TYPE\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nLEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND) bt ON e.EMPLOYEE_ID = bt.EMPLOYEE_ID\nLEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND) ft ON e.EMPLOYEE_ID = ft.EMPLOYEE_ID\nLEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA) dt ON e.EMPLOYEE_ID = dt.EMPLOYEE_ID\nLEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING) tt ON e.EMPLOYEE_ID = tt.EMPLOYEE_ID\nWHERE e.REPORT_TO_ID IN (8001,
-	 8002,
-	 8003)\nORDER BY e.REPORT_TO_ID,
-	 e.EMPLOYEE_ID\n"
+	8002,
+	8003)\nORDER BY e.REPORT_TO_ID,
+	e.EMPLOYEE_ID\n"
 }
 
 ```
@@ -1361,10 +1361,10 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL \nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (8001,
-	 8002,
-	 8003)\n"
+	e.NAME,
+	e.EMAIL \nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (8001,
+	8002,
+	8003)\n"
 }
 
 ```
@@ -1401,13 +1401,13 @@ Now let me check for overdue tasks (where DDL < current date and FINISHED_FLAG =
 ```json arguments
 {
 	"query": "\nSELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 \n       pt.TASK_NAME,
-	 pt.DDL,
-	 pt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON pt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE pt.FINISHED_FLAG = false AND pt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
-	 pt.CREATE_DATE\n"
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	\n       pt.TASK_NAME,
+	pt.DDL,
+	pt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON pt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE pt.FINISHED_FLAG = false AND pt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
+	pt.CREATE_DATE\n"
 }
 
 ```
@@ -1485,13 +1485,13 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
 	\n       bt.TASK_NAME,
-	 bt.DDL,
-	 bt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND bt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON bt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE bt.FINISHED_FLAG = false AND bt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
-	 bt.CREATE_DATE\n"
+	bt.DDL,
+	bt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND bt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON bt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE bt.FINISHED_FLAG = false AND bt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
+	bt.CREATE_DATE\n"
 }
 
 ```
@@ -1520,13 +1520,13 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
 	\n       ft.TASK_NAME,
-	 ft.DDL,
-	 ft.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND ft\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON ft.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE ft.FINISHED_FLAG = false AND ft.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
-	 ft.CREATE_DATE\n"
+	ft.DDL,
+	ft.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND ft\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON ft.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE ft.FINISHED_FLAG = false AND ft.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
+	ft.CREATE_DATE\n"
 }
 
 ```
@@ -1550,13 +1550,13 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
 	\n       dt.TASK_NAME,
-	 dt.DDL,
-	 dt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA dt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON dt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE dt.FINISHED_FLAG = false AND dt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
-	 dt.CREATE_DATE\n"
+	dt.DDL,
+	dt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA dt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON dt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE dt.FINISHED_FLAG = false AND dt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
+	dt.CREATE_DATE\n"
 }
 
 ```
@@ -1585,13 +1585,13 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
 	\n       tt.TASK_NAME,
-	 tt.DDL,
-	 tt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING tt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON tt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE tt.FINISHED_FLAG = false AND tt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
-	 tt.CREATE_DATE\n"
+	tt.DDL,
+	tt.CREATE_DATE\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING tt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON tt.EMPLOYEE_ID = e.EMPLOYEE_ID\nWHERE tt.FINISHED_FLAG = false AND tt.DDL < CURRENT_DATE()\nORDER BY e.EMPLOYEE_ID,
+	tt.CREATE_DATE\n"
 }
 
 ```
@@ -1626,8 +1626,8 @@ Good! Now I have identified overdue tasks. Let me understand the training manual
 ```json arguments
 {
 	"query": "\nSELECT DISTINCT TASK_NAME,
-	 MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
-	 TASK_NAME\n"
+	MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
+	TASK_NAME\n"
 }
 
 ```
@@ -1659,8 +1659,8 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT DISTINCT TASK_NAME,
-	 MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
-	 TASK_NAME\n"
+	MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
+	TASK_NAME\n"
 }
 
 ```
@@ -1688,8 +1688,8 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT DISTINCT TASK_NAME,
-	 MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
-	 TASK_NAME\n"
+	MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
+	TASK_NAME\n"
 }
 
 ```
@@ -1717,8 +1717,8 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT DISTINCT TASK_NAME,
-	 MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
-	 TASK_NAME\n"
+	MIN(CREATE_DATE) as FIRST_CREATED\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nGROUP BY TASK_NAME\nORDER BY MIN(CREATE_DATE),
+	TASK_NAME\n"
 }
 
 ```
@@ -1752,9 +1752,9 @@ Now let me check a specific employee to understand the exact order of tasks in t
 ```json arguments
 {
 	"query": "\nSELECT TASK_NAME,
-	 CREATE_DATE,
-	 DDL\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 6001\nORDER BY CREATE_DATE,
-	 TASK_NAME\n"
+	CREATE_DATE,
+	DDL\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 6001\nORDER BY CREATE_DATE,
+	TASK_NAME\n"
 }
 
 ```
@@ -1791,9 +1791,9 @@ data:
 ```json arguments
 {
 	"query": "\nSELECT TASK_NAME,
-	 CREATE_DATE,
-	 DDL\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nWHERE EMPLOYEE_ID = 6001\nORDER BY CREATE_DATE,
-	 TASK_NAME\n"
+	CREATE_DATE,
+	DDL\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nWHERE EMPLOYEE_ID = 6001\nORDER BY CREATE_DATE,
+	TASK_NAME\n"
 }
 
 ```
@@ -1830,13 +1830,13 @@ I need to understand the exact order. Let me check if there's a pattern by looki
 ```json arguments
 {
 	"query": "\nSELECT pt.EMPLOYEE_ID,
-	 pt.TASK_NAME,
-	 pt.CREATE_DATE,
-	 \n       ROW_NUMBER() OVER (PARTITION BY pt.EMPLOYEE_ID ORDER BY pt.CREATE_DATE,
-	 pt.TASK_NAME) as TASK_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\nWHERE pt.EMPLOYEE_ID IN (6001,
-	 6002,
-	 6003)\nORDER BY pt.EMPLOYEE_ID,
-	 TASK_ORDER\n"
+	pt.TASK_NAME,
+	pt.CREATE_DATE,
+	\n       ROW_NUMBER() OVER (PARTITION BY pt.EMPLOYEE_ID ORDER BY pt.CREATE_DATE,
+	pt.TASK_NAME) as TASK_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\nWHERE pt.EMPLOYEE_ID IN (6001,
+	6002,
+	6003)\nORDER BY pt.EMPLOYEE_ID,
+	TASK_ORDER\n"
 }
 
 ```
@@ -1938,50 +1938,50 @@ Now I'll create the tasks for the 3 new employees and send emails. Let me start 
 ```json arguments
 {
 	"query": "\n-- Insert public tasks for employee 9001 (Dorothy Edwards - Backend)\nINSERT INTO LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS (EMPLOYEE_ID,
-	 TASK_NAME,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES\n(9001,
-	 'Onboarding Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	TASK_NAME,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES\n(9001,
+	'Onboarding Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9001,
-	 'Security Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Security Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9001,
-	 'Confidentiality Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Confidentiality Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9001,
-	 'Company Culture',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Company Culture',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9001,
-	 'Company Strategy',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false)\n"
+	'Company Strategy',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false)\n"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 5}]
+[\{'number of rows inserted': 5\}]
 ```
 
 </Expandable>
@@ -1994,36 +1994,36 @@ Now I'll create the tasks for the 3 new employees and send emails. Let me start 
 ```json arguments
 {
 	"query": "\n-- Insert backend group tasks for employee 9001 (Dorothy Edwards)\nINSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND (EMPLOYEE_ID,
-	 TASK_NAME,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES\n(9001,
-	 'Backend Development Process',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 30,
-	 CURRENT_DATE()),
-	 false),
+	TASK_NAME,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES\n(9001,
+	'Backend Development Process',
+	CURRENT_DATE(),
+	DATEADD(day,
+	30,
+	CURRENT_DATE()),
+	false),
 	\n(9001,
-	 'Backend Development Standards',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 30,
-	 CURRENT_DATE()),
-	 false),
+	'Backend Development Standards',
+	CURRENT_DATE(),
+	DATEADD(day,
+	30,
+	CURRENT_DATE()),
+	false),
 	\n(9001,
-	 'Backend Development Environment',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 30,
-	 CURRENT_DATE()),
-	 false)\n"
+	'Backend Development Environment',
+	CURRENT_DATE(),
+	DATEADD(day,
+	30,
+	CURRENT_DATE()),
+	false)\n"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -2036,50 +2036,50 @@ Now I'll create the tasks for the 3 new employees and send emails. Let me start 
 ```json arguments
 {
 	"query": "\n-- Insert public tasks for employee 9002 (Anthony Young - Frontend)\nINSERT INTO LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS (EMPLOYEE_ID,
-	 TASK_NAME,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES\n(9002,
-	 'Onboarding Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	TASK_NAME,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES\n(9002,
+	'Onboarding Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9002,
-	 'Security Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Security Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9002,
-	 'Confidentiality Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Confidentiality Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9002,
-	 'Company Culture',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Company Culture',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9002,
-	 'Company Strategy',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false)\n"
+	'Company Strategy',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false)\n"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 5}]
+[\{'number of rows inserted': 5\}]
 ```
 
 </Expandable>
@@ -2092,36 +2092,36 @@ Now I'll create the tasks for the 3 new employees and send emails. Let me start 
 ```json arguments
 {
 	"query": "\n-- Insert frontend group tasks for employee 9002 (Anthony Young)\nINSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND (EMPLOYEE_ID,
-	 TASK_NAME,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES\n(9002,
-	 'Frontend Development Process',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	TASK_NAME,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES\n(9002,
+	'Frontend Development Process',
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n(9002,
-	 'Frontend Development Standards',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	'Frontend Development Standards',
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n(9002,
-	 'Frontend Development Environment',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false)\n"
+	'Frontend Development Environment',
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false)\n"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -2134,50 +2134,50 @@ Now I'll create the tasks for the 3 new employees and send emails. Let me start 
 ```json arguments
 {
 	"query": "\n-- Insert public tasks for employee 9003 (Maria Hernandez - Testing)\nINSERT INTO LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS (EMPLOYEE_ID,
-	 TASK_NAME,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES\n(9003,
-	 'Onboarding Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	TASK_NAME,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES\n(9003,
+	'Onboarding Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9003,
-	 'Security Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Security Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9003,
-	 'Confidentiality Training',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Confidentiality Training',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9003,
-	 'Company Culture',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	'Company Culture',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n(9003,
-	 'Company Strategy',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false)\n"
+	'Company Strategy',
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false)\n"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 5}]
+[\{'number of rows inserted': 5\}]
 ```
 
 </Expandable>
@@ -2190,36 +2190,36 @@ Now I'll create the tasks for the 3 new employees and send emails. Let me start 
 ```json arguments
 {
 	"query": "\n-- Insert testing group tasks for employee 9003 (Maria Hernandez)\nINSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING (EMPLOYEE_ID,
-	 TASK_NAME,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES\n(9003,
-	 'Testing Development Process',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 60,
-	 CURRENT_DATE()),
-	 false),
+	TASK_NAME,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES\n(9003,
+	'Testing Development Process',
+	CURRENT_DATE(),
+	DATEADD(day,
+	60,
+	CURRENT_DATE()),
+	false),
 	\n(9003,
-	 'Testing Development Standards',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 60,
-	 CURRENT_DATE()),
-	 false),
+	'Testing Development Standards',
+	CURRENT_DATE(),
+	DATEADD(day,
+	60,
+	CURRENT_DATE()),
+	false),
 	\n(9003,
-	 'Testing Development Environment',
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 60,
-	 CURRENT_DATE()),
-	 false)\n"
+	'Testing Development Environment',
+	CURRENT_DATE(),
+	DATEADD(day,
+	60,
+	CURRENT_DATE()),
+	false)\n"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -2238,14 +2238,14 @@ Great! Now let me update the LANDING_TASK_ASSIGNED flag for the new employees:
 ```json arguments
 {
 	"query": "\nUPDATE LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING\nSET LANDING_TASK_ASSIGNED = true\nWHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\n"
+	9002,
+	9003)\n"
 }
 
 ```
 
 ```json output_result
-[{'number of rows updated': 3, 'number of multi-joined rows updated': 0}]
+[\{'number of rows updated': 3, 'number of multi-joined rows updated': 0\}]
 ```
 
 </Expandable>
@@ -2264,13 +2264,13 @@ Now let me retrieve the complete task lists for each new employee to send the on
 ```json arguments
 {
 	"query": "\n-- Get all tasks for employee 9001 (Dorothy Edwards) in training manual order\nSELECT TASK_NAME,
-	 DDL,
-	 'Public' as TASK_TYPE,
-	 1 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 9001\nUNION ALL\nSELECT TASK_NAME,
-	 DDL,
-	 'Backend' as TASK_TYPE,
-	 2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nWHERE EMPLOYEE_ID = 9001\nORDER BY TYPE_ORDER,
-	 TASK_NAME\n"
+	DDL,
+	'Public' as TASK_TYPE,
+	1 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 9001\nUNION ALL\nSELECT TASK_NAME,
+	DDL,
+	'Backend' as TASK_TYPE,
+	2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nWHERE EMPLOYEE_ID = 9001\nORDER BY TYPE_ORDER,
+	TASK_NAME\n"
 }
 
 ```
@@ -2324,13 +2324,13 @@ data:
 ```json arguments
 {
 	"query": "\n-- Get all tasks for employee 9002 (Anthony Young) in training manual order\nSELECT TASK_NAME,
-	 DDL,
-	 'Public' as TASK_TYPE,
-	 1 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 9002\nUNION ALL\nSELECT TASK_NAME,
-	 DDL,
-	 'Frontend' as TASK_TYPE,
-	 2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nWHERE EMPLOYEE_ID = 9002\nORDER BY TYPE_ORDER,
-	 TASK_NAME\n"
+	DDL,
+	'Public' as TASK_TYPE,
+	1 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 9002\nUNION ALL\nSELECT TASK_NAME,
+	DDL,
+	'Frontend' as TASK_TYPE,
+	2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nWHERE EMPLOYEE_ID = 9002\nORDER BY TYPE_ORDER,
+	TASK_NAME\n"
 }
 
 ```
@@ -2384,13 +2384,13 @@ data:
 ```json arguments
 {
 	"query": "\n-- Get all tasks for employee 9003 (Maria Hernandez) in training manual order\nSELECT TASK_NAME,
-	 DDL,
-	 'Public' as TASK_TYPE,
-	 1 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 9003\nUNION ALL\nSELECT TASK_NAME,
-	 DDL,
-	 'Testing' as TASK_TYPE,
-	 2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nWHERE EMPLOYEE_ID = 9003\nORDER BY TYPE_ORDER,
-	 TASK_NAME\n"
+	DDL,
+	'Public' as TASK_TYPE,
+	1 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS\nWHERE EMPLOYEE_ID = 9003\nUNION ALL\nSELECT TASK_NAME,
+	DDL,
+	'Testing' as TASK_TYPE,
+	2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nWHERE EMPLOYEE_ID = 9003\nORDER BY TYPE_ORDER,
+	TASK_NAME\n"
 }
 
 ```
@@ -2450,10 +2450,10 @@ Perfect! Now let me send the onboarding emails to the 3 new employees. I'll send
 ```json arguments
 {
 	"to": "dorothy.edwards@mcp.com",
-	 "subject": "Welcome! Your Training Tasks",
-	 "body": "Dear Dorothy Edwards,
-	 You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nOnboarding Training\nSecurity Training\nBackend Development Environment\nBackend Development Process\nBackend Development Standards\nPlease complete them as soon as possible.",
-	 "cc": "jennifer.baker@mcp.com"
+	"subject": "Welcome! Your Training Tasks",
+	"body": "Dear Dorothy Edwards,
+	You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nOnboarding Training\nSecurity Training\nBackend Development Environment\nBackend Development Process\nBackend Development Standards\nPlease complete them as soon as possible.",
+	"cc": "jennifer.baker@mcp.com"
 }
 
 ```
@@ -2472,10 +2472,10 @@ Email sent successfully to dorothy.edwards@mcp.com
 ```json arguments
 {
 	"to": "anthony.young28@mcp.com",
-	 "subject": "Welcome! Your Training Tasks",
-	 "body": "Dear Anthony Young,
-	 You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nOnboarding Training\nSecurity Training\nFrontend Development Environment\nFrontend Development Process\nFrontend Development Standards\nPlease complete them as soon as possible.",
-	 "cc": "jacksonv8@mcp.com"
+	"subject": "Welcome! Your Training Tasks",
+	"body": "Dear Anthony Young,
+	You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nOnboarding Training\nSecurity Training\nFrontend Development Environment\nFrontend Development Process\nFrontend Development Standards\nPlease complete them as soon as possible.",
+	"cc": "jacksonv8@mcp.com"
 }
 
 ```
@@ -2494,10 +2494,10 @@ Email sent successfully to anthony.young28@mcp.com
 ```json arguments
 {
 	"to": "hernandezm@mcp.com",
-	 "subject": "Welcome! Your Training Tasks",
-	 "body": "Dear Maria Hernandez,
-	 You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nOnboarding Training\nSecurity Training\nTesting Development Environment\nTesting Development Process\nTesting Development Standards\nPlease complete them as soon as possible.",
-	 "cc": "drogers@mcp.com"
+	"subject": "Welcome! Your Training Tasks",
+	"body": "Dear Maria Hernandez,
+	You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nOnboarding Training\nSecurity Training\nTesting Development Environment\nTesting Development Process\nTesting Development Standards\nPlease complete them as soon as possible.",
+	"cc": "drogers@mcp.com"
 }
 
 ```
@@ -2522,48 +2522,48 @@ Excellent! Now I need to send reminder emails to employees with overdue tasks. L
 ```json arguments
 {
 	"query": "\n-- Get all overdue tasks for each employee with supervisor info\nSELECT \n    e.EMPLOYEE_ID,
-	 \n    e.NAME,
-	 \n    e.EMAIL,
-	 \n    e.REPORT_TO_ID,
+	\n    e.NAME,
+	\n    e.EMAIL,
+	\n    e.REPORT_TO_ID,
 	\n    sup.EMAIL as SUPERVISOR_EMAIL,
 	\n    pt.TASK_NAME,
 	\n    pt.DDL,
 	\n    'Public' as TASK_TYPE,
 	\n    1 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON pt.EMPLOYEE_ID = e.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE sup ON e.REPORT_TO_ID = sup.EMPLOYEE_ID\nWHERE pt.FINISHED_FLAG = false AND pt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT \n    e.EMPLOYEE_ID,
-	 \n    e.NAME,
-	 \n    e.EMAIL,
-	 \n    e.REPORT_TO_ID,
+	\n    e.NAME,
+	\n    e.EMAIL,
+	\n    e.REPORT_TO_ID,
 	\n    sup.EMAIL as SUPERVISOR_EMAIL,
 	\n    bt.TASK_NAME,
 	\n    bt.DDL,
 	\n    'Backend' as TASK_TYPE,
 	\n    2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND bt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON bt.EMPLOYEE_ID = e.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE sup ON e.REPORT_TO_ID = sup.EMPLOYEE_ID\nWHERE bt.FINISHED_FLAG = false AND bt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT \n    e.EMPLOYEE_ID,
-	 \n    e.NAME,
-	 \n    e.EMAIL,
-	 \n    e.REPORT_TO_ID,
+	\n    e.NAME,
+	\n    e.EMAIL,
+	\n    e.REPORT_TO_ID,
 	\n    sup.EMAIL as SUPERVISOR_EMAIL,
 	\n    ft.TASK_NAME,
 	\n    ft.DDL,
 	\n    'Frontend' as TASK_TYPE,
 	\n    2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND ft\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON ft.EMPLOYEE_ID = e.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE sup ON e.REPORT_TO_ID = sup.EMPLOYEE_ID\nWHERE ft.FINISHED_FLAG = false AND ft.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT \n    e.EMPLOYEE_ID,
-	 \n    e.NAME,
-	 \n    e.EMAIL,
-	 \n    e.REPORT_TO_ID,
+	\n    e.NAME,
+	\n    e.EMAIL,
+	\n    e.REPORT_TO_ID,
 	\n    sup.EMAIL as SUPERVISOR_EMAIL,
 	\n    dt.TASK_NAME,
 	\n    dt.DDL,
 	\n    'Data' as TASK_TYPE,
 	\n    2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA dt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON dt.EMPLOYEE_ID = e.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE sup ON e.REPORT_TO_ID = sup.EMPLOYEE_ID\nWHERE dt.FINISHED_FLAG = false AND dt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT \n    e.EMPLOYEE_ID,
-	 \n    e.NAME,
-	 \n    e.EMAIL,
-	 \n    e.REPORT_TO_ID,
+	\n    e.NAME,
+	\n    e.EMAIL,
+	\n    e.REPORT_TO_ID,
 	\n    sup.EMAIL as SUPERVISOR_EMAIL,
 	\n    tt.TASK_NAME,
 	\n    tt.DDL,
 	\n    'Testing' as TASK_TYPE,
 	\n    2 as TYPE_ORDER\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING tt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON tt.EMPLOYEE_ID = e.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE sup ON e.REPORT_TO_ID = sup.EMPLOYEE_ID\nWHERE tt.FINISHED_FLAG = false AND tt.DDL < CURRENT_DATE()\n\nORDER BY EMPLOYEE_ID,
-	 TYPE_ORDER,
-	 TASK_NAME\n"
+	TYPE_ORDER,
+	TASK_NAME\n"
 }
 
 ```
@@ -2695,10 +2695,10 @@ Perfect! Now I'll send reminder emails to employees with overdue tasks. Let me o
 ```json arguments
 {
 	"to": "franka73@mcp.com",
-	 "subject": "Reminder: Overdue Training Tasks",
-	 "body": "Dear Frank Allen,
-	 You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nBackend Development Environment\nPlease complete them as soon as possible.",
-	 "cc": "jennifer.baker@mcp.com"
+	"subject": "Reminder: Overdue Training Tasks",
+	"body": "Dear Frank Allen,
+	You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nBackend Development Environment\nPlease complete them as soon as possible.",
+	"cc": "jennifer.baker@mcp.com"
 }
 
 ```
@@ -2717,10 +2717,10 @@ Email sent successfully to franka73@mcp.com
 ```json arguments
 {
 	"to": "morrisg31@mcp.com",
-	 "subject": "Reminder: Overdue Training Tasks",
-	 "body": "Dear George Morris,
-	 You have the following training tasks to complete:\nConfidentiality Training\nPlease complete them as soon as possible.",
-	 "cc": "jacksonv8@mcp.com"
+	"subject": "Reminder: Overdue Training Tasks",
+	"body": "Dear George Morris,
+	You have the following training tasks to complete:\nConfidentiality Training\nPlease complete them as soon as possible.",
+	"cc": "jacksonv8@mcp.com"
 }
 
 ```
@@ -2739,10 +2739,10 @@ Email sent successfully to morrisg31@mcp.com
 ```json arguments
 {
 	"to": "debrac99@mcp.com",
-	 "subject": "Reminder: Overdue Training Tasks",
-	 "body": "Dear Debra Chavez,
-	 You have the following training tasks to complete:\nConfidentiality Training\nSecurity Training\nTesting Development Process\nPlease complete them as soon as possible.",
-	 "cc": "drogers@mcp.com"
+	"subject": "Reminder: Overdue Training Tasks",
+	"body": "Dear Debra Chavez,
+	You have the following training tasks to complete:\nConfidentiality Training\nSecurity Training\nTesting Development Process\nPlease complete them as soon as possible.",
+	"cc": "drogers@mcp.com"
 }
 
 ```
@@ -2761,10 +2761,10 @@ Email sent successfully to debrac99@mcp.com
 ```json arguments
 {
 	"to": "stephens@mcp.com",
-	 "subject": "Reminder: Overdue Training Tasks",
-	 "body": "Dear Stephen Sanchez,
-	 You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nData Development Environment\nPlease complete them as soon as possible.",
-	 "cc": "greenm@mcp.com"
+	"subject": "Reminder: Overdue Training Tasks",
+	"body": "Dear Stephen Sanchez,
+	You have the following training tasks to complete:\nCompany Culture\nCompany Strategy\nConfidentiality Training\nData Development Environment\nPlease complete them as soon as possible.",
+	"cc": "greenm@mcp.com"
 }
 
 ```
@@ -2789,17 +2789,17 @@ Perfect! Now let me verify that all tasks have been properly created and the dat
 ```json arguments
 {
 	"query": "\n-- Verify new employee tasks were created\nSELECT el.EMPLOYEE_ID,
-	 e.NAME,
-	 el.LANDING_TASK_ASSIGNED,
+	e.NAME,
+	el.LANDING_TASK_ASSIGNED,
 	\n       COUNT(DISTINCT pt.TASK_NAME) as PUBLIC_TASKS,
 	\n       COUNT(DISTINCT COALESCE(bt.TASK_NAME,
-	 ft.TASK_NAME,
-	 dt.TASK_NAME,
-	 tt.TASK_NAME)) as GROUP_TASKS\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING el\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON el.EMPLOYEE_ID = e.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt ON el.EMPLOYEE_ID = pt.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND bt ON el.EMPLOYEE_ID = bt.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND ft ON el.EMPLOYEE_ID = ft.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA dt ON el.EMPLOYEE_ID = dt.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING tt ON el.EMPLOYEE_ID = tt.EMPLOYEE_ID\nWHERE el.EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\nGROUP BY el.EMPLOYEE_ID,
-	 e.NAME,
-	 el.LANDING_TASK_ASSIGNED\nORDER BY el.EMPLOYEE_ID\n"
+	ft.TASK_NAME,
+	dt.TASK_NAME,
+	tt.TASK_NAME)) as GROUP_TASKS\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING el\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON el.EMPLOYEE_ID = e.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt ON el.EMPLOYEE_ID = pt.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND bt ON el.EMPLOYEE_ID = bt.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND ft ON el.EMPLOYEE_ID = ft.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA dt ON el.EMPLOYEE_ID = dt.EMPLOYEE_ID\nLEFT JOIN LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING tt ON el.EMPLOYEE_ID = tt.EMPLOYEE_ID\nWHERE el.EMPLOYEE_ID IN (9001,
+	9002,
+	9003)\nGROUP BY el.EMPLOYEE_ID,
+	e.NAME,
+	el.LANDING_TASK_ASSIGNED\nORDER BY el.EMPLOYEE_ID\n"
 }
 
 ```
@@ -2842,18 +2842,18 @@ Excellent! Let me create a summary of what was accomplished:
 ```json arguments
 {
 	"insight": "Successfully processed 3 new employees (9001-Dorothy Edwards/Backend,
-	 9002-Anthony Young/Frontend,
-	 9003-Maria Hernandez/Testing) by:\n1. Creating 5 public training tasks per employee (Onboarding Training,
-	 Security Training,
-	 Confidentiality Training,
-	 Company Culture,
-	 Company Strategy) with 7-day deadlines\n2. Creating 3 group-specific tasks per employee (Backend/Frontend/Testing Development Process/Standards/Environment) with 30/45/60-day deadlines respectively\n3. Updating LANDING_TASK_ASSIGNED flag to true for all 3 new employees\n4. Sending onboarding emails to all 3 new employees with CC to their direct supervisors (8001-Jennifer Baker,
-	 8002-Victoria Jackson,
-	 8003-Debra Rogers)\n5. Identified 4 employees with overdue tasks (6001-Frank Allen: 3 tasks,
-	 6002-George Morris: 1 task,
-	 6003-Debra Chavez: 3 tasks,
-	 6004-Stephen Sanchez: 4 tasks)\n6. Sent reminder emails to all 4 employees with overdue tasks,
-	 CC'ing their supervisors\nAll tasks were ordered according to the training manual (alphabetically by task name within each category)"
+	9002-Anthony Young/Frontend,
+	9003-Maria Hernandez/Testing) by:\n1. Creating 5 public training tasks per employee (Onboarding Training,
+	Security Training,
+	Confidentiality Training,
+	Company Culture,
+	Company Strategy) with 7-day deadlines\n2. Creating 3 group-specific tasks per employee (Backend/Frontend/Testing Development Process/Standards/Environment) with 30/45/60-day deadlines respectively\n3. Updating LANDING_TASK_ASSIGNED flag to true for all 3 new employees\n4. Sending onboarding emails to all 3 new employees with CC to their direct supervisors (8001-Jennifer Baker,
+	8002-Victoria Jackson,
+	8003-Debra Rogers)\n5. Identified 4 employees with overdue tasks (6001-Frank Allen: 3 tasks,
+	6002-George Morris: 1 task,
+	6003-Debra Chavez: 3 tasks,
+	6004-Stephen Sanchez: 4 tasks)\n6. Sent reminder emails to all 4 employees with overdue tasks,
+	CC'ing their supervisors\nAll tasks were ordered according to the training manual (alphabetically by task name within each category)"
 }
 
 ```
@@ -4441,8 +4441,8 @@ Now let me identify the 3 new employees who need onboarding tasks assigned:
 ```json arguments
 {
 	"query":"SELECT e.*,
-	 el.LANDING_DATE,
-	 el.LANDING_TASK_ASSIGNED \nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING el ON e.EMPLOYEE_ID = el.EMPLOYEE_ID\nWHERE el.LANDING_TASK_ASSIGNED = false"
+	el.LANDING_DATE,
+	el.LANDING_TASK_ASSIGNED \nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING el ON e.EMPLOYEE_ID = el.EMPLOYEE_ID\nWHERE el.LANDING_TASK_ASSIGNED = false"
 }
 
 ```
@@ -4488,8 +4488,8 @@ Now I need to determine which group each new employee belongs to. Let me check i
 ```json arguments
 {
 	"query":"SELECT * FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)"
+	9002,
+	9003)"
 }
 
 ```
@@ -4519,18 +4519,18 @@ Let me check all group tables to see if any of the new employees have existing g
 ```json arguments
 {
 	"query":"SELECT 'FRONTEND' as GROUP_TYPE,
-	 EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\nUNION ALL\nSELECT 'BACKEND' as GROUP_TYPE,
-	 EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\nUNION ALL\nSELECT 'DATA' as GROUP_TYPE,
-	 EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\nUNION ALL\nSELECT 'TESTING' as GROUP_TYPE,
-	 EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)"
+	EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID IN (9001,
+	9002,
+	9003)\nUNION ALL\nSELECT 'BACKEND' as GROUP_TYPE,
+	EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND WHERE EMPLOYEE_ID IN (9001,
+	9002,
+	9003)\nUNION ALL\nSELECT 'DATA' as GROUP_TYPE,
+	EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA WHERE EMPLOYEE_ID IN (9001,
+	9002,
+	9003)\nUNION ALL\nSELECT 'TESTING' as GROUP_TYPE,
+	EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING WHERE EMPLOYEE_ID IN (9001,
+	9002,
+	9003)"
 }
 
 ```
@@ -4560,11 +4560,11 @@ Since the new employees don't have group assignments yet, I'll need to determine
 ```json arguments
 {
 	"query":"SELECT DISTINCT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.REPORT_TO_ID,
-	 \n       CASE \n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'FRONTEND'\n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'BACKEND'\n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'DATA'\n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'TESTING'\n           ELSE 'UNKNOWN'\n       END as SUPERVISOR_GROUP\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)"
+	e.NAME,
+	e.REPORT_TO_ID,
+	\n       CASE \n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'FRONTEND'\n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'BACKEND'\n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'DATA'\n           WHEN EXISTS (SELECT 1 FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING WHERE EMPLOYEE_ID = e.REPORT_TO_ID) THEN 'TESTING'\n           ELSE 'UNKNOWN'\n       END as SUPERVISOR_GROUP\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (9001,
+	9002,
+	9003)"
 }
 
 ```
@@ -4604,12 +4604,12 @@ Perfect! Now I have the group assignments for the new employees. Let me also get
 ```json arguments
 {
 	"query":"SELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 s.NAME as SUPERVISOR_NAME,
-	 s.EMAIL as SUPERVISOR_EMAIL\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE e.EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)"
+	e.NAME,
+	e.EMAIL,
+	s.NAME as SUPERVISOR_NAME,
+	s.EMAIL as SUPERVISOR_EMAIL\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE e.EMPLOYEE_ID IN (9001,
+	9002,
+	9003)"
 }
 
 ```
@@ -4652,13 +4652,13 @@ Now let me check for overdue tasks that need reminder emails:
 ```json arguments
 {
 	"query":"SELECT pt.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 s.EMAIL as SUPERVISOR_EMAIL,
-	 pt.TASK_NAME,
-	 pt.DDL,
-	 pt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON pt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE pt.FINISHED_FLAG = false \nAND pt.DDL < CURRENT_DATE()"
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	s.EMAIL as SUPERVISOR_EMAIL,
+	pt.TASK_NAME,
+	pt.DDL,
+	pt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON pt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE pt.FINISHED_FLAG = false \nAND pt.DDL < CURRENT_DATE()"
 }
 
 ```
@@ -4750,38 +4750,38 @@ Now let me also check for overdue group tasks:
 ```json arguments
 {
 	"query":"SELECT 'FRONTEND' as GROUP_TYPE,
-	 gt.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 s.EMAIL as SUPERVISOR_EMAIL,
-	 gt.TASK_NAME,
-	 gt.DDL,
-	 gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT 'BACKEND' as GROUP_TYPE,
-	 gt.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 s.EMAIL as SUPERVISOR_EMAIL,
-	 gt.TASK_NAME,
-	 gt.DDL,
-	 gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT 'DATA' as GROUP_TYPE,
-	 gt.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 s.EMAIL as SUPERVISOR_EMAIL,
-	 gt.TASK_NAME,
-	 gt.DDL,
-	 gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT 'TESTING' as GROUP_TYPE,
-	 gt.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 s.EMAIL as SUPERVISOR_EMAIL,
-	 gt.TASK_NAME,
-	 gt.DDL,
-	 gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()"
+	gt.EMPLOYEE_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	s.EMAIL as SUPERVISOR_EMAIL,
+	gt.TASK_NAME,
+	gt.DDL,
+	gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT 'BACKEND' as GROUP_TYPE,
+	gt.EMPLOYEE_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	s.EMAIL as SUPERVISOR_EMAIL,
+	gt.TASK_NAME,
+	gt.DDL,
+	gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT 'DATA' as GROUP_TYPE,
+	gt.EMPLOYEE_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	s.EMAIL as SUPERVISOR_EMAIL,
+	gt.TASK_NAME,
+	gt.DDL,
+	gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()\n\nUNION ALL\n\nSELECT 'TESTING' as GROUP_TYPE,
+	gt.EMPLOYEE_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	s.EMAIL as SUPERVISOR_EMAIL,
+	gt.TASK_NAME,
+	gt.DDL,
+	gt.FINISHED_FLAG\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING gt\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\nWHERE gt.FINISHED_FLAG = false \nAND gt.DDL < CURRENT_DATE()"
 }
 
 ```
@@ -4868,120 +4868,120 @@ Now I'll assign tasks to the new employees and send onboarding emails:
 ```json arguments
 {
 	"query":"INSERT INTO LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS (TASK_NAME,
-	 EMPLOYEE_ID,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES \n('Onboarding Training',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	EMPLOYEE_ID,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES \n('Onboarding Training',
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Security Training',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Confidentiality Training',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Company Culture',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Company Strategy',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n\n('Onboarding Training',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Security Training',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Confidentiality Training',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Company Culture',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Company Strategy',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n\n('Onboarding Training',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Security Training',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Confidentiality Training',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Company Culture',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false),
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false),
 	\n('Company Strategy',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 7,
-	 CURRENT_DATE()),
-	 false)"
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	7,
+	CURRENT_DATE()),
+	false)"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 15}]
+[\{'number of rows inserted': 15\}]
 ```
 
 </Expandable>
@@ -5000,36 +5000,36 @@ Now let me assign group-specific tasks:
 ```json arguments
 {
 	"query":"INSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND (TASK_NAME,
-	 EMPLOYEE_ID,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES \n('Backend Development Environment',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	EMPLOYEE_ID,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES \n('Backend Development Environment',
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n('Backend Development Standards',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n('Backend Development Process',
-	 9001,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false)"
+	9001,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false)"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -5042,36 +5042,36 @@ Now let me assign group-specific tasks:
 ```json arguments
 {
 	"query":"INSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND (TASK_NAME,
-	 EMPLOYEE_ID,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES \n('Frontend Development Environment',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	EMPLOYEE_ID,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES \n('Frontend Development Environment',
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n('Frontend Development Standards',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n('Frontend Development Process',
-	 9002,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false)"
+	9002,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false)"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -5084,36 +5084,36 @@ Now let me assign group-specific tasks:
 ```json arguments
 {
 	"query":"INSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING (TASK_NAME,
-	 EMPLOYEE_ID,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG)\nVALUES \n('Testing Development Environment',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	EMPLOYEE_ID,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG)\nVALUES \n('Testing Development Environment',
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n('Testing Development Standards',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false),
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false),
 	\n('Testing Development Process',
-	 9003,
-	 CURRENT_DATE(),
-	 DATEADD(day,
-	 45,
-	 CURRENT_DATE()),
-	 false)"
+	9003,
+	CURRENT_DATE(),
+	DATEADD(day,
+	45,
+	CURRENT_DATE()),
+	false)"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -5132,14 +5132,14 @@ Now let me update the LANDING_TASK_ASSIGNED flag for the new employees:
 ```json arguments
 {
 	"query":"UPDATE LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING \nSET LANDING_TASK_ASSIGNED = true \nWHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)"
+	9002,
+	9003)"
 }
 
 ```
 
 ```json output_result
-[{'number of rows updated': 3, 'number of multi-joined rows updated': 0}]
+[\{'number of rows updated': 3, 'number of multi-joined rows updated': 0\}]
 ```
 
 </Expandable>
@@ -5242,35 +5242,35 @@ Now let me send reminder emails for overdue tasks. First, let me group the overd
 ```json arguments
 {
 	"query":"WITH OverdueTasks AS (\n    -- Public tasks\n    SELECT pt.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 s.EMAIL as SUPERVISOR_EMAIL,
-	 pt.TASK_NAME,
-	 pt.DDL\n    FROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON pt.EMPLOYEE_ID = e.EMPLOYEE_ID\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\n    WHERE pt.FINISHED_FLAG = false \n    AND pt.DDL < CURRENT_DATE()\n    \n    UNION ALL\n    \n    -- Group tasks\n    SELECT gt.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 s.EMAIL as SUPERVISOR_EMAIL,
-	 gt.TASK_NAME,
-	 gt.DDL\n    FROM (\n        SELECT EMPLOYEE_ID,
-	 TASK_NAME,
-	 DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\n        UNION ALL\n        SELECT EMPLOYEE_ID,
-	 TASK_NAME,
-	 DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\n        UNION ALL\n        SELECT EMPLOYEE_ID,
-	 TASK_NAME,
-	 DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA\n        UNION ALL\n        SELECT EMPLOYEE_ID,
-	 TASK_NAME,
-	 DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\n    ) gt\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\n    WHERE gt.DDL < CURRENT_DATE()\n)\nSELECT EMPLOYEE_ID,
-	 NAME,
-	 EMAIL,
-	 SUPERVISOR_EMAIL,
-	 \n       LISTAGG(TASK_NAME || ' (Due: ' || TO_CHAR(DDL,
-	 'YYYY-MM-DD') || ')',
-	 '\\n- ') WITHIN GROUP (ORDER BY TASK_NAME) as TASK_LIST\nFROM OverdueTasks\nGROUP BY EMPLOYEE_ID,
-	 NAME,
-	 EMAIL,
-	 SUPERVISOR_EMAIL"
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	s.EMAIL as SUPERVISOR_EMAIL,
+	pt.TASK_NAME,
+	pt.DDL\n    FROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS pt\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON pt.EMPLOYEE_ID = e.EMPLOYEE_ID\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\n    WHERE pt.FINISHED_FLAG = false \n    AND pt.DDL < CURRENT_DATE()\n    \n    UNION ALL\n    \n    -- Group tasks\n    SELECT gt.EMPLOYEE_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	s.EMAIL as SUPERVISOR_EMAIL,
+	gt.TASK_NAME,
+	gt.DDL\n    FROM (\n        SELECT EMPLOYEE_ID,
+	TASK_NAME,
+	DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\n        UNION ALL\n        SELECT EMPLOYEE_ID,
+	TASK_NAME,
+	DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\n        UNION ALL\n        SELECT EMPLOYEE_ID,
+	TASK_NAME,
+	DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_DATA\n        UNION ALL\n        SELECT EMPLOYEE_ID,
+	TASK_NAME,
+	DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\n    ) gt\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON gt.EMPLOYEE_ID = e.EMPLOYEE_ID\n    JOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE s ON e.REPORT_TO_ID = s.EMPLOYEE_ID\n    WHERE gt.DDL < CURRENT_DATE()\n)\nSELECT EMPLOYEE_ID,
+	NAME,
+	EMAIL,
+	SUPERVISOR_EMAIL,
+	\n       LISTAGG(TASK_NAME || ' (Due: ' || TO_CHAR(DDL,
+	'YYYY-MM-DD') || ')',
+	'\\n- ') WITHIN GROUP (ORDER BY TASK_NAME) as TASK_LIST\nFROM OverdueTasks\nGROUP BY EMPLOYEE_ID,
+	NAME,
+	EMAIL,
+	SUPERVISOR_EMAIL"
 }
 
 ```
@@ -5810,8 +5810,8 @@ Now let me verify that all tasks have been properly assigned and the database ha
 ```json arguments
 {
 	"query":"SELECT COUNT(*) as NEW_TASKS_ASSIGNED \nFROM LANDING_TASK_REMINDER.PUBLIC.PUBLIC_TASKS \nWHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)"
+	9002,
+	9003)"
 }
 
 ```
@@ -5834,12 +5834,12 @@ data:
 ```json arguments
 {
 	"query":"SELECT COUNT(*) as GROUP_TASKS_ASSIGNED \nFROM (\n    SELECT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\n    UNION ALL\n    SELECT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\n    UNION ALL\n    SELECT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING WHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)\n)"
+	9002,
+	9003)\n    UNION ALL\n    SELECT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID IN (9001,
+	9002,
+	9003)\n    UNION ALL\n    SELECT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING WHERE EMPLOYEE_ID IN (9001,
+	9002,
+	9003)\n)"
 }
 
 ```
@@ -5862,9 +5862,9 @@ data:
 ```json arguments
 {
 	"query":"SELECT EMPLOYEE_ID,
-	 LANDING_TASK_ASSIGNED \nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING \nWHERE EMPLOYEE_ID IN (9001,
-	 9002,
-	 9003)"
+	LANDING_TASK_ASSIGNED \nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING \nWHERE EMPLOYEE_ID IN (9001,
+	9002,
+	9003)"
 }
 
 ```
@@ -6371,11 +6371,11 @@ data:
 ```json arguments
 {
 	"query":"SELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
-	 el.LANDING_DATE,
-	 el.LANDING_TASK_ASSIGNED\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING el\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON e.EMPLOYEE_ID = el.EMPLOYEE_ID\nWHERE el.LANDING_DATE = CURRENT_DATE();"
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
+	el.LANDING_DATE,
+	el.LANDING_TASK_ASSIGNED\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE_LANDING el\nJOIN LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e ON e.EMPLOYEE_ID = el.EMPLOYEE_ID\nWHERE el.LANDING_DATE = CURRENT_DATE();"
 }
 
 ```
@@ -6434,7 +6434,7 @@ Allowed directories:
 	"query":"SELECT * FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID IN (9001,
 	9002,
 	9003) ORDER BY EMPLOYEE_ID,
-	 CREATE_DATE;"
+	CREATE_DATE;"
 }
 
 ```
@@ -6476,11 +6476,11 @@ data:
 ```json arguments
 {
 	"query":"SELECT EMPLOYEE_ID,
-	 TASK_NAME,
-	 CREATE_DATE,
-	 DDL,
-	 FINISHED_FLAG FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND ORDER BY EMPLOYEE_ID,
-	 CREATE_DATE LIMIT 200;"
+	TASK_NAME,
+	CREATE_DATE,
+	DDL,
+	FINISHED_FLAG FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND ORDER BY EMPLOYEE_ID,
+	CREATE_DATE LIMIT 200;"
 }
 
 ```
@@ -6664,24 +6664,24 @@ data:
 ```json arguments
 {
 	"query":"-- Determine manual task order and typical duration per group\nWITH fe AS (\n  SELECT TASK_NAME,
-	 MIN(CREATE_DATE) AS first_date,
-	 AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL)) AS avg_days\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\n  GROUP BY TASK_NAME\n),
-	 be AS (\n  SELECT TASK_NAME,
-	 MIN(CREATE_DATE) AS first_date,
-	 AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL)) AS avg_days\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\n  GROUP BY TASK_NAME\n),
-	 te AS (\n  SELECT TASK_NAME,
-	 MIN(CREATE_DATE) AS first_date,
-	 AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL)) AS avg_days\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\n  GROUP BY TASK_NAME\n)\nSELECT 'FRONTEND' AS grp,
-	 TASK_NAME,
-	 first_date,
-	 avg_days FROM fe ORDER BY first_date,
-	 TASK_NAME;\n"
+	MIN(CREATE_DATE) AS first_date,
+	AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL)) AS avg_days\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\n  GROUP BY TASK_NAME\n),
+	be AS (\n  SELECT TASK_NAME,
+	MIN(CREATE_DATE) AS first_date,
+	AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL)) AS avg_days\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\n  GROUP BY TASK_NAME\n),
+	te AS (\n  SELECT TASK_NAME,
+	MIN(CREATE_DATE) AS first_date,
+	AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL)) AS avg_days\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\n  GROUP BY TASK_NAME\n)\nSELECT 'FRONTEND' AS grp,
+	TASK_NAME,
+	first_date,
+	avg_days FROM fe ORDER BY first_date,
+	TASK_NAME;\n"
 }
 
 ```
@@ -6700,11 +6700,11 @@ Error: Calls to read_query should not contain write operations
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 MIN(CREATE_DATE) AS ORDER_KEY,
-	 ROUND(AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nGROUP BY TASK_NAME\nORDER BY ORDER_KEY,
-	 TASK_NAME;"
+	MIN(CREATE_DATE) AS ORDER_KEY,
+	ROUND(AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nGROUP BY TASK_NAME\nORDER BY ORDER_KEY,
+	TASK_NAME;"
 }
 
 ```
@@ -6735,11 +6735,11 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 MIN(CREATE_DATE) AS ORDER_KEY,
-	 ROUND(AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nGROUP BY TASK_NAME\nORDER BY ORDER_KEY,
-	 TASK_NAME;"
+	MIN(CREATE_DATE) AS ORDER_KEY,
+	ROUND(AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nGROUP BY TASK_NAME\nORDER BY ORDER_KEY,
+	TASK_NAME;"
 }
 
 ```
@@ -6770,11 +6770,11 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 MIN(CREATE_DATE) AS ORDER_KEY,
-	 ROUND(AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nGROUP BY TASK_NAME\nORDER BY ORDER_KEY,
-	 TASK_NAME;"
+	MIN(CREATE_DATE) AS ORDER_KEY,
+	ROUND(AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nGROUP BY TASK_NAME\nORDER BY ORDER_KEY,
+	TASK_NAME;"
 }
 
 ```
@@ -6805,8 +6805,8 @@ data:
 ```json arguments
 {
 	"query":"SELECT EMPLOYEE_ID,
-	 NAME,
-	 EMAIL FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE WHERE EMPLOYEE_ID IN (8001,
+	NAME,
+	EMAIL FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE WHERE EMPLOYEE_ID IN (8001,
 	8002,
 	8003);"
 }
@@ -6839,9 +6839,9 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 ROUND(AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nGROUP BY TASK_NAME;"
+	ROUND(AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nGROUP BY TASK_NAME;"
 }
 
 ```
@@ -6869,9 +6869,9 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 ROUND(AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nGROUP BY TASK_NAME;"
+	ROUND(AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nGROUP BY TASK_NAME;"
 }
 
 ```
@@ -6899,9 +6899,9 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 ROUND(AVG(DATEDIFF('day',
-	 CREATE_DATE,
-	 DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nGROUP BY TASK_NAME;"
+	ROUND(AVG(DATEDIFF('day',
+	CREATE_DATE,
+	DDL))) AS AVG_DAYS\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nGROUP BY TASK_NAME;"
 }
 
 ```
@@ -6929,9 +6929,9 @@ data:
 ```json arguments
 {
 	"query":"-- Fetch supervisor to group mapping derived from existing group task tables\nWITH sup_groups AS (\n  SELECT 8001 AS EMPLOYEE_ID,
-	 'BACKEND' AS GRP\n  UNION ALL SELECT 8002,
-	 'FRONTEND'\n  UNION ALL SELECT 8003,
-	 'TESTING'\n)\nSELECT * FROM sup_groups;"
+	'BACKEND' AS GRP\n  UNION ALL SELECT 8002,
+	'FRONTEND'\n  UNION ALL SELECT 8003,
+	'TESTING'\n)\nSELECT * FROM sup_groups;"
 }
 
 ```
@@ -6959,8 +6959,8 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 CREATE_DATE,
-	 DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND WHERE EMPLOYEE_ID = 8001 ORDER BY CREATE_DATE;"
+	CREATE_DATE,
+	DDL FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND WHERE EMPLOYEE_ID = 8001 ORDER BY CREATE_DATE;"
 }
 
 ```
@@ -6991,8 +6991,8 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME,
-	 CREATE_DATE FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID = 8002 ORDER BY CREATE_DATE,
-	 TASK_NAME;"
+	CREATE_DATE FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND WHERE EMPLOYEE_ID = 8002 ORDER BY CREATE_DATE,
+	TASK_NAME;"
 }
 
 ```
@@ -7020,36 +7020,36 @@ data:
 ```json arguments
 {
 	"query":"INSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND (EMPLOYEE_ID,
-	 CREATE_DATE,
-	 TASK_NAME,
-	 FINISHED_FLAG,
-	 DDL)\nVALUES\n  (9001,
-	 CURRENT_DATE(),
-	 'Backend Development Environment',
-	 FALSE,
-	 DATEADD('day',
-	 30,
-	 CURRENT_DATE())),
+	CREATE_DATE,
+	TASK_NAME,
+	FINISHED_FLAG,
+	DDL)\nVALUES\n  (9001,
+	CURRENT_DATE(),
+	'Backend Development Environment',
+	FALSE,
+	DATEADD('day',
+	30,
+	CURRENT_DATE())),
 	\n  (9001,
-	 CURRENT_DATE(),
-	 'Backend Development Process',
-	 FALSE,
-	 DATEADD('day',
-	 30,
-	 CURRENT_DATE())),
+	CURRENT_DATE(),
+	'Backend Development Process',
+	FALSE,
+	DATEADD('day',
+	30,
+	CURRENT_DATE())),
 	\n  (9001,
-	 CURRENT_DATE(),
-	 'Backend Development Standards',
-	 FALSE,
-	 DATEADD('day',
-	 30,
-	 CURRENT_DATE()));"
+	CURRENT_DATE(),
+	'Backend Development Standards',
+	FALSE,
+	DATEADD('day',
+	30,
+	CURRENT_DATE()));"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -7062,36 +7062,36 @@ data:
 ```json arguments
 {
 	"query":"INSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND (EMPLOYEE_ID,
-	 CREATE_DATE,
-	 TASK_NAME,
-	 FINISHED_FLAG,
-	 DDL)\nVALUES\n  (9002,
-	 CURRENT_DATE(),
-	 'Frontend Development Environment',
-	 FALSE,
-	 DATEADD('day',
-	 45,
-	 CURRENT_DATE())),
+	CREATE_DATE,
+	TASK_NAME,
+	FINISHED_FLAG,
+	DDL)\nVALUES\n  (9002,
+	CURRENT_DATE(),
+	'Frontend Development Environment',
+	FALSE,
+	DATEADD('day',
+	45,
+	CURRENT_DATE())),
 	\n  (9002,
-	 CURRENT_DATE(),
-	 'Frontend Development Process',
-	 FALSE,
-	 DATEADD('day',
-	 45,
-	 CURRENT_DATE())),
+	CURRENT_DATE(),
+	'Frontend Development Process',
+	FALSE,
+	DATEADD('day',
+	45,
+	CURRENT_DATE())),
 	\n  (9002,
-	 CURRENT_DATE(),
-	 'Frontend Development Standards',
-	 FALSE,
-	 DATEADD('day',
-	 45,
-	 CURRENT_DATE()));"
+	CURRENT_DATE(),
+	'Frontend Development Standards',
+	FALSE,
+	DATEADD('day',
+	45,
+	CURRENT_DATE()));"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -7104,36 +7104,36 @@ data:
 ```json arguments
 {
 	"query":"INSERT INTO LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING (EMPLOYEE_ID,
-	 CREATE_DATE,
-	 TASK_NAME,
-	 FINISHED_FLAG,
-	 DDL)\nVALUES\n  (9003,
-	 CURRENT_DATE(),
-	 'Testing Development Environment',
-	 FALSE,
-	 DATEADD('day',
-	 60,
-	 CURRENT_DATE())),
+	CREATE_DATE,
+	TASK_NAME,
+	FINISHED_FLAG,
+	DDL)\nVALUES\n  (9003,
+	CURRENT_DATE(),
+	'Testing Development Environment',
+	FALSE,
+	DATEADD('day',
+	60,
+	CURRENT_DATE())),
 	\n  (9003,
-	 CURRENT_DATE(),
-	 'Testing Development Process',
-	 FALSE,
-	 DATEADD('day',
-	 60,
-	 CURRENT_DATE())),
+	CURRENT_DATE(),
+	'Testing Development Process',
+	FALSE,
+	DATEADD('day',
+	60,
+	CURRENT_DATE())),
 	\n  (9003,
-	 CURRENT_DATE(),
-	 'Testing Development Standards',
-	 FALSE,
-	 DATEADD('day',
-	 60,
-	 CURRENT_DATE()));"
+	CURRENT_DATE(),
+	'Testing Development Standards',
+	FALSE,
+	DATEADD('day',
+	60,
+	CURRENT_DATE()));"
 }
 
 ```
 
 ```json output_result
-[{'number of rows inserted': 3}]
+[\{'number of rows inserted': 3\}]
 ```
 
 </Expandable>
@@ -7153,7 +7153,7 @@ data:
 ```
 
 ```json output_result
-[{'number of rows updated': 3, 'number of multi-joined rows updated': 0}]
+[\{'number of rows updated': 3, 'number of multi-joined rows updated': 0\}]
 ```
 
 </Expandable>
@@ -7166,9 +7166,9 @@ data:
 ```json arguments
 {
 	"query":"SELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
 	\n       CASE WHEN s.EMPLOYEE_ID IS NOT NULL THEN 'BACKEND'\n            WHEN f.EMPLOYEE_ID IS NOT NULL THEN 'FRONTEND'\n            WHEN t.EMPLOYEE_ID IS NOT NULL THEN 'TESTING' END AS GRP\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nLEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND) s ON s.EMPLOYEE_ID = e.REPORT_TO_ID\nLEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND) f ON f.EMPLOYEE_ID = e.REPORT_TO_ID\nLEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING) t ON t.EMPLOYEE_ID = e.REPORT_TO_ID\nWHERE e.EMPLOYEE_ID IN (9001,
 	9002,
 	9003);"
@@ -7208,9 +7208,9 @@ data:
 ```json arguments
 {
 	"query":"SELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e WHERE e.EMPLOYEE_ID IN (8001,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e WHERE e.EMPLOYEE_ID IN (8001,
 	8002,
 	8003);"
 }
@@ -7246,19 +7246,19 @@ data:
 ```json arguments
 {
 	"query":"WITH emp AS (\n  SELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID,
 	\n         CASE WHEN s.EMPLOYEE_ID IS NOT NULL THEN 'BACKEND'\n              WHEN f.EMPLOYEE_ID IS NOT NULL THEN 'FRONTEND'\n              WHEN t.EMPLOYEE_ID IS NOT NULL THEN 'TESTING' END AS GRP\n  FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\n  LEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND) s ON s.EMPLOYEE_ID = e.REPORT_TO_ID\n  LEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND) f ON f.EMPLOYEE_ID = e.REPORT_TO_ID\n  LEFT JOIN (SELECT DISTINCT EMPLOYEE_ID FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING) t ON t.EMPLOYEE_ID = e.REPORT_TO_ID\n  WHERE e.EMPLOYEE_ID IN (9001,
 	9002,
 	9003)\n),
-	 sup AS (\n  SELECT EMPLOYEE_ID,
-	 NAME AS SUP_NAME,
-	 EMAIL AS SUP_EMAIL\n  FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE\n  WHERE EMPLOYEE_ID IN (8001,
+	sup AS (\n  SELECT EMPLOYEE_ID,
+	NAME AS SUP_NAME,
+	EMAIL AS SUP_EMAIL\n  FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE\n  WHERE EMPLOYEE_ID IN (8001,
 	8002,
 	8003)\n)\nSELECT emp.*,
-	 sup.SUP_NAME,
-	 sup.SUP_EMAIL\nFROM emp\nJOIN sup ON sup.EMPLOYEE_ID = emp.REPORT_TO_ID;"
+	sup.SUP_NAME,
+	sup.SUP_EMAIL\nFROM emp\nJOIN sup ON sup.EMPLOYEE_ID = emp.REPORT_TO_ID;"
 }
 
 ```
@@ -7301,21 +7301,21 @@ data:
 ```json arguments
 {
 	"query":"WITH overdue AS (\n  SELECT 'BACKEND' AS GRP,
-	 b.EMPLOYEE_ID,
-	 b.TASK_NAME\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND b\n  WHERE b.FINISHED_FLAG = FALSE AND b.DDL < CURRENT_DATE()\n  UNION ALL\n  SELECT 'FRONTEND' AS GRP,
-	 f.EMPLOYEE_ID,
-	 f.TASK_NAME\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND f\n  WHERE f.FINISHED_FLAG = FALSE AND f.DDL < CURRENT_DATE()\n  UNION ALL\n  SELECT 'TESTING' AS GRP,
-	 t.EMPLOYEE_ID,
-	 t.TASK_NAME\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING t\n  WHERE t.FINISHED_FLAG = FALSE AND t.DDL < CURRENT_DATE()\n),
-	 emp AS (\n  SELECT e.EMPLOYEE_ID,
-	 e.NAME,
-	 e.EMAIL,
-	 e.REPORT_TO_ID\n  FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\n)\nSELECT o.GRP,
-	 o.EMPLOYEE_ID,
-	 emp.NAME,
-	 emp.EMAIL,
-	 emp.REPORT_TO_ID,
-	 o.TASK_NAME\nFROM overdue o\nJOIN emp ON emp.EMPLOYEE_ID = o.EMPLOYEE_ID\nORDER BY o.EMPLOYEE_ID;"
+	b.EMPLOYEE_ID,
+	b.TASK_NAME\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND b\n  WHERE b.FINISHED_FLAG = FALSE AND b.DDL < CURRENT_DATE()\n  UNION ALL\n  SELECT 'FRONTEND' AS GRP,
+	f.EMPLOYEE_ID,
+	f.TASK_NAME\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND f\n  WHERE f.FINISHED_FLAG = FALSE AND f.DDL < CURRENT_DATE()\n  UNION ALL\n  SELECT 'TESTING' AS GRP,
+	t.EMPLOYEE_ID,
+	t.TASK_NAME\n  FROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING t\n  WHERE t.FINISHED_FLAG = FALSE AND t.DDL < CURRENT_DATE()\n),
+	emp AS (\n  SELECT e.EMPLOYEE_ID,
+	e.NAME,
+	e.EMAIL,
+	e.REPORT_TO_ID\n  FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\n)\nSELECT o.GRP,
+	o.EMPLOYEE_ID,
+	emp.NAME,
+	emp.EMAIL,
+	emp.REPORT_TO_ID,
+	o.TASK_NAME\nFROM overdue o\nJOIN emp ON emp.EMPLOYEE_ID = o.EMPLOYEE_ID\nORDER BY o.EMPLOYEE_ID;"
 }
 
 ```
@@ -7349,7 +7349,7 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nWHERE EMPLOYEE_ID = 6001 AND FINISHED_FLAG = FALSE AND DDL < CURRENT_DATE()\nORDER BY CASE\n  WHEN TASK_NAME ILIKE '%Environment' THEN 1\n  WHEN TASK_NAME ILIKE '%Process' THEN 2\n  WHEN TASK_NAME ILIKE '%Standards' THEN 3\n  ELSE 99 END,
-	 TASK_NAME;"
+	TASK_NAME;"
 }
 
 ```
@@ -7372,7 +7372,7 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nWHERE EMPLOYEE_ID = 6003 AND FINISHED_FLAG = FALSE AND DDL < CURRENT_DATE()\nORDER BY CASE\n  WHEN TASK_NAME ILIKE '%Environment' THEN 1\n  WHEN TASK_NAME ILIKE '%Process' THEN 2\n  WHEN TASK_NAME ILIKE '%Standards' THEN 3\n  ELSE 99 END,
-	 TASK_NAME;"
+	TASK_NAME;"
 }
 
 ```
@@ -7395,7 +7395,7 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_BACKEND\nWHERE EMPLOYEE_ID = 9001 AND FINISHED_FLAG = FALSE\nORDER BY CASE\n  WHEN TASK_NAME ILIKE '%Environment' THEN 1\n  WHEN TASK_NAME ILIKE '%Process' THEN 2\n  WHEN TASK_NAME ILIKE '%Standards' THEN 3\n  ELSE 99 END,
-	 TASK_NAME;"
+	TASK_NAME;"
 }
 
 ```
@@ -7420,7 +7420,7 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_FRONTEND\nWHERE EMPLOYEE_ID = 9002 AND FINISHED_FLAG = FALSE\nORDER BY CASE\n  WHEN TASK_NAME ILIKE '%Environment' THEN 1\n  WHEN TASK_NAME ILIKE '%Process' THEN 2\n  WHEN TASK_NAME ILIKE '%Standards' THEN 3\n  ELSE 99 END,
-	 TASK_NAME;"
+	TASK_NAME;"
 }
 
 ```
@@ -7445,7 +7445,7 @@ data:
 ```json arguments
 {
 	"query":"SELECT TASK_NAME\nFROM LANDING_TASK_REMINDER.PUBLIC.GROUP_TASKS_TESTING\nWHERE EMPLOYEE_ID = 9003 AND FINISHED_FLAG = FALSE\nORDER BY CASE\n  WHEN TASK_NAME ILIKE '%Environment' THEN 1\n  WHEN TASK_NAME ILIKE '%Process' THEN 2\n  WHEN TASK_NAME ILIKE '%Standards' THEN 3\n  ELSE 99 END,
-	 TASK_NAME;"
+	TASK_NAME;"
 }
 
 ```
@@ -7472,7 +7472,7 @@ data:
 	"to":"dorothy.edwards@mcp.com",
 	"subject":"Your onboarding training tasks",
 	"body":"Dear Dorothy Edwards,
-	 You have the following training tasks to complete:\nBackend Development Environment\nBackend Development Process\nBackend Development Standards\nPlease complete them as soon as possible.",
+	You have the following training tasks to complete:\nBackend Development Environment\nBackend Development Process\nBackend Development Standards\nPlease complete them as soon as possible.",
 	"html_body":"",
 	"cc":"jennifer.baker@mcp.com",
 	"bcc":"",
@@ -7497,7 +7497,7 @@ Email sent successfully to dorothy.edwards@mcp.com
 	"to":"anthony.young28@mcp.com",
 	"subject":"Your onboarding training tasks",
 	"body":"Dear Anthony Young,
-	 You have the following training tasks to complete:\nFrontend Development Environment\nFrontend Development Process\nFrontend Development Standards\nPlease complete them as soon as possible.",
+	You have the following training tasks to complete:\nFrontend Development Environment\nFrontend Development Process\nFrontend Development Standards\nPlease complete them as soon as possible.",
 	"html_body":"",
 	"cc":"jacksonv8@mcp.com",
 	"bcc":"",
@@ -7522,7 +7522,7 @@ Email sent successfully to anthony.young28@mcp.com
 	"to":"hernandezm@mcp.com",
 	"subject":"Your onboarding training tasks",
 	"body":"Dear Maria Hernandez,
-	 You have the following training tasks to complete:\nTesting Development Environment\nTesting Development Process\nTesting Development Standards\nPlease complete them as soon as possible.",
+	You have the following training tasks to complete:\nTesting Development Environment\nTesting Development Process\nTesting Development Standards\nPlease complete them as soon as possible.",
 	"html_body":"",
 	"cc":"drogers@mcp.com",
 	"bcc":"",
@@ -7545,8 +7545,8 @@ Email sent successfully to hernandezm@mcp.com
 ```json arguments
 {
 	"query":"SELECT EMPLOYEE_ID,
-	 NAME,
-	 EMAIL FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE WHERE EMPLOYEE_ID IN (6001,
+	NAME,
+	EMAIL FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE WHERE EMPLOYEE_ID IN (6001,
 	6003);"
 }
 
@@ -7575,7 +7575,7 @@ data:
 ```json arguments
 {
 	"query":"SELECT e.NAME AS SUP_NAME,
-	 e.EMAIL AS SUP_EMAIL\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (\n  SELECT REPORT_TO_ID FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE WHERE EMPLOYEE_ID IN (6001,
+	e.EMAIL AS SUP_EMAIL\nFROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE e\nWHERE e.EMPLOYEE_ID IN (\n  SELECT REPORT_TO_ID FROM LANDING_TASK_REMINDER.PUBLIC.EMPLOYEE WHERE EMPLOYEE_ID IN (6001,
 	6003)\n);"
 }
 
@@ -7604,7 +7604,7 @@ data:
 	"to":"franka73@mcp.com",
 	"subject":"Reminder: Overdue training tasks",
 	"body":"Dear Frank Allen,
-	 You have the following training tasks to complete:\nBackend Development Environment\nPlease complete them as soon as possible.",
+	You have the following training tasks to complete:\nBackend Development Environment\nPlease complete them as soon as possible.",
 	"html_body":"",
 	"cc":"jennifer.baker@mcp.com",
 	"bcc":"",
@@ -7629,7 +7629,7 @@ Email sent successfully to franka73@mcp.com
 	"to":"debrac99@mcp.com",
 	"subject":"Reminder: Overdue training tasks",
 	"body":"Dear Debra Chavez,
-	 You have the following training tasks to complete:\nTesting Development Process\nPlease complete them as soon as possible.",
+	You have the following training tasks to complete:\nTesting Development Process\nPlease complete them as soon as possible.",
 	"html_body":"",
 	"cc":"drogers@mcp.com",
 	"bcc":"",
@@ -7652,8 +7652,8 @@ Email sent successfully to debrac99@mcp.com
 ```json arguments
 {
 	"insight":"Assigned onboarding tasks for 3 new employees based on supervisor’s group (Backend,
-	 Frontend,
-	 Testing) using average durations for deadlines; updated EMPLOYEE_LANDING.LANDING_TASK_ASSIGNED to TRUE; sent onboarding emails to employees with supervisor CC; identified overdue incomplete tasks for existing employees and sent reminder emails with supervisor CC."
+	Frontend,
+	Testing) using average durations for deadlines; updated EMPLOYEE_LANDING.LANDING_TASK_ASSIGNED to TRUE; sent onboarding emails to employees with supervisor CC; identified overdue incomplete tasks for existing employees and sent reminder emails with supervisor CC."
 }
 
 ```

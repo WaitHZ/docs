@@ -264,9 +264,9 @@ def main(args):
                                                         for i, arg in enumerate(argu_s):
                                                             if i == 0:
                                                                 # dst.write(f"\t{arg.replace("@", "@")}")
-                                                                arg_str += f"\t{arg.replace("@", "@")}"
+                                                                arg_str += f"\t{arg.strip()}"
                                                             else:
-                                                                arg_str += f",\n\t{arg.replace("@", "@")}"
+                                                                arg_str += f",\n\t{arg.strip()}"
                                                                 # dst.write(f",\n\t{arg.replace("@", "@")}")
                                                         # dst.write("\n}\n")
                                                         arg_str += "\n}\n"
@@ -299,6 +299,7 @@ def main(args):
                                             tool_res = json.load(open("_tmp", "r", encoding="utf-8"))
                                             tool_res = tool_res["text"]
                                             tool_res = tool_res.replace('```', '')
+                                            tool_res = tool_res.replace('{', r'\{').replace('}', r'\}')
                                         except:
                                             tool_res = msg['content']
                                             if tool_res.startswith('[') and tool_res.endswith(']'):

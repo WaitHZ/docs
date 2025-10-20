@@ -230,8 +230,8 @@ Creation date: D:20250819112512+00'00'
 ```json arguments
 {
 	"pdf_file_path": "/workspace/dumps/workspace/futuregadget_pricing.pdf",
-	 "start_page": 1,
-	 "end_page": 3
+	"start_page": 1,
+	"end_page": 3
 }
 
 ```
@@ -363,7 +363,7 @@ Now let me create the BigQuery dataset and load the data:
 ```json arguments
 {
 	"dataset_id": "bigquery_pricing_analysis",
-	 "description": "Pricing analysis dataset for competitor comparison"
+	"description": "Pricing analysis dataset for competitor comparison"
 }
 
 ```
@@ -388,10 +388,10 @@ Good, the dataset already exists. Now let me load the CSV data into the BigQuery
 ```json arguments
 {
 	"dataset_id": "bigquery_pricing_analysis",
-	 "table_id": "analysis",
-	 "csv_file_path": "/workspace/dumps/workspace/price_comparison.csv",
-	 "skip_header": true,
-	 "write_mode": "WRITE_TRUNCATE"
+	"table_id": "analysis",
+	"csv_file_path": "/workspace/dumps/workspace/price_comparison.csv",
+	"skip_header": true,
+	"write_mode": "WRITE_TRUNCATE"
 }
 
 ```
@@ -426,11 +426,11 @@ Total rows: 10, Returned: 10
 Bytes processed: 420, Execution time: 722ms
 
 Sample results (first 5 rows):
-Row 1: {'Product Name': 'AutoTask Manager', 'Our Price': 119.99, 'Competitor Price': 99.99, 'Price Difference': 20.0}
-Row 2: {'Product Name': 'CloudSync Enterprise', 'Our Price': 89.99, 'Competitor Price': 129.99, 'Price Difference': -40.0}
-Row 3: {'Product Name': 'DataFlow Analyzer', 'Our Price': 1599.99, 'Competitor Price': 1399.0, 'Price Difference': 200.99}
-Row 4: {'Product Name': 'DataStream Basic', 'Our Price': 89.99, 'Competitor Price': 69.99, 'Price Difference': 20.0}
-Row 5: {'Product Name': 'MobileShield', 'Our Price': 79.99, 'Competitor Price': 49.99, 'Price Difference': 30.0}
+Row 1: \{'Product Name': 'AutoTask Manager', 'Our Price': 119.99, 'Competitor Price': 99.99, 'Price Difference': 20.0\}
+Row 2: \{'Product Name': 'CloudSync Enterprise', 'Our Price': 89.99, 'Competitor Price': 129.99, 'Price Difference': -40.0\}
+Row 3: \{'Product Name': 'DataFlow Analyzer', 'Our Price': 1599.99, 'Competitor Price': 1399.0, 'Price Difference': 200.99\}
+Row 4: \{'Product Name': 'DataStream Basic', 'Our Price': 89.99, 'Competitor Price': 69.99, 'Price Difference': 20.0\}
+Row 5: \{'Product Name': 'MobileShield', 'Our Price': 79.99, 'Competitor Price': 49.99, 'Price Difference': 30.0\}
 ... and 5 more rows
 ```
 
@@ -453,11 +453,11 @@ Perfect! Let me also create a summary analysis report to provide additional insi
 	\n  SUM(CASE WHEN `Price Difference` > 0 THEN 1 ELSE 0 END) as Products_More_Expensive,
 	\n  SUM(CASE WHEN `Price Difference` < 0 THEN 1 ELSE 0 END) as Products_Less_Expensive,
 	\n  ROUND(AVG(`Price Difference`),
-	 2) as Avg_Price_Difference,
+	2) as Avg_Price_Difference,
 	\n  ROUND(MIN(`Price Difference`),
-	 2) as Max_Disadvantage,
+	2) as Max_Disadvantage,
 	\n  ROUND(MAX(`Price Difference`),
-	 2) as Max_Advantage\nFROM `bigquery_pricing_analysis.analysis`\n"
+	2) as Max_Advantage\nFROM `bigquery_pricing_analysis.analysis`\n"
 }
 
 ```
@@ -468,7 +468,7 @@ Total rows: 1, Returned: 1
 Bytes processed: 80, Execution time: 548ms
 
 Sample results (first 5 rows):
-Row 1: {'Total_Products': 10, 'Products_More_Expensive': 5, 'Products_Less_Expensive': 5, 'Avg_Price_Difference': -20.89, 'Max_Disadvantage': -300.0, 'Max_Advantage': 200.99}
+Row 1: \{'Total_Products': 10, 'Products_More_Expensive': 5, 'Products_Less_Expensive': 5, 'Avg_Price_Difference': -20.89, 'Max_Disadvantage': -300.0, 'Max_Advantage': 200.99\}
 
 ```
 
@@ -596,10 +596,10 @@ Total rows: 4, Returned: 4
 Bytes processed: 10485760, Execution time: 527ms
 
 Sample results (first 5 rows):
-Row 1: {'column_name': 'Product Name', 'data_type': 'STRING'}
-Row 2: {'column_name': 'Our Price', 'data_type': 'FLOAT64'}
-Row 3: {'column_name': 'Competitor Price', 'data_type': 'FLOAT64'}
-Row 4: {'column_name': 'Price Difference', 'data_type': 'FLOAT64'}
+Row 1: \{'column_name': 'Product Name', 'data_type': 'STRING'\}
+Row 2: \{'column_name': 'Our Price', 'data_type': 'FLOAT64'\}
+Row 3: \{'column_name': 'Competitor Price', 'data_type': 'FLOAT64'\}
+Row 4: \{'column_name': 'Price Difference', 'data_type': 'FLOAT64'\}
 
 ```
 
@@ -633,11 +633,11 @@ Total rows: 10, Returned: 10
 Bytes processed: 420, Execution time: 794ms
 
 Sample results (first 5 rows):
-Row 1: {'Product Name': 'DataFlow Analyzer', 'Our Price': 1599.99, 'Competitor Price': 1399.0, 'Price Difference': 200.99, 'Competitive_Position': 'More Expensive'}
-Row 2: {'Product Name': 'SmartWidget Pro', 'Our Price': 399.99, 'Competitor Price': 349.95, 'Price Difference': 50.04, 'Competitive_Position': 'More Expensive'}
-Row 3: {'Product Name': 'MobileShield', 'Our Price': 79.99, 'Competitor Price': 49.99, 'Price Difference': 30.0, 'Competitive_Position': 'More Expensive'}
-Row 4: {'Product Name': 'AutoTask Manager', 'Our Price': 119.99, 'Competitor Price': 99.99, 'Price Difference': 20.0, 'Competitive_Position': 'More Expensive'}
-Row 5: {'Product Name': 'DataStream Basic', 'Our Price': 89.99, 'Competitor Price': 69.99, 'Price Difference': 20.0, 'Competitive_Position': 'More Expensive'}
+Row 1: \{'Product Name': 'DataFlow Analyzer', 'Our Price': 1599.99, 'Competitor Price': 1399.0, 'Price Difference': 200.99, 'Competitive_Position': 'More Expensive'\}
+Row 2: \{'Product Name': 'SmartWidget Pro', 'Our Price': 399.99, 'Competitor Price': 349.95, 'Price Difference': 50.04, 'Competitive_Position': 'More Expensive'\}
+Row 3: \{'Product Name': 'MobileShield', 'Our Price': 79.99, 'Competitor Price': 49.99, 'Price Difference': 30.0, 'Competitive_Position': 'More Expensive'\}
+Row 4: \{'Product Name': 'AutoTask Manager', 'Our Price': 119.99, 'Competitor Price': 99.99, 'Price Difference': 20.0, 'Competitive_Position': 'More Expensive'\}
+Row 5: \{'Product Name': 'DataStream Basic', 'Our Price': 89.99, 'Competitor Price': 69.99, 'Price Difference': 20.0, 'Competitive_Position': 'More Expensive'\}
 ... and 5 more rows
 ```
 
@@ -1004,8 +1004,8 @@ Creation date: D:20250819112512+00'00'
 ```json arguments
 {
 	"pdf_file_path": "/workspace/dumps/workspace/futuregadget_pricing.pdf",
-	 "start_page": 1,
-	 "end_page": 3
+	"start_page": 1,
+	"end_page": 3
 }
 
 ```
@@ -1494,10 +1494,10 @@ Now I'll load the data into BigQuery to create the table:
 ```json arguments
 {
 	"dataset_id": "bigquery_pricing_analysis",
-	 "table_id": "analysis",
-	 "csv_file_path": "/workspace/dumps/workspace/price_comparison_results.csv",
-	 "skip_header": true,
-	 "write_mode": "WRITE_TRUNCATE"
+	"table_id": "analysis",
+	"csv_file_path": "/workspace/dumps/workspace/price_comparison_results.csv",
+	"skip_header": true,
+	"write_mode": "WRITE_TRUNCATE"
 }
 
 ```
@@ -1532,11 +1532,11 @@ Total rows: 10, Returned: 10
 Bytes processed: 420, Execution time: 626ms
 
 Sample results (first 5 rows):
-Row 1: {'Product Name': 'DataFlow Analyzer', 'Our Price': 1599.99, 'Competitor Price': 1399.0, 'Price Difference': 200.99}
-Row 2: {'Product Name': 'SmartWidget Pro', 'Our Price': 399.99, 'Competitor Price': 349.95, 'Price Difference': 50.04000000000002}
-Row 3: {'Product Name': 'MobileShield', 'Our Price': 79.99, 'Competitor Price': 49.99, 'Price Difference': 29.999999999999993}
-Row 4: {'Product Name': 'DataStream Basic', 'Our Price': 89.99, 'Competitor Price': 69.99, 'Price Difference': 20.0}
-Row 5: {'Product Name': 'AutoTask Manager', 'Our Price': 119.99, 'Competitor Price': 99.99, 'Price Difference': 20.0}
+Row 1: \{'Product Name': 'DataFlow Analyzer', 'Our Price': 1599.99, 'Competitor Price': 1399.0, 'Price Difference': 200.99\}
+Row 2: \{'Product Name': 'SmartWidget Pro', 'Our Price': 399.99, 'Competitor Price': 349.95, 'Price Difference': 50.04000000000002\}
+Row 3: \{'Product Name': 'MobileShield', 'Our Price': 79.99, 'Competitor Price': 49.99, 'Price Difference': 29.999999999999993\}
+Row 4: \{'Product Name': 'DataStream Basic', 'Our Price': 89.99, 'Competitor Price': 69.99, 'Price Difference': 20.0\}
+Row 5: \{'Product Name': 'AutoTask Manager', 'Our Price': 119.99, 'Competitor Price': 99.99, 'Price Difference': 20.0\}
 ... and 5 more rows
 ```
 
@@ -1571,7 +1571,7 @@ Total rows: 1, Returned: 1
 Bytes processed: 80, Execution time: 518ms
 
 Sample results (first 5 rows):
-Row 1: {'Total_Products': 10, 'Products_More_Expensive': 5, 'Products_Cheaper': 5, 'Average_Price_Difference': -20.892999999999994, 'Max_Advantage': -300.0, 'Max_Disadvantage': 200.99}
+Row 1: \{'Total_Products': 10, 'Products_More_Expensive': 5, 'Products_Cheaper': 5, 'Average_Price_Difference': -20.892999999999994, 'Max_Advantage': -300.0, 'Max_Disadvantage': 200.99\}
 
 ```
 
