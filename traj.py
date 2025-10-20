@@ -281,7 +281,7 @@ def main(args):
                                                 raise NotImplementedError(f"Unsupported tool call type: {msg_tool_call['type']}")
                                     else:
                                         dst.write(f"<div className=\"thinking-box\">\n")
-                                        dst.write(f"🧐`Agent`\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}")}\n</div>\n\n")
+                                        dst.write(f"🧐`Agent`\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}").replace("<", "[").replace(">", ']')}\n</div>\n\n")
                                 elif msg["role"] == "tool":
                                     tooloutput_type = categorize_tool_output(msg['content'])
                                     tool_call_id = msg["tool_call_id"]
@@ -299,7 +299,6 @@ def main(args):
                                             tool_res = json.load(open("_tmp", "r", encoding="utf-8"))
                                             tool_res = tool_res["text"]
                                             tool_res = tool_res.replace('```', '')
-                                            tool_res = tool_res.replace('{', r'\{').replace('}', r'\}')
                                         except:
                                             tool_res = msg['content']
                                             if tool_res.startswith('[') and tool_res.endswith(']'):

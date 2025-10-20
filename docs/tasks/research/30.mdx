@@ -379,7 +379,7 @@ Good! I can see the CVPR 2025 accepted papers page. Let me accept the cookie ban
 ### Ran Playwright code
 js
 // Click Accept button in cookie consent banner
-await page.getByRole('button', \{ name: 'Accept' \}).click();
+await page.getByRole('button', { name: 'Accept' }).click();
 
 
 ### New console messages
@@ -502,16 +502,16 @@ The page has 502 spans which is too much to navigate manually. Let me try to use
 
 ```json output_result
 ### Result
-\{
+{
   "totalPapers": 4,
   "sample": [
-    \{
+    {
       "text": "\n                    \n                        OralXrays-9: Towards Hospital-Scale Panoramic X-ray Anomaly Detection via Personalized Multi-Object Query-Aware Mining\n                    \n              ",
       "authors": [
         "Xrays-9: Towards Hospital-Scale Panoramic X-ray Anomaly Detection via Personalized Multi-Object Query-Aware Mining"
       ]
-    \},
-    \{
+    },
+    {
       "text": "\n                    \n                        Hierarchical Adaptive Filtering Network for Text Image Specular Highlight Removal\n                    \n                    \n                    Poster Ses",
       "authors": [
         "Jingbo Hu",
@@ -519,8 +519,8 @@ The page has 502 spans which is too much to navigate manually. Let me try to use
         "Gang Fu",
         "Chunxia Xiao"
       ]
-    \},
-    \{
+    },
+    {
       "text": "\n                    \n                        Learning to Highlight Audio by Watching Movies\n                    \n                    \n                    Poster Session 5\n                    \n       ",
       "authors": [
         "Ruohan Gao",
@@ -531,21 +531,21 @@ The page has 502 spans which is too much to navigate manually. Let me try to use
         "Anurag Kumar",
         "Sanjeel Parekh"
       ]
-    \},
-    \{
+    },
+    {
       "text": "\n                    \n                        No Thing, Nothing: Highlighting Safety-Critical Classes for Robust LiDAR Semantic Segmentation in Adverse Weather\n                    \n                   ",
       "authors": [
         "HwiJeong Lee",
         "Inha Kang",
         "Hyunjung Shim"
       ]
-    \}
+    }
   ]
-\}
+}
 
 ### Ran Playwright code
 js
-await page.evaluate('() => \{\n  const papers = [];\n  const rows = document.querySelectorAll(\'table tr\');\n  \n  for (let row of rows) \{\n    const cells = row.querySelectorAll(\'td\');\n    if (cells.length >= 1) \{\n      const authorCell = cells[0];\n      const authorText = authorCell.textContent || \'\';\n      \n      // Extract authors (they appear after "Poster Session X" or similar)\n      const match = authorText.match(/(?:Poster Session \\d+|Oral|Highlight[^·]*)(.*)/);\n      if (match && match[1]) \{\n        const authors = match[1].split(\'·\').map(a => a.trim()).filter(a => a.length > 0);\n        if (authors.length > 0) \{\n          papers.push(\{\n            text: authorText.substring(0, 200),\n            authors: authors\n          \});\n        \}\n      \}\n    \}\n  \}\n  \n  return \{\n    totalPapers: papers.length,\n    sample: papers.slice(0, 10)\n  \};\n\}');
+await page.evaluate('() => {\n  const papers = [];\n  const rows = document.querySelectorAll(\'table tr\');\n  \n  for (let row of rows) {\n    const cells = row.querySelectorAll(\'td\');\n    if (cells.length >= 1) {\n      const authorCell = cells[0];\n      const authorText = authorCell.textContent || \'\';\n      \n      // Extract authors (they appear after "Poster Session X" or similar)\n      const match = authorText.match(/(?:Poster Session \\d+|Oral|Highlight[^·]*)(.*)/);\n      if (match && match[1]) {\n        const authors = match[1].split(\'·\').map(a => a.trim()).filter(a => a.length > 0);\n        if (authors.length > 0) {\n          papers.push({\n            text: authorText.substring(0, 200),\n            authors: authors\n          });\n        }\n      }\n    }\n  }\n  \n  return {\n    totalPapers: papers.length,\n    sample: papers.slice(0, 10)\n  };\n}');
 
 
 ### New console messages
@@ -671,7 +671,7 @@ The page seems to be dynamically loaded. Let me scroll down to load more content
 
 ### Ran Playwright code
 js
-await page.evaluate('async () => \{\n  // Scroll to bottom to load all content\n  await new Promise(resolve => \{\n    let totalHeight = 0;\n    const distance = 1000;\n    const timer = setInterval(() => \{\n      const scrollHeight = document.body.scrollHeight;\n      window.scrollBy(0, distance);\n      totalHeight += distance;\n      \n      if(totalHeight >= scrollHeight)\{\n        clearInterval(timer);\n        resolve();\n      \}\n    \}, 100);\n  \});\n  \n  // Wait a bit for content to load\n  await new Promise(resolve => setTimeout(resolve, 3000));\n  \n  return \'Scrolled to bottom\';\n\}');
+await page.evaluate('async () => {\n  // Scroll to bottom to load all content\n  await new Promise(resolve => {\n    let totalHeight = 0;\n    const distance = 1000;\n    const timer = setInterval(() => {\n      const scrollHeight = document.body.scrollHeight;\n      window.scrollBy(0, distance);\n      totalHeight += distance;\n      \n      if(totalHeight >= scrollHeight){\n        clearInterval(timer);\n        resolve();\n      }\n    }, 100);\n  });\n  \n  // Wait a bit for content to load\n  await new Promise(resolve => setTimeout(resolve, 3000));\n  \n  return \'Scrolled to bottom\';\n}');
 
 
 ### New console messages
@@ -915,21 +915,21 @@ author_counts = Counter(all_authors)
 # Get top authors
 top_authors = author_counts.most_common(50)
 
-print(f"Total papers found: \{len(matches)\}")
-print(f"Total unique authors: \{len(author_counts)\}")
+print(f"Total papers found: {len(matches)}")
+print(f"Total unique authors: {len(author_counts)}")
 print("\nTop 50 authors by number of publications at CVPR 2025:")
 print("=" * 60)
 for i, (author, count) in enumerate(top_authors, 1):
-    print(f"\{i\}. \{author\}: \{count\} papers")
+    print(f"{i}. {author}: {count} papers")
 
 # Save the results
 with open('/workspace/dumps/workspace/cvpr_2025_author_stats.txt', 'w') as f:
-    f.write(f"Total papers found: \{len(matches)\}\n")
-    f.write(f"Total unique authors: \{len(author_counts)\}\n\n")
+    f.write(f"Total papers found: {len(matches)}\n")
+    f.write(f"Total unique authors: {len(author_counts)}\n\n")
     f.write("Top 50 authors by number of publications at CVPR 2025:\n")
     f.write("=" * 60 + "\n")
     for i, (author, count) in enumerate(top_authors, 1):
-        f.write(f"\{i\}. \{author\}: \{count\} papers\n")
+        f.write(f"{i}. {author}: {count} papers\n")
 
 print("\nResults saved to cvpr_2025_author_stats.txt")
 
@@ -1144,7 +1144,7 @@ Perfect! I can see there's a link to browse by authors. Let me click on that lin
 ### Ran Playwright code
 js
 // Click Link to browse authors list
-await page.getByRole('link', \{ name: '~ 12,000 authors (CVPR-2025)' \}).click();
+await page.getByRole('link', { name: '~ 12,000 authors (CVPR-2025)' }).click();
 
 
 ### Open tabs
@@ -3519,12 +3519,12 @@ Took the viewport screenshot and saved it as /workspace/dumps/workspace/.playwri
 ### Ran Playwright code
 js
 // Screenshot viewport and save it as /workspace/dumps/workspace/.playwright_output/page-2025-10-17T23-15-00-508Z.jpeg
-await page.screenshot(\{
+await page.screenshot({
   path: '/workspace/dumps/workspace/.playwright_output/page-2025-10-17T23-15-00-508Z.jpeg',
   quality: 50,
   scale: 'css',
   type: 'jpeg'
-\});
+});
 
 
 ```
@@ -5868,7 +5868,7 @@ Sitelinks: No sitelinks
     
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag()\{dataLayer.push(arguments);\}
+        function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-GSY69BENC6');
     </script>
@@ -5876,21 +5876,21 @@ Sitelinks: No sitelinks
 
 	<script>
 
-	    function X() \{
+	    function X() {
 	        window.filter="paper";
             $('#result').load('../code/venue.html');
-		\}
+		}
 		
-		$(window).load(function() \{
+		$(window).load(function() {
 	        $('#footer').load('../code/footer.html');
-        \});  
+        });  
 
 
-		$(document).ready(function()\{
+		$(document).ready(function(){
             load_functions();
             loadMenu();
             verify00(X);		    
-		\}); 		
+		}); 		
 		window.addEventListener('DOMContentLoaded', loadMenu); 
 	</script>
 </head>
@@ -6116,7 +6116,7 @@ Available commands: next_page, prev_page, jump_to_page, first_page, last_page
  *  - Compatible with WordPress AJAX (`ajaxmeta.ajax_url`) and dynamic DOM extensions.
  */
 
-jQuery(document).ready(function ($) \{
+jQuery(document).ready(function ($) {
   var batch = 0;
   var n_records = 0;
   var container = $('#paperlist');
@@ -6133,35 +6133,35 @@ jQuery(document).ready(function ($) \{
    * - If `is_fetchall` is true, recursively loads all pages.
    * - Re-applies filters and sorting after new rows are added.
    */
-  function loadMoreRows() \{
-    $.ajax(\{
+  function loadMoreRows() {
+    $.ajax({
       url: ajaxmeta.ajax_url,
       type: 'GET',
-      data: \{
+      data: {
         action: 'load_paperlist',
         batch: batch,
         conf: ajaxmeta.conf,
         year: ajaxmeta.year,
         mode: ajaxmeta.mode,
         track: ajaxmeta.track,
-      \},
-      success: function (data) \{
-        if (data == '0') \{
+      },
+      success: function (data) {
+        if (data == '0') {
           // ✅ All data fetched — hide the button
           $('#btn_fetchall').hide();
           return;
-        \}
+        }
 
-        if (data.length > 0) \{
+        if (data.length > 0) {
           container.append(data);
           n_records += (data.match(/<tr>/g) || []).length;
 
           // 📌 Cache numeric/text value once per cell for fast sort
-          $('#paperlist tbody tr').each(function () \{
-            $(this).find('td').each(function () \{
+          $('#paperlist tbody tr').each(function () {
+            $(this).find('td').each(function () {
               $(this).attr('data-val', $(this).text().trim());
-            \});
-          \});
+            });
+          });
 
           $('#n_records').html(n_records);
           batch++;
@@ -6169,47 +6169,47 @@ jQuery(document).ready(function ($) \{
           attachHoverHighlighting(); // ⬅ Ensure this is here
 
           // 🔄 Apply metrics mode to new rows
-          if ($('#metrics_switch').length) \{
+          if ($('#metrics_switch').length) {
             $('#metrics_switch').trigger('change');
-          \}
+          }
 
           setTimeout(autotoggleEmptyColumns, 100); // Delay to ensure all rows are appended
 
-        \}
+        }
 
-        if (is_fetchall) \{
+        if (is_fetchall) {
           loadMoreRows();
-        \}
+        }
 
         applyFilters(); // Apply filters after new rows are loaded
 
         // Reapply sort after loading new rows
-        if (currentSortColumn !== null) \{
+        if (currentSortColumn !== null) {
           sortTable(currentSortColumn, currentSortAscending);
-        \}
-      \},
-      error: function(xhr, status, error) \{
+        }
+      },
+      error: function(xhr, status, error) {
         debugger;
           console.error('AJAX Error:', status, error);
           console.log('Response Text:', xhr.responseText);
-      \}
-    \});
-  \}
+      }
+    });
+  }
 
   /**
    * 🔍 Find "Status" column index dynamically
    * - Searches table headers to determine the column index of the "Status" field.
    * - Ensures compatibility even if table column order changes.
    */
-  function findStatusColumnIndex() \{
+  function findStatusColumnIndex() {
     statusColumnIndex = -1; // Reset before searching
-    $('#paperlist thead th').each(function (index) \{
-      if ($(this).text().trim().toLowerCase() === "status") \{
+    $('#paperlist thead th').each(function (index) {
+      if ($(this).text().trim().toLowerCase() === "status") {
         statusColumnIndex = index;
         return false; // Stop loop once found
-      \}
-    \});
-  \}
+      }
+    });
+  }
 
   // 🔄 Find the column index on page load
   findStatusColumnIndex();
@@ -6220,42 +6220,42 @@ jQuery(document).ready(function ($) \{
    * - Stores it using jQuery `.data('status')` for faster access during filtering.
    * - Ensures repeated DOM access is minimized.
    */
-  function cacheStatusData() \{
-    if (statusColumnIndex === -1) \{
+  function cacheStatusData() {
+    if (statusColumnIndex === -1) {
       findStatusColumnIndex(); // 🔄 Auto-find column index if not set
-    \}
+    }
 
-    if (statusColumnIndex !== -1) \{ // Ensure "Status" column exists before proceeding
-      $('#paperlist tbody tr').each(function () \{
+    if (statusColumnIndex !== -1) { // Ensure "Status" column exists before proceeding
+      $('#paperlist tbody tr').each(function () {
         var statusText = $(this).find('td').eq(statusColumnIndex).text().toLowerCase();
         $(this).data('status', statusText);
-      \});
-    \}
-  \}
+      });
+    }
+  }
 
   // 🎬 Initial load
   loadMoreRows();
 
   // when scroll to the buttom, load more
-  // $(window).scroll(function () \{
-  //     if ($(window).scrollTop() + $(window).height() == $(document).height()) \{
+  // $(window).scroll(function () {
+  //     if ($(window).scrollTop() + $(window).height() == $(document).height()) {
   //         loadMoreRows();
-  //     \}
-  // \}); // disable due to the filter could cause to the bottom of the page
+  //     }
+  // }); // disable due to the filter could cause to the bottom of the page
 
 
   // 🎯 Button: Load all records at once
-  $('#btn_fetchall').click(function () \{
+  $('#btn_fetchall').click(function () {
     is_fetchall = true;
     $(this).prop('disabled', true).text('Loading...');
     loadMoreRows();  // Trigger fetch loop
-  \});
+  });
 
   // 🚫 Button: Toggle rejection filter
-  $('#btn_hide_reject').click(function () \{
+  $('#btn_hide_reject').click(function () {
     is_hide_reject = !is_hide_reject;
     applyFilters();
-  \});
+  });
 
   /**
    * 🔍 Apply all active filters (column inputs + reject toggle)
@@ -6264,112 +6264,112 @@ jQuery(document).ready(function ($) \{
    * - Uses `requestAnimationFrame()` for smooth UI updates.
    * - Updates visible row counts and per-column match statistics.
    */
-  function applyFilters() \{
+  function applyFilters() {
     cancelAnimationFrame(filterTimeout);
-    filterTimeout = requestAnimationFrame(() => \{
+    filterTimeout = requestAnimationFrame(() => {
       const filterValues = [];
-      $('.filter-row input').each(function (i) \{
+      $('.filter-row input').each(function (i) {
         filterValues[i] = $(this).val().toLowerCase();
-      \});
+      });
 
       hiddenCount = 0;
       let visibleRows = 0;
       let n_index_columns = 2;
 
-      $('#paperlist tbody tr').each(function () \{
+      $('#paperlist tbody tr').each(function () {
         const row = $(this);
         const cells = row.find('td');
         let showRow = true;
 
-        for (let i = 0; i < filterValues.length; i++) \{
+        for (let i = 0; i < filterValues.length; i++) {
           if (!filterValues[i]) continue;
           const cellText = cells.eq(i + n_index_columns).text().toLowerCase();
-          if (!cellText.includes(filterValues[i])) \{
+          if (!cellText.includes(filterValues[i])) {
             showRow = false;
             break;
-          \}
-        \}
+          }
+        }
 
         var isRejected = row.data('status').includes('withdraw') || row.data('status').includes('reject');
 
-        if (is_hide_reject && isRejected) \{
+        if (is_hide_reject && isRejected) {
           row.css('display', 'none');
           hiddenCount++;
-        \} else \{
+        } else {
           row.css('display', showRow ? '' : 'none');
           if (showRow) visibleRows++;
-        \}
-      \});
+        }
+      });
 
       updateHiddenCount();
       updateOverallMatchCount(visibleRows);
 
       // ✅ Column counts now consider hidden rejected rows properly
-      $('.filter-row input').each(function (i) \{
+      $('.filter-row input').each(function (i) {
         const count = singleColumnMatchCount(i + n_index_columns, filterValues[i]); // +2 to skip index and row index column
-        $(this).closest('th').find('.column-match-count').text(`#: $\{count\}`);
-      \});
+        $(this).closest('th').find('.column-match-count').text(`#: ${count}`);
+      });
 
       autotoggleEmptyColumns();
-    \});
-  \}
+    });
+  }
 
   /**
  * 🔢 Update UI count of hidden (rejected/withdrawn) papers
  * - Displays total number of hidden rows.
  * - Updates toggle button label accordingly.
  */
-  function updateHiddenCount() \{
-    $('.column-match-count.status').text(`Hidden: $\{hiddenCount\}`);
-    $('#btn_hide_reject').text(is_hide_reject ? `Show Rejected (Hidden: $\{hiddenCount\})` : "Hide Rejected");
-  \}
+  function updateHiddenCount() {
+    $('.column-match-count.status').text(`Hidden: ${hiddenCount}`);
+    $('#btn_hide_reject').text(is_hide_reject ? `Show Rejected (Hidden: ${hiddenCount})` : "Hide Rejected");
+  }
 
   /**
  * 🔢 Display how many rows match current filters
  * - Updates summary label showing number of visible rows vs. total.
  */
-  function updateOverallMatchCount(visibleRows) \{
+  function updateOverallMatchCount(visibleRows) {
     const totalRows = $('#paperlist tbody tr').length;
-    $('#filter-match-count').text(`All Filter Matches: $\{visibleRows\} / $\{totalRows\}`);
-  \}
+    $('#filter-match-count').text(`All Filter Matches: ${visibleRows} / ${totalRows}`);
+  }
 
   /**
    * 📊 Count matches for a specific column
    * - Returns the number of visible rows that match `filterText` in column `colIndex`.
    * - Automatically excludes rejected/withdrawn rows if toggle is active.
    */
-  function singleColumnMatchCount(colIndex, filterText) \{
+  function singleColumnMatchCount(colIndex, filterText) {
     const allRows = $('#paperlist tbody tr');
 
     let count = 0;
-    allRows.each(function () \{
+    allRows.each(function () {
       const row = $(this);
       const isRejected = row.data('status').includes('withdraw') || row.data('status').includes('reject');
 
-      if (is_hide_reject && isRejected) \{
+      if (is_hide_reject && isRejected) {
         return; // Skip hidden rejected rows
-      \}
+      }
 
       const cellText = row.find('td').eq(colIndex).text().toLowerCase();
-      if (!filterText || cellText.includes(filterText)) \{
+      if (!filterText || cellText.includes(filterText)) {
         count++;
-      \}
-    \});
+      }
+    });
 
     return count;
-  \}
+  }
 
   /**
    * ⏳ Generic debounce wrapper
    * - Ensures a function (e.g., `applyFilters`) only runs after a delay.
    * - Prevents over-triggering during rapid input events.
    */
-  function debounce(func, delay) \{
-    return function () \{
+  function debounce(func, delay) {
+    return function () {
       clearTimeout(filterTimeout);
       filterTimeout = setTimeout(func, delay);
-    \};
-  \}
+    };
+  }
 
   // ⌨️ Attach event listeners for filtering (with 100ms debounce)
   $('#paperlist thead').on('keyup change', '.filter-row input', debounce(applyFilters, 100));
@@ -6384,12 +6384,12 @@ jQuery(document).ready(function ($) \{
  ******************************************************************/
 
   // 1️⃣  Custom palette for specific countries
-  const COUNTRY_COLOR_MAP = \{
+  const COUNTRY_COLOR_MAP = {
     'china': '#ff4d4f',  // red
     'united states': '#4d79ff',
     'us': '#4d79ff',
     'usa': '#4d79ff'
-  \};
+  };
   const HIGHLIGHT_ALPHA = 0.8;   // global opacity (0–1)
 
   /**
@@ -6397,39 +6397,39 @@ jQuery(document).ready(function ($) \{
  * - Hashes the string to generate a hue value.
  * - Returns HSLA color string with preset saturation/lightness.
  */
-  function autoColor(name) \{
+  function autoColor(name) {
     let hash = 0;
     for (let i = 0; i < name.length; i++)
       hash = name.charCodeAt(i) + ((hash << 5) - hash);
     const hue = Math.abs(hash) % 360;
-    return `hsla($\{hue\},70%,85%,$\{HIGHLIGHT_ALPHA\})`;
-  \}
+    return `hsla(${hue},70%,85%,${HIGHLIGHT_ALPHA})`;
+  }
 
   /**
  * 🎨 Convert hex color string to RGBA with optional opacity
  * - Supports 3-digit and 6-digit hex formats.
  * - Used for COUNTRY_COLOR_MAP values.
  */
-  function hexToRgba(hex, alpha = HIGHLIGHT_ALPHA) \{
+  function hexToRgba(hex, alpha = HIGHLIGHT_ALPHA) {
     hex = hex.replace('#', '');
     if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
     const int = parseInt(hex, 16);
     const r = (int >> 16) & 255,
       g = (int >> 8) & 255,
       b = int & 255;
-    return `rgba($\{r\},$\{g\},$\{b\},$\{alpha\})`;
-  \}
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
 
   /**
    * 🌐 Resolve country to highlight color
    * - Uses predefined COUNTRY_COLOR_MAP if available.
    * - Falls back to auto-generated pastel color.
    */
-  function countryToColor(country) \{
+  function countryToColor(country) {
     const key = (country || '').toLowerCase().trim();
     const base = COUNTRY_COLOR_MAP[key];
     return base ? hexToRgba(base) : autoColor(key);
-  \}
+  }
 
   /**
  * ✨ Attach hover highlight logic for author/affiliation/country
@@ -6437,61 +6437,61 @@ jQuery(document).ready(function ($) \{
  * - Uses country-based color mapping for consistent highlighting.
  * - Applies background color and transition effect.
  */
-  function attachHoverHighlighting() \{
+  function attachHoverHighlighting() {
 
-    function colourize($el, colour, base) \{
-      $el.css(\{
+    function colourize($el, colour, base) {
+      $el.css({
         'background-color': colour,
-        // 'border': `1px solid $\{base\}`,   // inner border for definition
+        // 'border': `1px solid ${base}`,   // inner border for definition
         'transition': 'background-color 0.12s'
-      \}).attr('data-coloured', '1');
-    \}
+      }).attr('data-coloured', '1');
+    }
 
-    function clearHighlights($row) \{
+    function clearHighlights($row) {
       $row.find('[data-coloured="1"]').removeAttr('style data-coloured');
-    \}
+    }
 
-    function matchAny($row, selector, dataKey, values, colour, base) \{
-      values.forEach(val => \{
-        $row.find(`$\{selector\}[data-$\{dataKey\}*="$\{val\}"]`).each(function () \{
-          const targetVals = (`$\{$(this).data(dataKey)\}`).split('+');
+    function matchAny($row, selector, dataKey, values, colour, base) {
+      values.forEach(val => {
+        $row.find(`${selector}[data-${dataKey}*="${val}"]`).each(function () {
+          const targetVals = (`${$(this).data(dataKey)}`).split('+');
           if (targetVals.includes(val)) colourize($(this), colour, base);
-        \});
-      \});
-    \}
+        });
+      });
+    }
 
     /* ---------- EVENT BINDINGS ---------- */
-    $(document).on('mouseenter', '.author-link', function () \{
+    $(document).on('mouseenter', '.author-link', function () {
       const $row = $(this).closest('tr');
-      const affs = (`$\{$(this).data('aff')\}`).split('+');
-      const countries = (`$\{$(this).data('country')\}`).split('+');
+      const affs = (`${$(this).data('aff')}`).split('+');
+      const countries = (`${$(this).data('country')}`).split('+');
       const base = COUNTRY_COLOR_MAP[(countries[0] || '').toLowerCase()] || autoColor(countries[0] || '');
       const fill = countryToColor(countries[0] || '');
 
       matchAny($row, '.aff-link', 'aff', affs, fill, base);
       matchAny($row, '.country-link', 'index', countries, fill, base);
       colourize($(this), fill, base);
-    \}).on('mouseleave', '.author-link', function () \{
+    }).on('mouseleave', '.author-link', function () {
       clearHighlights($(this).closest('tr'));
-    \});
+    });
 
-    $(document).on('mouseenter', '.aff-link', function () \{
+    $(document).on('mouseenter', '.aff-link', function () {
       const $row = $(this).closest('tr');
-      const affs = (`$\{$(this).data('aff')\}`).split('+');
-      const countries = (`$\{$(this).data('country')\}`).split('+');
+      const affs = (`${$(this).data('aff')}`).split('+');
+      const countries = (`${$(this).data('country')}`).split('+');
       const base = COUNTRY_COLOR_MAP[(countries[0] || '').toLowerCase()] || autoColor(countries[0] || '');
       const fill = countryToColor(countries[0] || '');
 
       matchAny($row, '.author-link', 'aff', affs, fill, base);
       matchAny($row, '.country-link', 'index', countries, fill, base);
       colourize($(this), fill, base);
-    \}).on('mouseleave', '.aff-link', function () \{
+    }).on('mouseleave', '.aff-link', function () {
       clearHighlights($(this).closest('tr'));
-    \});
+    });
 
-    $(document).on('mouseenter', '.country-link', function () \{
+    $(document).on('mouseenter', '.country-link', function () {
       const $row = $(this).closest('tr');
-      const idx = `$\{$(this).data('index')\}`;
+      const idx = `${$(this).data('index')}`;
       const name = $(this).text().trim();
       const base = COUNTRY_COLOR_MAP[name.toLowerCase()] || autoColor(name);
       const fill = countryToColor(name);
@@ -6499,17 +6499,17 @@ jQuery(document).ready(function ($) \{
       matchAny($row, '.author-link', 'country', [idx], fill, base);
       matchAny($row, '.aff-link', 'country', [idx], fill, base);
       colourize($(this), fill, base);
-    \}).on('mouseleave', '.country-link', function () \{
+    }).on('mouseleave', '.country-link', function () {
       clearHighlights($(this).closest('tr'));
-    \});
-  \}
+    });
+  }
 
   // 🔄  Re-attach after every AJAX batch
 
   $('body').append('<div id="author-popup" style="position:absolute;display:none;padding:6px 10px;background:#fff;border:1px solid #ccc;border-radius:6px;font-size:13px;z-index:10000;box-shadow:2px 2px 5px rgba(0,0,0,0.1);"></div>');
 
   // Add the floating profile popup div (only once)
-  if (!$('#author-popup').length) \{
+  if (!$('#author-popup').length) {
     $('body').append(`
       <div id="author-popup" style="
         position:absolute;
@@ -6525,12 +6525,12 @@ jQuery(document).ready(function ($) \{
         line-height:1.6;
       "></div>
     `);
-  \}
+  }
 
   let hidePopupTimeout = null;
 
   // Hover on author span
-  $(document).on('mouseenter', '.author-link', function (e) \{
+  $(document).on('mouseenter', '.author-link', function (e) {
     clearTimeout(hidePopupTimeout);
 
     const gs = $(this).data('gs');
@@ -6543,45 +6543,45 @@ jQuery(document).ready(function ($) \{
     if (!gs && !hp && !dblp && !or) return;
 
     let content = `
-      <div style="font-weight:bold; font-size:14px; margin-bottom:6px;">$\{name\}</div>
+      <div style="font-weight:bold; font-size:14px; margin-bottom:6px;">${name}</div>
       <div style="margin-top:4px;">
-        $\{gs ? `<a href="$\{gs\}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;margin-bottom:4px;">Google Scholar</a>` : ''\}
-        $\{hp ? `<a href="$\{hp\}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;">Homepage</a>` : ''\}
-        $\{dblp ? `<a href="$\{dblp\}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;margin-top:4px;">DBLP</a>` : ''\}
-        $\{or ? `<a href="$\{or\}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;margin-top:4px;">OpenReview</a>` : ''\}
+        ${gs ? `<a href="${gs}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;margin-bottom:4px;">Google Scholar</a>` : ''}
+        ${hp ? `<a href="${hp}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;">Homepage</a>` : ''}
+        ${dblp ? `<a href="${dblp}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;margin-top:4px;">DBLP</a>` : ''}
+        ${or ? `<a href="${or}" target="_blank" style="color:#0645ad;text-decoration:none;display:block;margin-top:4px;">OpenReview</a>` : ''}
       </div>
     `;
 
     $('#author-popup')
       .html(content)
-      .css(\{
+      .css({
         top: e.pageY + 12 + 'px',
         left: e.pageX - 12 + 'px',
         display: 'block',
         opacity: 1
-      \});
-  \}).on('mousemove', '.author-link', function (e) \{
-    $('#author-popup').css(\{
+      });
+  }).on('mousemove', '.author-link', function (e) {
+    $('#author-popup').css({
       top: e.pageY + 12 + 'px',
       left: e.pageX - 12 + 'px'
-    \});
-  \}).on('mouseleave', '.author-link', function () \{
-    hidePopupTimeout = setTimeout(() => \{
+    });
+  }).on('mouseleave', '.author-link', function () {
+    hidePopupTimeout = setTimeout(() => {
       $('#author-popup').fadeOut(150);
-    \}, 400);
-  \});
+    }, 400);
+  });
 
   // Prevent flicker when hovering into popup
-  $(document).on('mouseenter', '#author-popup', function () \{
+  $(document).on('mouseenter', '#author-popup', function () {
     clearTimeout(hidePopupTimeout);
-  \}).on('mouseleave', '#author-popup', function () \{
+  }).on('mouseleave', '#author-popup', function () {
     $('#author-popup').fadeOut(50);
-  \});
+  });
 
 
-  $('#aff_switch').on('change', function () \{
+  $('#aff_switch').on('change', function () {
     const mode = $(this).val();
-    $('.aff-link').each(function () \{
+    $('.aff-link').each(function () {
       const dep = $(this).data('dep');
       const campus = $(this).data('campus');
       const norm = $(this).data('norm');
@@ -6589,63 +6589,63 @@ jQuery(document).ready(function ($) \{
       const url = $(this).data('url');
 
       let text = norm;
-      if (mode === 'dep') \{
-        if (dep || campus) \{
-          text = `$\{dep ? `<span style="color:#555;font-style:italic;">$\{dep\}</span>, ` : ''\}` +
-            `$\{campus ? `<span style="color:#999;">$\{campus\}</span>, ` : ''\}` +
+      if (mode === 'dep') {
+        if (dep || campus) {
+          text = `${dep ? `<span style="color:#555;font-style:italic;">${dep}</span>, ` : ''}` +
+            `${campus ? `<span style="color:#999;">${campus}</span>, ` : ''}` +
             norm;
-        \}
-      \} else if (mode === 'abbr') \{
+        }
+      } else if (mode === 'abbr') {
         text = abbr || norm;
-      \}
+      }
 
-      const link = url ? `<a href="$\{url\}" target="_blank">$\{text\}</a>` : text;
+      const link = url ? `<a href="${url}" target="_blank">${text}</a>` : text;
       $(this).html(link);
-    \});
-  \});
+    });
+  });
 
-  $('#metrics_switch').on('change', function () \{
+  $('#metrics_switch').on('change', function () {
     const mode = $(this).val();
-    $('.metrics-cell').each(function () \{
+    $('.metrics-cell').each(function () {
       const $cell = $(this);
-      if (mode === 'gs' || mode === 'rating_avg' || mode === 'rating_str') \{
+      if (mode === 'gs' || mode === 'rating_avg' || mode === 'rating_str') {
         const html = $cell.data(mode);
         $cell.html(html ?? '');
-      \} else \{
+      } else {
         const val = $cell.data(mode);
         $cell.text(val ?? '');
-      \}
-    \});
+      }
+    });
 
-  \});
+  });
 
-  $('#rating_avg_switch').on('change', function () \{
+  $('#rating_avg_switch').on('change', function () {
     const mode = $(this).val();
-    $('.rating-cell').each(function () \{
+    $('.rating-cell').each(function () {
       const $cell = $(this);
-      if (mode === 'all') \{
+      if (mode === 'all') {
         const html = $cell.attr('data-all');
         $cell.html(html ?? '');
-      \} else \{
+      } else {
         const val = $cell.data(mode);
         $cell.text(val ?? '');
-      \}
-    \});
-  \});
+      }
+    });
+  });
   
-  $('#confidence_avg_switch').on('change', function () \{
+  $('#confidence_avg_switch').on('change', function () {
     const mode = $(this).val();
-    $('.confidence-cell').each(function () \{
+    $('.confidence-cell').each(function () {
       const $cell = $(this);
-      if (mode === 'all') \{
+      if (mode === 'all') {
         const html = $cell.attr('data-all');
         $cell.html(html ?? '');
-      \} else \{
+      } else {
         const val = $cell.data(mode);
         $cell.text(val ?? '');
-      \}
-    \});
-  \});
+      }
+    });
+  });
   
 
   let currentSortColumn = null;
@@ -6658,18 +6658,18 @@ jQuery(document).ready(function ($) \{
  * - Maintains sort state globally (ascending/descending).
  * - Calls `autotoggleEmptyColumns()` after reordering.
  */
-  function sortTable(colIndex, ascending) \{
+  function sortTable(colIndex, ascending) {
     const tbody = document.querySelector('#paperlist tbody');
     const rows = Array.from(tbody.rows);          // live HTMLCollection → real array
 
     /* ---- 1️⃣  read-once, work on JS objects only ----------------------- */
-    const numeric = rows.every(r => \{
+    const numeric = rows.every(r => {
       // const txt = r.cells[colIndex].dataset.val ?? r.cells[colIndex].textContent.trim();
       const txt = r.cells[colIndex].textContent.trim();
       return txt === '' || !isNaN(+txt);
-    \});
+    });
 
-    rows.sort((a, b) => \{
+    rows.sort((a, b) => {
       // const A = a.cells[colIndex].dataset.val ?? a.cells[colIndex].textContent;
       // const B = b.cells[colIndex].dataset.val ?? b.cells[colIndex].textContent;
       const A = a.cells[colIndex].textContent;
@@ -6678,18 +6678,18 @@ jQuery(document).ready(function ($) \{
       return numeric
         ? (ascending ? +A - +B : +B - +A)
         : (ascending ? A.localeCompare(B) : B.localeCompare(A));
-    \});
+    });
 
     /* ---- 2️⃣  write-back in one go (no re-flows in the loop) ----------- */
     // Determine if we're back in original order (for R# hiding)
     let allMatchOriginal = true;
-    rows.forEach((row, i) => \{
+    rows.forEach((row, i) => {
       const originalIndex = parseInt(row.cells[1].textContent.trim()); // original #
       const newIndex = i + 1;
       if (originalIndex !== newIndex) allMatchOriginal = false;
       // row.cells[0].textContent = newIndex; // update R#
       row.cells[0].innerHTML = '<small>' + newIndex + '</small>'; // update R# with small font
-    \});
+    });
 
     // Reorder rows in DOM
     const frag = document.createDocumentFragment();
@@ -6697,33 +6697,33 @@ jQuery(document).ready(function ($) \{
     tbody.appendChild(frag);
 
     // Hide index column if not sorted
-    if (allMatchOriginal) \{
+    if (allMatchOriginal) {
       rows.forEach(row => row.cells[0].innerHTML = '');
-    \}
+    }
 
     autotoggleEmptyColumns(); // Recheck empty columns after sorting
-  \}
+  }
 
-  $(document).on('click', '.sort-btn', function () \{
+  $(document).on('click', '.sort-btn', function () {
     const colIndex = parseInt($(this).data('col'));
 
     // Toggle and store global state
-    if (currentSortColumn === colIndex) \{
+    if (currentSortColumn === colIndex) {
       currentSortAscending = !currentSortAscending;
-    \} else \{
+    } else {
       currentSortColumn = colIndex;
       currentSortAscending = true;
-    \}
+    }
 
     sortTable(colIndex, currentSortAscending);
 
     // Update all buttons
-    $('.sort-btn').each(function () \{
+    $('.sort-btn').each(function () {
       const idx = $(this).data('col');
       const isCurrent = idx === currentSortColumn;
       $(this).text(isCurrent ? (currentSortAscending ? '⬍ A-Z' : '⬍ Z-A') : '⬍ A-Z');
-    \});
-  \});
+    });
+  });
 
   /**
  * 🧽 Automatically hide empty columns
@@ -6731,7 +6731,7 @@ jQuery(document).ready(function ($) \{
  * - If so, hides both `<th>` and `<td>` elements for that column.
  * - Supports merged headers via `colspan`.
  */
-  function autotoggleEmptyColumns() \{
+  function autotoggleEmptyColumns() {
     const $table = $('#paperlist');
     const $tbodyRows = $table.find('tbody tr');
     const numCols = $tbodyRows.first().find('td').length;
@@ -6739,43 +6739,43 @@ jQuery(document).ready(function ($) \{
     const emptyCols = new Array(numCols).fill(true);
 
     // 1️⃣ Detect truly empty columns
-    $tbodyRows.each(function () \{
-      $(this).find('td').each(function (i) \{
-        if ($(this).text().trim() !== '') \{
+    $tbodyRows.each(function () {
+      $(this).find('td').each(function (i) {
+        if ($(this).text().trim() !== '') {
           emptyCols[i] = false;
-        \}
-      \});
-    \});
+        }
+      });
+    });
 
     // 2️⃣ Hide <th> and <td> for empty columns, mark as .auto-hidden
-    $table.find('thead tr').each(function () \{
+    $table.find('thead tr').each(function () {
       let colIdx = 0;
-      $(this).children('th').each(function () \{
+      $(this).children('th').each(function () {
         const colspan = parseInt($(this).attr('colspan')) || 1;
         const coversEmpty = emptyCols.slice(colIdx, colIdx + colspan).every(v => v);
 
-        if (coversEmpty) \{
+        if (coversEmpty) {
           $(this).addClass('auto-hidden').hide();
-        \} else \{
+        } else {
           $(this).removeClass('auto-hidden').show();
-        \}
+        }
 
         colIdx += colspan;
-      \});
-    \});
+      });
+    });
 
-    $tbodyRows.each(function () \{
-      $(this).find('td').each(function (i) \{
-        if (emptyCols[i]) \{
+    $tbodyRows.each(function () {
+      $(this).find('td').each(function (i) {
+        if (emptyCols[i]) {
           $(this).addClass('auto-hidden').hide();
-        \} else \{
+        } else {
           $(this).removeClass('auto-hidden').show();
-        \}
-      \});
-    \});
-  \}
+        }
+      });
+    });
+  }
 
-\});
+});
 
 ```
 
