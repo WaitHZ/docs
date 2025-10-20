@@ -76,50 +76,53 @@ I plan to go on vacation to Paris soon. Please help me create a two-day Paris tr
 ## Model Trajectory
 
 <AccordionGroup>
-<Accordion title="claude-4-sonnet">
+<Accordion title="gpt-5">
 
 <Columns cols={3}>
 <Card title="Task Completion" icon="x">
 Failed
 </Card>
 <Card title="Tool Calls" icon="wrench">
-22
+27
 </Card>
 <Card title="Turns" icon="arrows-rotate">
-23
+22
 </Card>
 </Columns>
 
-<div className="thinking-box">
-🧐`Agent`
-
-I'll help you create a two-day Paris travel itinerary based on your wishlist. Let me start by reading the necessary files to understand your preferences and the required format.
-</div>
-
 <div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/><path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/></svg> `filesystem read_multiple_files`
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/><path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/></svg> `filesystem list_directory`
 
 <Expandable title="Details">
 ```json arguments
 {
-	"paths": ["my_wishlist.txt",
-	"format.json"]
+	"path":"/workspace/dumps/workspace"
 }
 
 ```
 
 ```json output_result
-my_wishlist.txt:
-Eiffel Tower
-Louvre Museum
-Arc de Triomphe
-Notre Dame Cathedral
-Musée d'Orsay
-Panthéon
-Musée de l'Orangerie
+[FILE] format.json
+[FILE] my_wishlist.txt
+```
 
----
-format.json:
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/><path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/></svg> `filesystem read_file`
+
+<Expandable title="Details">
+```json arguments
+{
+	"path":"/workspace/dumps/workspace/format.json",
+	"tail":0,
+	"head":0
+}
+
+```
+
+```json output_result
 {
     "day1": [
       {
@@ -140,381 +143,71 @@ format.json:
       }
     ]
   }
-
-```
-
-</Expandable>
-</div>
-
-<div className="thinking-box">
-🧐`Agent`
-
-Now I need to get the location details for each attraction and determine which ones are on the Rive Droite (Right Bank) vs Rive Gauche (Left Bank). Let me start by getting the coordinates and addresses for all attractions.
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_geocode`
-
-<Expandable title="Details">
-```json arguments
-{
-	"address": "Notre Dame Cathedral,
-	 Paris,
-	 France"
-}
-
-```
-
-```json output_result
-{
-  "location": {
-    "lat": 48.85296820000001,
-    "lng": 2.3499021
-  },
-  "formatted_address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
-  "place_id": "ChIJATr1n-Fx5kcRjQb6q6cdQDY"
-}
 ```
 
 </Expandable>
 </div>
 
 <div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_geocode`
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/><path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/></svg> `filesystem read_file`
 
 <Expandable title="Details">
 ```json arguments
 {
-	"address": "Eiffel Tower,
-	 Paris,
-	 France"
+	"path":"/workspace/dumps/workspace/my_wishlist.txt",
+	"tail":0,
+	"head":0
 }
 
 ```
 
 ```json output_result
-{
-  "location": {
-    "lat": 48.85837009999999,
-    "lng": 2.2944813
-  },
-  "formatted_address": "Av. Gustave Eiffel, 75007 Paris, France",
-  "place_id": "ChIJLU7jZClu5kcR4PcOOO6p3I0"
-}
+Eiffel Tower
+Louvre Museum
+Arc de Triomphe
+Notre Dame Cathedral
+Musée d'Orsay
+Panthéon
+Musée de l'Orangerie
 ```
 
 </Expandable>
 </div>
 
 <div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_geocode`
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_search_places`
 
 <Expandable title="Details">
 ```json arguments
 {
-	"address": "Louvre Museum,
-	 Paris,
-	 France"
+	"query":"Louvre Museum Paris",
+	"location":{"latitude":48.8566,
+	"longitude":2.3522},
+	"radius":50000
 }
 
 ```
 
 ```json output_result
 {
-  "location": {
-    "lat": 48.8606111,
-    "lng": 2.337644
-  },
-  "formatted_address": "75001 Paris, France",
-  "place_id": "ChIJD3uTd9hx5kcR1IQvGfr8dbk"
-}
-```
-
-</Expandable>
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_geocode`
-
-<Expandable title="Details">
-```json arguments
-{
-	"address": "Arc de Triomphe,
-	 Paris,
-	 France"
-}
-
-```
-
-```json output_result
-{
-  "location": {
-    "lat": 48.8737917,
-    "lng": 2.2950275
-  },
-  "formatted_address": "Pl. Charles de Gaulle, 75008 Paris, France",
-  "place_id": "ChIJjx37cOxv5kcRPWQuEW5ntdk"
-}
-```
-
-</Expandable>
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_geocode`
-
-<Expandable title="Details">
-```json arguments
-{
-	"address": "Musée d'Orsay,
-	 Paris,
-	 France"
-}
-
-```
-
-```json output_result
-{
-  "location": {
-    "lat": 48.8599614,
-    "lng": 2.3265614
-  },
-  "formatted_address": "Esplanade Valéry Giscard d'Estaing, 75007 Paris, France",
-  "place_id": "ChIJG5Qwtitu5kcR2CNEsYy9cdA"
-}
-```
-
-</Expandable>
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_geocode`
-
-<Expandable title="Details">
-```json arguments
-{
-	"address": "Panthéon,
-	 Paris,
-	 France"
-}
-
-```
-
-```json output_result
-{
-  "location": {
-    "lat": 48.8462218,
-    "lng": 2.3464138
-  },
-  "formatted_address": "Pl. du Panthéon, 75005 Paris, France",
-  "place_id": "ChIJc8mX0udx5kcRWKcjTwDr5QA"
-}
-```
-
-</Expandable>
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_geocode`
-
-<Expandable title="Details">
-```json arguments
-{
-	"address": "Musée de l'Orangerie,
-	 Paris,
-	 France"
-}
-
-```
-
-```json output_result
-{
-  "location": {
-    "lat": 48.8637884,
-    "lng": 2.3226724
-  },
-  "formatted_address": "Jardin des Tuileries, 75001 Paris, France",
-  "place_id": "ChIJo6qq6i5u5kcRCpYBp4rQP9w"
-}
-```
-
-</Expandable>
-</div>
-
-<div className="thinking-box">
-🧐`Agent`
-
-Now let me get detailed information about each attraction, including opening hours:
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_place_details`
-
-<Expandable title="Details">
-```json arguments
-{
-	"place_id": "ChIJATr1n-Fx5kcRjQb6q6cdQDY"
-}
-
-```
-
-```json output_result
-{
-  "name": "Notre-Dame Cathedral of Paris",
-  "formatted_address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
-  "location": {
-    "lat": 48.85296820000001,
-    "lng": 2.3499021
-  },
-  "formatted_phone_number": "01 42 34 56 10",
-  "website": "https://www.notredamedeparis.fr/",
-  "rating": 4.7,
-  "reviews": [
+  "places": [
     {
-      "author_name": "Happy Sunny",
-      "author_url": "https://www.google.com/maps/contrib/115077109530605433852/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIhrtA612fP6soH2c7PBaInHGNvnte3YNRS_qAs35pTYrJn3A=s128-c0x00000000-cc-rp-mo-ba3",
-      "rating": 5,
-      "relative_time_description": "a week ago",
-      "text": "Visiting the newly reopened Notre-Dame Cathedral was a dream come true! On this sunny Monday, I joined a well-organized queue that took about 20 minutes—well worth the wait (no need to buy tickets). The staff ensured a respectful atmosphere, requiring gentlemen to remove hats, dress neatly, and maintain silence, which added to the sacred ambiance.\nInside, the cathedral is nothing short of breathtaking. The restored beauty of the soaring arches, intricate stained glass, and serene orderliness left me in awe. Every detail radiates history, artistry, and spiritual grandeur. The experience was profoundly moving, evoking a deep sense of reverence and wonder. Notre-Dame is a true masterpiece, and I’m already looking forward to returning to bask in its timeless magnificence. Highly recommend this unforgettable visit to anyone!",
-      "time": 1759791163,
-      "translated": false
-    },
-    {
-      "author_name": "Kristin Knowlton",
-      "author_url": "https://www.google.com/maps/contrib/117007598821856439540/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUhs5sqyk2pRq3TD1iMj_JBDKr0-K9rsVLzHgBU_CpIJC11KpM=s128-c0x00000000-cc-rp-mo-ba4",
-      "rating": 5,
-      "relative_time_description": "a week ago",
-      "text": "Long queue that moves quickly for free entrance. The stunning renovations make the cathedral look nearly new. Shockingly so. Gone are hundreds of years of candle smoke and soot. It is as if we are seeing it open for the first time as its original intent. I am glad I went but it truly makes me wish I’d seen it 10+ years ago to enjoy the patina of soot from dedicated parishioners. Truly something to visit and admire in quiet reverence.",
-      "time": 1759838720,
-      "translated": false
-    },
-    {
-      "author_name": "Markie Kidd",
-      "author_url": "https://www.google.com/maps/contrib/104346069599196752930/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVaW-60ujYlnXRwIgCjkQFmY6ihb_Jw8336PLlPiwmFeD-AeX5s=s128-c0x00000000-cc-rp-mo-ba3",
-      "rating": 4,
-      "relative_time_description": "2 weeks ago",
-      "text": "This is a beautiful place! I am sad the tickets were sold out and they only go up a couple days at a time, so I couldn't get any to go inside. I would've loved to see the cathedral and walk around. But the outside is still beautiful and noteworthy. Worth going just to see it. There's some boards with the history on it as well, so that was fun to read about.",
-      "time": 1759497058,
-      "translated": false
-    },
-    {
-      "author_name": "Dan Theriault",
-      "author_url": "https://www.google.com/maps/contrib/107874575038680514360/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUDn_sLfQwgK1shCaFiIytdQ7fA6qE5Iuwk9yEcar-cQt2Zby2w=s128-c0x00000000-cc-rp-mo-ba5",
-      "rating": 5,
-      "relative_time_description": "in the last week",
-      "text": "When visiting Paris, this is a must-see and truly worth while.  The lines may appear long but they move pretty quickly.  The architecture is magnificent.  Once inside, there are 29 chapels around the perimeter, each with it's own altar, artwork, and relics of a patron saint.  The stained glass windows are beautiful beyond belief.  Be advised that there are not only tourists here but worshippers as well.  Note that there is a dress code while visiting.",
-      "time": 1760484755,
-      "translated": false
-    },
-    {
-      "author_name": "Mena",
-      "author_url": "https://www.google.com/maps/contrib/117562797607294797976/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXIoFtLTQ4GuR66HujW21K4ec4MKf549jufMQW5A7kWd_iBhRYEzA=s128-c0x00000000-cc-rp-mo-ba5",
-      "rating": 5,
-      "relative_time_description": "3 weeks ago",
-      "text": "Notre-Dame Cathedral is absolutely breathtaking and truly a must-see in Paris. The architecture is stunning, with its incredible Gothic details, magnificent stained-glass windows, and the famous flying buttresses that make it one of the world’s most iconic landmarks. Even from the outside, the cathedral radiates history and beauty, but stepping inside feels like traveling back in time.\n\nThe interior is peaceful and awe-inspiring, with high vaulted ceilings and colorful light streaming through the rose windows. You can feel the weight of centuries of history, art, and spirituality in every corner. Climbing up to the towers is an unforgettable experience—seeing the gargoyles up close and taking in panoramic views of Paris is worth every step.\n\nDespite the damage from the 2019 fire, restoration efforts are ongoing, and it’s still one of the most moving and magical places to visit in Paris. Whether you’re interested in architecture, history, or just want to experience something truly iconic, Notre-Dame Cathedral is a place you’ll never forget.",
-      "time": 1758873480,
-      "translated": false
+      "name": "Louvre Museum",
+      "formatted_address": "75001 Paris, France",
+      "location": {
+        "lat": 48.8606111,
+        "lng": 2.337644
+      },
+      "place_id": "ChIJD3uTd9hx5kcR1IQvGfr8dbk",
+      "rating": 4.7,
+      "types": [
+        "tourist_attraction",
+        "museum",
+        "point_of_interest",
+        "establishment"
+      ]
     }
-  ],
-  "opening_hours": {
-    "open_now": false,
-    "periods": [
-      {
-        "close": {
-          "day": 0,
-          "time": "1930"
-        },
-        "open": {
-          "day": 0,
-          "time": "0815"
-        }
-      },
-      {
-        "close": {
-          "day": 1,
-          "time": "1900"
-        },
-        "open": {
-          "day": 1,
-          "time": "0750"
-        }
-      },
-      {
-        "close": {
-          "day": 2,
-          "time": "1900"
-        },
-        "open": {
-          "day": 2,
-          "time": "0750"
-        }
-      },
-      {
-        "close": {
-          "day": 3,
-          "time": "1900"
-        },
-        "open": {
-          "day": 3,
-          "time": "0750"
-        }
-      },
-      {
-        "close": {
-          "day": 4,
-          "time": "2200"
-        },
-        "open": {
-          "day": 4,
-          "time": "0750"
-        }
-      },
-      {
-        "close": {
-          "day": 5,
-          "time": "1900"
-        },
-        "open": {
-          "day": 5,
-          "time": "0750"
-        }
-      },
-      {
-        "close": {
-          "day": 6,
-          "time": "1930"
-        },
-        "open": {
-          "day": 6,
-          "time": "0815"
-        }
-      }
-    ],
-    "weekday_text": [
-      "Monday: 7:50 AM – 7:00 PM",
-      "Tuesday: 7:50 AM – 7:00 PM",
-      "Wednesday: 7:50 AM – 7:00 PM",
-      "Thursday: 7:50 AM – 10:00 PM",
-      "Friday: 7:50 AM – 7:00 PM",
-      "Saturday: 8:15 AM – 7:30 PM",
-      "Sunday: 8:15 AM – 7:30 PM"
-    ]
-  }
+  ]
 }
 ```
 
@@ -522,172 +215,252 @@ Now let me get detailed information about each attraction, including opening hou
 </div>
 
 <div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_place_details`
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_search_places`
 
 <Expandable title="Details">
 ```json arguments
 {
-	"place_id": "ChIJLU7jZClu5kcR4PcOOO6p3I0"
+	"query":"Musée de l'Orangerie Paris",
+	"location":{"latitude":48.8566,
+	"longitude":2.3522},
+	"radius":50000
 }
 
 ```
 
 ```json output_result
 {
-  "name": "Eiffel Tower",
-  "formatted_address": "Av. Gustave Eiffel, 75007 Paris, France",
-  "location": {
-    "lat": 48.85837009999999,
-    "lng": 2.2944813
-  },
-  "website": "https://www.toureiffel.paris/fr",
-  "rating": 4.7,
-  "reviews": [
+  "places": [
     {
-      "author_name": "Aryan Patel",
-      "author_url": "https://www.google.com/maps/contrib/108763739082590762673/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWN-HE_k5z5pJXS1qcI21MOWRQysPDimTv3SBv4uYyK53zGpc3LxQ=s128-c0x00000000-cc-rp-mo-ba3",
-      "rating": 5,
-      "relative_time_description": "2 weeks ago",
-      "text": "A Magical Day at the Eiffel Tower\n\nI visited the Eiffel Tower today and it absolutely lived up to the hype. From the moment I stepped onto the Champ de Mars, the Iron Lady’s latticework felt both grand and surprisingly graceful. The views from the top are breathtaking—Paris stretches out in every direction like a living postcard, with the Seine curving through the city and landmarks popping up everywhere you look.\n\nThe experience felt smooth and well-organized. Staff were friendly, and even with the crowds, the lines moved faster than I expected. I loved taking my time on each level—there’s something special about pausing with a coffee and just soaking in the panorama. As evening fell, the tower’s sparkle made the whole scene feel downright romantic and cinematic.\n\nIf you’re planning a visit, I’d recommend booking tickets ahead of time and going a bit before sunset so you catch daylight, golden hour, and the first twinkle after dark. Whether you take the elevator or brave the stairs, the journey itself is part of the fun.\n\nAll in all, today’s visit was unforgettable. The Eiffel Tower isn’t just a must-see—it’s a must-feel. Five stars! ⭐️⭐️⭐️⭐️⭐️",
-      "time": 1759495706,
-      "translated": false
-    },
-    {
-      "author_name": "Leena Gale",
-      "author_url": "https://www.google.com/maps/contrib/106566144260087343783/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUWNW8qef3UHdDzJEKwtH2kr9FMkkYjmiAJalqctMnbnrabg1UT=s128-c0x00000000-cc-rp-mo-ba6",
-      "rating": 5,
-      "relative_time_description": "a week ago",
-      "text": "Love it. Worth the 30 minute wait in the queue. Took the lift to the top. Fabulous views. Glass of champagne is 24euros. But you can keep the plastic glass as a souvenir. It's tapered so you can't put it down. Was crowded so you have to be patient but amazing visit and definitely as must whilst in Paris",
-      "time": 1760130643,
-      "translated": false
-    },
-    {
-      "author_name": "VIJAY Singh",
-      "author_url": "https://www.google.com/maps/contrib/104142760539490840954/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUFesP1izWpN2xPX9Rc8KA4_OqwkfVgly9yg9I_UD5sXs9xhqk=s128-c0x00000000-cc-rp-mo-ba4",
-      "rating": 5,
-      "relative_time_description": "a month ago",
-      "text": "Visiting the Eiffel Tower is an experience that truly lives up to its iconic reputation. From the moment you approach the base, the sheer scale and elegance of this iron masterpiece leave you in awe. Whether you’re a first-time visitor or returning, the view of the tower from the surrounding Champ de Mars and Trocadéro Gardens is breathtaking, offering perfect photo opportunities.\n\nThe structure itself is a marvel of engineering. As you ascend via the elevator or the stairs, each level provides a unique perspective of Paris. The panoramic views from the top are absolutely stunning—you can see the Seine River winding through the city, historic landmarks like Notre-Dame and Sacré-Cœur, and the charming rooftops of Paris stretching into the horizon.\n\nThe atmosphere around the Eiffel Tower is lively yet romantic. Street performers, souvenir shops, and cafes create a vibrant ambiance, while evening visits offer the unforgettable sight of the tower sparkling every hour on the hour. Dining at one of its restaurants is a special treat, combining fine cuisine with unparalleled views.\n\nTips for visitors: arrive early to avoid long lines, book tickets online if possible, and don’t forget your camera—every angle is Instagram-worthy. Whether you’re traveling solo, with friends, or on a romantic getaway, the Eiffel Tower offers a timeless experience that captures the heart of Paris. A visit here isn’t just sightseeing—it’s creating memories that will last a lifetime.\n\n⭐⭐⭐⭐⭐ Highly recommended for anyone visiting Paris!",
-      "time": 1758172536,
-      "translated": false
-    },
-    {
-      "author_name": "Louie Farhat",
-      "author_url": "https://www.google.com/maps/contrib/107211163946124799833/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWx3AGjQDuhM6RWEwIPYcIun6ilA8wfik6EbPnY69ugh5TviQ5I5Q=s128-c0x00000000-cc-rp-mo-ba6",
-      "rating": 5,
-      "relative_time_description": "2 weeks ago",
-      "text": "I just had the most incredible experience at the Eiffel Tower with VIP access! Skipping the long lines made everything effortless, and I could fully enjoy every moment without feeling rushed. The elevator ride itself is amazing, giving you a sense of the tower’s grandeur as you rise above the city.\n\nOnce at the top, the views are absolutely breathtaking – the Seine winding through Paris, the Champs-Élysées stretching toward the Arc de Triomphe, and the city’s landmarks unfolding in every direction. Being able to linger, take photos, and simply soak in the atmosphere made the experience truly special.\n\nThe tower’s architecture is stunning up close, and from the observation decks, Paris feels alive, endless, and magical. VIP access made it all seamless and comfortable, turning an iconic visit into a relaxed, unforgettable adventure. This was one of the highlights of my trip – a breathtaking, once-in-a-lifetime experience I’ll never forget",
-      "time": 1759413369,
-      "translated": false
-    },
-    {
-      "author_name": "Jesus Arevalo Merino",
-      "author_url": "https://www.google.com/maps/contrib/101791241702766088668/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjW7Hx6KJmyVBOAuHkrEFVgcOWEfzY96qNPzxrlcG-ZFlBLRDymTMg=s128-c0x00000000-cc-rp-mo-ba4",
-      "rating": 5,
-      "relative_time_description": "2 weeks ago",
-      "text": "Being up there is like a dream! Lots of fun and most people are just happy to be there! You can also buy drinks up there! I had like four glasses of wine👹. HOWEVER! Don’t even waste your time trying to eat at the restaurant. The hostess is delightful, but the servers are obviously unhappy with their existence. I’m willing to pay the prices and these people don’t want to serve me? Come on! ALSO! Buy a drink at a restaurant and use the bathroom before heading there. The bathrooms there are outrageous! So many people, and if you speak English, overweight French people will yell at you! Girl I am just in line to use the bathroom! What did I do to you?😂 Just tell them you don’t understand and walk away🥰.",
-      "time": 1759374972,
-      "translated": false
+      "name": "Musée de l'Orangerie",
+      "formatted_address": "Jardin des Tuileries, 75001 Paris, France",
+      "location": {
+        "lat": 48.8637884,
+        "lng": 2.3226724
+      },
+      "place_id": "ChIJo6qq6i5u5kcRCpYBp4rQP9w",
+      "rating": 4.6,
+      "types": [
+        "museum",
+        "point_of_interest",
+        "establishment"
+      ]
     }
-  ],
-  "opening_hours": {
-    "open_now": false,
-    "periods": [
-      {
-        "close": {
-          "day": 0,
-          "time": "2300"
-        },
-        "open": {
-          "day": 0,
-          "time": "0930"
-        }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_search_places`
+
+<Expandable title="Details">
+```json arguments
+{
+	"query":"Arc de Triomphe Paris",
+	"location":{"latitude":48.8566,
+	"longitude":2.3522},
+	"radius":50000
+}
+
+```
+
+```json output_result
+{
+  "places": [
+    {
+      "name": "Arc de Triomphe",
+      "formatted_address": "Pl. Charles de Gaulle, 75008 Paris, France",
+      "location": {
+        "lat": 48.8737917,
+        "lng": 2.2950275
       },
-      {
-        "close": {
-          "day": 1,
-          "time": "2300"
-        },
-        "open": {
-          "day": 1,
-          "time": "0930"
-        }
+      "place_id": "ChIJjx37cOxv5kcRPWQuEW5ntdk",
+      "rating": 4.7,
+      "types": [
+        "tourist_attraction",
+        "museum",
+        "point_of_interest",
+        "establishment"
+      ]
+    }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_search_places`
+
+<Expandable title="Details">
+```json arguments
+{
+	"query":"Notre Dame Cathedral Paris",
+	"location":{"latitude":48.8566,
+	"longitude":2.3522},
+	"radius":50000
+}
+
+```
+
+```json output_result
+{
+  "places": [
+    {
+      "name": "Notre-Dame Cathedral of Paris",
+      "formatted_address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
+      "location": {
+        "lat": 48.85296820000001,
+        "lng": 2.3499021
       },
-      {
-        "close": {
-          "day": 2,
-          "time": "2300"
-        },
-        "open": {
-          "day": 2,
-          "time": "0930"
-        }
+      "place_id": "ChIJATr1n-Fx5kcRjQb6q6cdQDY",
+      "rating": 4.7,
+      "types": [
+        "tourist_attraction",
+        "church",
+        "place_of_worship",
+        "point_of_interest",
+        "establishment"
+      ]
+    }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_search_places`
+
+<Expandable title="Details">
+```json arguments
+{
+	"query":"Panthéon Paris",
+	"location":{"latitude":48.8566,
+	"longitude":2.3522},
+	"radius":50000
+}
+
+```
+
+```json output_result
+{
+  "places": [
+    {
+      "name": "Panthéon",
+      "formatted_address": "Pl. du Panthéon, 75005 Paris, France",
+      "location": {
+        "lat": 48.8462218,
+        "lng": 2.3464138
       },
-      {
-        "close": {
-          "day": 3,
-          "time": "2300"
-        },
-        "open": {
-          "day": 3,
-          "time": "0930"
-        }
+      "place_id": "ChIJc8mX0udx5kcRWKcjTwDr5QA",
+      "rating": 4.6,
+      "types": [
+        "tourist_attraction",
+        "point_of_interest",
+        "establishment"
+      ]
+    }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_search_places`
+
+<Expandable title="Details">
+```json arguments
+{
+	"query":"Musée d'Orsay Paris",
+	"location":{"latitude":48.8566,
+	"longitude":2.3522},
+	"radius":50000
+}
+
+```
+
+```json output_result
+{
+  "places": [
+    {
+      "name": "Musée d'Orsay",
+      "formatted_address": "Esplanade Valéry Giscard d'Estaing, 75007 Paris, France",
+      "location": {
+        "lat": 48.8599614,
+        "lng": 2.3265614
       },
-      {
-        "close": {
-          "day": 4,
-          "time": "2300"
-        },
-        "open": {
-          "day": 4,
-          "time": "0930"
-        }
+      "place_id": "ChIJG5Qwtitu5kcR2CNEsYy9cdA",
+      "rating": 4.8,
+      "types": [
+        "tourist_attraction",
+        "museum",
+        "point_of_interest",
+        "establishment"
+      ]
+    }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_search_places`
+
+<Expandable title="Details">
+```json arguments
+{
+	"query":"Eiffel Tower Paris",
+	"location":{"latitude":48.8566,
+	"longitude":2.3522},
+	"radius":50000
+}
+
+```
+
+```json output_result
+{
+  "places": [
+    {
+      "name": "Eiffel Tower",
+      "formatted_address": "Av. Gustave Eiffel, 75007 Paris, France",
+      "location": {
+        "lat": 48.85837009999999,
+        "lng": 2.2944813
       },
-      {
-        "close": {
-          "day": 5,
-          "time": "2300"
-        },
-        "open": {
-          "day": 5,
-          "time": "0930"
-        }
+      "place_id": "ChIJLU7jZClu5kcR4PcOOO6p3I0",
+      "rating": 4.7,
+      "types": [
+        "tourist_attraction",
+        "point_of_interest",
+        "establishment"
+      ]
+    },
+    {
+      "name": "Bureau de Gustave Eiffel",
+      "formatted_address": "5 Av. Anatole France 3è étage, 75007 Paris, France",
+      "location": {
+        "lat": 48.8587047,
+        "lng": 2.2945148
       },
-      {
-        "close": {
-          "day": 6,
-          "time": "2300"
-        },
-        "open": {
-          "day": 6,
-          "time": "0930"
-        }
-      }
-    ],
-    "weekday_text": [
-      "Monday: 9:30 AM – 11:00 PM",
-      "Tuesday: 9:30 AM – 11:00 PM",
-      "Wednesday: 9:30 AM – 11:00 PM",
-      "Thursday: 9:30 AM – 11:00 PM",
-      "Friday: 9:30 AM – 11:00 PM",
-      "Saturday: 9:30 AM – 11:00 PM",
-      "Sunday: 9:30 AM – 11:00 PM"
-    ]
-  }
+      "place_id": "ChIJEbu08-Fv5kcRxIdhEH5yCFo",
+      "rating": 4.5,
+      "types": [
+        "tourist_attraction",
+        "point_of_interest",
+        "establishment"
+      ]
+    }
+  ]
 }
 ```
 
@@ -700,7 +473,7 @@ Now let me get detailed information about each attraction, including opening hou
 <Expandable title="Details">
 ```json arguments
 {
-	"place_id": "ChIJD3uTd9hx5kcR1IQvGfr8dbk"
+	"place_id":"ChIJD3uTd9hx5kcR1IQvGfr8dbk"
 }
 
 ```
@@ -736,7 +509,7 @@ Now let me get detailed information about each attraction, including opening hou
       "original_language": "en",
       "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWOGafbaMzzYkcVpkpcbkjeN7qh8dxXIAsM7oIPOwOQeypRxWgN=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 5,
-      "relative_time_description": "2 weeks ago",
+      "relative_time_description": "a week ago",
       "text": "Visiting the Louvre was an unforgettable experience. The art collection is incredible. Seeing the Mona Lisa, Venus de Milo and Winged Victory in person was surreal. The building itself is stunning and full of history.\n\nWith that being said, it was very crowded, people were everywhere. Especially around the Mona Lisa. I recommend planning ahead, picking a few must-see pieces and arriving early.\n\nOverall, visiting was absolutely worth it.  Just enter with realistic expectations. ❤️",
       "time": 1759508588,
       "translated": false
@@ -754,15 +527,15 @@ Now let me get detailed information about each attraction, including opening hou
       "translated": false
     },
     {
-      "author_name": "Jim Ratchford",
-      "author_url": "https://www.google.com/maps/contrib/106425227153421769685/reviews",
+      "author_name": "Nubia Valenzuela",
+      "author_url": "https://www.google.com/maps/contrib/113216488862536748216/reviews",
       "language": "en",
       "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIMczqhpqF2-lXJmHmhn7aYyaPyWuvyBihVTN9HnmfzYTpa8Q=s128-c0x00000000-cc-rp-mo-ba6",
-      "rating": 5,
-      "relative_time_description": "a week ago",
-      "text": "A visit to the Louvre is a must. The architecture is amazing. The art offers something for everyone. Avoid crowds with an evening visit. Buying tickets in advance is recommended. If you're hungry, there is food. We tried a cafe. Pastries looked wonderful. Coffee too. The quality was poor. This didn't diminish our visit. Every minute in the museum was a memorable experience.",
-      "time": 1759813556,
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVNOoW1mqpvE5U05o8k6GlmD5LZvjtDEXN0trS7vW2w5lBodN1fNA=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 4,
+      "relative_time_description": "2 weeks ago",
+      "text": "The most visited museum in the world, with encyclopedic collections spanning from Ancient Egypt to European painting. Seeing the Mona Lisa is iconic, though many, specificially me, every time, are surprised by its small size; and in my view some lesser-known works are even more impactful and finely executed. Overall, only the Hermitage in St. Petersburg, with its vast masterpieces, specifically painting, and imperial setting, surpasses it.",
+      "time": 1759161793,
       "translated": false
     },
     {
@@ -864,7 +637,171 @@ Now let me get detailed information about each attraction, including opening hou
 <Expandable title="Details">
 ```json arguments
 {
-	"place_id": "ChIJjx37cOxv5kcRPWQuEW5ntdk"
+	"place_id":"ChIJo6qq6i5u5kcRCpYBp4rQP9w"
+}
+
+```
+
+```json output_result
+{
+  "name": "Musée de l'Orangerie",
+  "formatted_address": "Jardin des Tuileries, 75001 Paris, France",
+  "location": {
+    "lat": 48.8637884,
+    "lng": 2.3226724
+  },
+  "formatted_phone_number": "01 44 50 43 00",
+  "website": "https://www.musee-orangerie.fr/fr",
+  "rating": 4.6,
+  "reviews": [
+    {
+      "author_name": "Off to see the World",
+      "author_url": "https://www.google.com/maps/contrib/116679525275898110510/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVObP4uUNIl9rTKwxnHNRCAwZxzKd_yiegl7LI9DjtLXDNuFlgXNQ=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "4 weeks ago",
+      "text": "One of our favorite museums. Our kids enjoyed coming here.  It’s a meditation space, which we didn’t realize until going there.  It’s such a beautiful space and being a meditation space made it even better. You get to be wrapped around with Monet’s work, it was purely amazing! We got to paint with our travel paint set and pastels. There’s also a very cool kids space downstairs. We got tickets in advance but there’s a line if you don’t have tickets.",
+      "time": 1758199181,
+      "translated": false
+    },
+    {
+      "author_name": "Loo Yeo",
+      "author_url": "https://www.google.com/maps/contrib/102322000481746158264/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWoAC9z9tcoA0WkXQe1RgoxY_LFDm_1m-AMSLmCKQLfUsxATGdL=s128-c0x00000000-cc-rp-mo-ba5",
+      "rating": 5,
+      "relative_time_description": "2 weeks ago",
+      "text": "The Musée de l’Orangerie offers a rare balance of intimacy and depth. Its modern atrium, with glass roof and bare concrete walls, funnels visitors toward Monet’s monumental Nymphéas. Installed in two oval rooms, these water lily panels envelop you in shifting light: muted lavender hush, shadowed dusk, sudden brightness across the pond’s surface. Each canvas feels less like a painting than a perceptual event — reflections, contrasts, atmospheres. Below, the Jean Walter–Paul Guillaume Collection extends the story of modern art, from Renoir and Cézanne to Matisse and Picasso. A compact museum, yet an essential Paris stop: immersion, reflection, and continuity in one.",
+      "time": 1759234867,
+      "translated": false
+    },
+    {
+      "author_name": "Guy Mosenson",
+      "author_url": "https://www.google.com/maps/contrib/105978665193638539680/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjU5TGT9c9YBKqiFn-Kovf5A_r4d7v3JyXiQkPcnVJB01Icdd7Fb=s128-c0x00000000-cc-rp-mo-ba3",
+      "rating": 5,
+      "relative_time_description": "3 weeks ago",
+      "text": "Remarkable oval rooms showing Monet's Nymphéas paintings, and a nice collection of Impressionist and Post-Impressionist works.\n\nI specifically liked the selection and size, strolled slowly and attentively through it all in about 2 hours.\n\nYou can walk in and by tickets, if the online tickets are sold out. At 10am there was no queue, and you can buy combo ticket also for the near by huge Musée d'Orsay",
+      "time": 1758706755,
+      "translated": false
+    },
+    {
+      "author_name": "Jiwon Kokomong Kim",
+      "author_url": "https://www.google.com/maps/contrib/117067688537958368601/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXpjHLL_8JigoZH93AcgDa7OaDFKrfl9YB6Ajw1cCtHZcSllz6Q=s128-c0x00000000-cc-rp-mo-ba7",
+      "rating": 4,
+      "relative_time_description": "2 weeks ago",
+      "text": "If you don’t have time to visit other museums in Paris, this is a place where you can quickly see a lot of Monet’s works. Once you’ve admired his most famous masterpiece, there isn’t much else in the museum that feels particularly noteworthy. I recommend booking tickets in advance, but if you go early in the morning, you can usually buy them on-site without waiting in line.",
+      "time": 1758954093,
+      "translated": false
+    },
+    {
+      "author_name": "Chiara Riccioni",
+      "author_url": "https://www.google.com/maps/contrib/108682707256816699312/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIgyk8UEWD_spyaL6mDtU_AhCQohVdoszwiKzJtUhzmwXQMcEk=s128-c0x00000000-cc-rp-mo-ba3",
+      "rating": 5,
+      "relative_time_description": "a month ago",
+      "text": "very beautiful. quite small in comparison to the others in the city bit there is a lot of beautiful art. there is famous painters but  also minor ones.\nthe collection of Monet's Nympheas is fantastic, suggestive, and very unique.\nits not expensive at all and you dont have to wait much to enter. really recommended",
+      "time": 1756243270,
+      "translated": false
+    }
+  ],
+  "opening_hours": {
+    "open_now": false,
+    "periods": [
+      {
+        "close": {
+          "day": 0,
+          "time": "1800"
+        },
+        "open": {
+          "day": 0,
+          "time": "0900"
+        }
+      },
+      {
+        "close": {
+          "day": 1,
+          "time": "1800"
+        },
+        "open": {
+          "day": 1,
+          "time": "0900"
+        }
+      },
+      {
+        "close": {
+          "day": 3,
+          "time": "1800"
+        },
+        "open": {
+          "day": 3,
+          "time": "0900"
+        }
+      },
+      {
+        "close": {
+          "day": 4,
+          "time": "1800"
+        },
+        "open": {
+          "day": 4,
+          "time": "0900"
+        }
+      },
+      {
+        "close": {
+          "day": 5,
+          "time": "1800"
+        },
+        "open": {
+          "day": 5,
+          "time": "0900"
+        }
+      },
+      {
+        "close": {
+          "day": 6,
+          "time": "1800"
+        },
+        "open": {
+          "day": 6,
+          "time": "0900"
+        }
+      }
+    ],
+    "weekday_text": [
+      "Monday: 9:00 AM – 6:00 PM",
+      "Tuesday: Closed",
+      "Wednesday: 9:00 AM – 6:00 PM",
+      "Thursday: 9:00 AM – 6:00 PM",
+      "Friday: 9:00 AM – 6:00 PM",
+      "Saturday: 9:00 AM – 6:00 PM",
+      "Sunday: 9:00 AM – 6:00 PM"
+    ]
+  }
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_place_details`
+
+<Expandable title="Details">
+```json arguments
+{
+	"place_id":"ChIJjx37cOxv5kcRPWQuEW5ntdk"
 }
 
 ```
@@ -900,7 +837,7 @@ Now let me get detailed information about each attraction, including opening hou
       "original_language": "en",
       "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJQd26-zzhcHiQIo0tEUn_tGkNisnrHUoe41Nq97ocyXjT2RTg=s128-c0x00000000-cc-rp-mo-ba5",
       "rating": 5,
-      "relative_time_description": "2 weeks ago",
+      "relative_time_description": "a week ago",
       "text": "I visited the observatory in spring, summer, autumn and winter because the colours around the Arc de Triomphe change with each season, and they are beautiful. The view is also different by day and by night; while the Eiffel Tower offers a lovely panorama, the Champs-Élysées seen from here, especially at night, is even more striking and well worth the climb. Most people do not take the lift but climb the very narrow circular stone staircase, so those with mobility issues or the elderly should use the lift instead. Tickets must be purchased in advance for your preferred time slot on the official website. The staff at the ticket desk are very friendly, so if you need assistance, simply queue and they will be glad to help.",
       "time": 1759531541,
       "translated": false
@@ -918,18 +855,6 @@ Now let me get detailed information about each attraction, including opening hou
       "translated": false
     },
     {
-      "author_name": "Perth2Go . au",
-      "author_url": "https://www.google.com/maps/contrib/106271616164096521702/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWEbRzME3dE4xoxVYTcA_Mn_encp2uYWZTYme-RF4ggOJoPi9IE=s128-c0x00000000-cc-rp-mo-ba5",
-      "rating": 4,
-      "relative_time_description": "in the last week",
-      "text": "It's a super cool and intricate sculpture/monument but I was a bit disappointed. I assume it's because there's not much to do once you're here aside from looking at it. There is the ability to go on top of it, which I'm sure would've made it incredibly memorable, but the line was huge. Still incredibly enjoyable to observe all the different sculptures found encrusted along the sides. There was also a busker with an accordion playing some great tunes in the tunnel there. The most fun thing though is watching other tourists attempt to cross twelve lanes of traffic like a bunch of headless chickens.",
-      "time": 1760408162,
-      "translated": false
-    },
-    {
       "author_name": "Supreme intelligence Bureau",
       "author_url": "https://www.google.com/maps/contrib/103343165494891686519/reviews",
       "language": "en",
@@ -939,6 +864,18 @@ Now let me get detailed information about each attraction, including opening hou
       "relative_time_description": "a week ago",
       "text": "The Arc de Triomphe is truly an iconic landmark with amazing architecture and history. But the surroundings could be managed much better. The area was overcrowded, and several food vendors seemed to overcharge or serve something different than promised, which felt disappointing. Also, too much noise around the site made it hard to enjoy the atmosphere peacefully. It’s worth visiting once, but the local management should take better care of maintaining the place’s charm and cultural vibe.",
       "time": 1759945161,
+      "translated": false
+    },
+    {
+      "author_name": "Gaurav Singal",
+      "author_url": "https://www.google.com/maps/contrib/109967421851627726912/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjURz87mDReQz4Yl8V9fscHGxykPH31YbxBn-DIVJwt1UUph49qf=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 4,
+      "relative_time_description": "2 weeks ago",
+      "text": "Of course, it’s worth visiting if you’re in Paris for the first time – the view from the top is truly impressive. Fortunately, the wait to go up isn’t usually too long. However, the area around the monument can be extremely crowded with tourists and heavy traffic, so crossing the streets requires caution. Also, be mindful of pickpockets. Still, as one of Paris’s most iconic landmarks, the Arc de Triomphe is undeniably beautiful and well worth a visit.",
+      "time": 1759311450,
       "translated": false
     }
   ],
@@ -1038,7 +975,354 @@ Now let me get detailed information about each attraction, including opening hou
 <Expandable title="Details">
 ```json arguments
 {
-	"place_id": "ChIJG5Qwtitu5kcR2CNEsYy9cdA"
+	"place_id":"ChIJATr1n-Fx5kcRjQb6q6cdQDY"
+}
+
+```
+
+```json output_result
+{
+  "name": "Notre-Dame Cathedral of Paris",
+  "formatted_address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
+  "location": {
+    "lat": 48.85296820000001,
+    "lng": 2.3499021
+  },
+  "formatted_phone_number": "01 42 34 56 10",
+  "website": "https://www.notredamedeparis.fr/",
+  "rating": 4.7,
+  "reviews": [
+    {
+      "author_name": "Happy Sunny",
+      "author_url": "https://www.google.com/maps/contrib/115077109530605433852/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIhrtA612fP6soH2c7PBaInHGNvnte3YNRS_qAs35pTYrJn3A=s128-c0x00000000-cc-rp-mo-ba3",
+      "rating": 5,
+      "relative_time_description": "a week ago",
+      "text": "Visiting the newly reopened Notre-Dame Cathedral was a dream come true! On this sunny Monday, I joined a well-organized queue that took about 20 minutes—well worth the wait (no need to buy tickets). The staff ensured a respectful atmosphere, requiring gentlemen to remove hats, dress neatly, and maintain silence, which added to the sacred ambiance.\nInside, the cathedral is nothing short of breathtaking. The restored beauty of the soaring arches, intricate stained glass, and serene orderliness left me in awe. Every detail radiates history, artistry, and spiritual grandeur. The experience was profoundly moving, evoking a deep sense of reverence and wonder. Notre-Dame is a true masterpiece, and I’m already looking forward to returning to bask in its timeless magnificence. Highly recommend this unforgettable visit to anyone!",
+      "time": 1759791163,
+      "translated": false
+    },
+    {
+      "author_name": "Kristin Knowlton",
+      "author_url": "https://www.google.com/maps/contrib/117007598821856439540/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUhs5sqyk2pRq3TD1iMj_JBDKr0-K9rsVLzHgBU_CpIJC11KpM=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "a week ago",
+      "text": "Long queue that moves quickly for free entrance. The stunning renovations make the cathedral look nearly new. Shockingly so. Gone are hundreds of years of candle smoke and soot. It is as if we are seeing it open for the first time as its original intent. I am glad I went but it truly makes me wish I’d seen it 10+ years ago to enjoy the patina of soot from dedicated parishioners. Truly something to visit and admire in quiet reverence.",
+      "time": 1759838720,
+      "translated": false
+    },
+    {
+      "author_name": "Markie Kidd",
+      "author_url": "https://www.google.com/maps/contrib/104346069599196752930/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVaW-60ujYlnXRwIgCjkQFmY6ihb_Jw8336PLlPiwmFeD-AeX5s=s128-c0x00000000-cc-rp-mo-ba3",
+      "rating": 4,
+      "relative_time_description": "a week ago",
+      "text": "This is a beautiful place! I am sad the tickets were sold out and they only go up a couple days at a time, so I couldn't get any to go inside. I would've loved to see the cathedral and walk around. But the outside is still beautiful and noteworthy. Worth going just to see it. There's some boards with the history on it as well, so that was fun to read about.",
+      "time": 1759497058,
+      "translated": false
+    },
+    {
+      "author_name": "Dan Theriault",
+      "author_url": "https://www.google.com/maps/contrib/107874575038680514360/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUDn_sLfQwgK1shCaFiIytdQ7fA6qE5Iuwk9yEcar-cQt2Zby2w=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "in the last week",
+      "text": "When visiting Paris, this is a must-see and truly worth while.  The lines may appear long but they move pretty quickly.  The architecture is magnificent.  Once inside, there are 29 chapels around the perimeter, each with it's own altar, artwork, and relics of a patron saint.  The stained glass windows are beautiful beyond belief.  Be advised that there are not only tourists here but worshippers as well.  Note that there is a dress code while visiting.",
+      "time": 1760484755,
+      "translated": false
+    },
+    {
+      "author_name": "Mena",
+      "author_url": "https://www.google.com/maps/contrib/117562797607294797976/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXIoFtLTQ4GuR66HujW21K4ec4MKf549jufMQW5A7kWd_iBhRYEzA=s128-c0x00000000-cc-rp-mo-ba5",
+      "rating": 5,
+      "relative_time_description": "2 weeks ago",
+      "text": "Notre-Dame Cathedral is absolutely breathtaking and truly a must-see in Paris. The architecture is stunning, with its incredible Gothic details, magnificent stained-glass windows, and the famous flying buttresses that make it one of the world’s most iconic landmarks. Even from the outside, the cathedral radiates history and beauty, but stepping inside feels like traveling back in time.\n\nThe interior is peaceful and awe-inspiring, with high vaulted ceilings and colorful light streaming through the rose windows. You can feel the weight of centuries of history, art, and spirituality in every corner. Climbing up to the towers is an unforgettable experience—seeing the gargoyles up close and taking in panoramic views of Paris is worth every step.\n\nDespite the damage from the 2019 fire, restoration efforts are ongoing, and it’s still one of the most moving and magical places to visit in Paris. Whether you’re interested in architecture, history, or just want to experience something truly iconic, Notre-Dame Cathedral is a place you’ll never forget.",
+      "time": 1758873480,
+      "translated": false
+    }
+  ],
+  "opening_hours": {
+    "open_now": false,
+    "periods": [
+      {
+        "close": {
+          "day": 0,
+          "time": "1930"
+        },
+        "open": {
+          "day": 0,
+          "time": "0815"
+        }
+      },
+      {
+        "close": {
+          "day": 1,
+          "time": "1900"
+        },
+        "open": {
+          "day": 1,
+          "time": "0750"
+        }
+      },
+      {
+        "close": {
+          "day": 2,
+          "time": "1900"
+        },
+        "open": {
+          "day": 2,
+          "time": "0750"
+        }
+      },
+      {
+        "close": {
+          "day": 3,
+          "time": "1900"
+        },
+        "open": {
+          "day": 3,
+          "time": "0750"
+        }
+      },
+      {
+        "close": {
+          "day": 4,
+          "time": "2200"
+        },
+        "open": {
+          "day": 4,
+          "time": "0750"
+        }
+      },
+      {
+        "close": {
+          "day": 5,
+          "time": "1900"
+        },
+        "open": {
+          "day": 5,
+          "time": "0750"
+        }
+      },
+      {
+        "close": {
+          "day": 6,
+          "time": "1930"
+        },
+        "open": {
+          "day": 6,
+          "time": "0815"
+        }
+      }
+    ],
+    "weekday_text": [
+      "Monday: 7:50 AM – 7:00 PM",
+      "Tuesday: 7:50 AM – 7:00 PM",
+      "Wednesday: 7:50 AM – 7:00 PM",
+      "Thursday: 7:50 AM – 10:00 PM",
+      "Friday: 7:50 AM – 7:00 PM",
+      "Saturday: 8:15 AM – 7:30 PM",
+      "Sunday: 8:15 AM – 7:30 PM"
+    ]
+  }
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_place_details`
+
+<Expandable title="Details">
+```json arguments
+{
+	"place_id":"ChIJc8mX0udx5kcRWKcjTwDr5QA"
+}
+
+```
+
+```json output_result
+{
+  "name": "Panthéon",
+  "formatted_address": "Pl. du Panthéon, 75005 Paris, France",
+  "location": {
+    "lat": 48.8462218,
+    "lng": 2.3464138
+  },
+  "website": "https://www.paris-pantheon.fr/",
+  "rating": 4.6,
+  "reviews": [
+    {
+      "author_name": "John Abrahamson",
+      "author_url": "https://www.google.com/maps/contrib/110242012295636893027/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUPtm3fAG__B1l-zrEC2Mc_m0ltuH2gRDllr7V0ydyWe-4EkFTy8A=s128-c0x00000000-cc-rp-mo-ba8",
+      "rating": 5,
+      "relative_time_description": "a month ago",
+      "text": "Sizable place. Beautiful building. I liked how there were multiple themes going on with the art. (Christianity, Genevieve, etc) The crypt is interesting because there are many famous/important historical figures in there. But all the crypts are the same/redone. The rooftop was closed.on my day.",
+      "time": 1756754031,
+      "translated": false
+    },
+    {
+      "author_name": "Chris Oh! Boylesque",
+      "author_url": "https://www.google.com/maps/contrib/109351158112901398069/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXeHKgTy736503mXGzXE5ptnxyJvMAHJw3do7HuRUqHOuqgH8aTdg=s128-c0x00000000-cc-rp-mo-ba6",
+      "rating": 5,
+      "relative_time_description": "a month ago",
+      "text": "Just beautiful! The murals on the walls are exceptional, the space awe inspiring, and the tombs a sobering reminder of some of the great people that helped form the French identity.\n\nIt truly was a special experience, informative, and a nice pause from the hustle and bustle of the city.",
+      "time": 1756136335,
+      "translated": false
+    },
+    {
+      "author_name": "Sebahat Kaçar",
+      "author_url": "https://www.google.com/maps/contrib/105521470722270886854/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjV6aUsn3UV9bVx2xU3ERUo-1dpGBtzKAAFtOlRabBAE3YmsYs0=s128-c0x00000000-cc-rp-mo",
+      "rating": 5,
+      "relative_time_description": "a month ago",
+      "text": "The Panthéon was truly impressive. It wasn’t crowded, which made the visit very enjoyable. Inside, it’s fascinating to see the tombs of great figures like Victor Hugo, Voltaire, Rousseau, and Marie Curie. The grand dome and frescoes are breathtaking, and Foucault’s Pendulum is a highlight – a simple yet powerful demonstration of Earth’s rotation. Unfortunately, the terrace was temporarily closed – I would have loved to see the Paris view from there. Overall, a peaceful and historic site, definitely worth a visit.",
+      "time": 1757259600,
+      "translated": false
+    },
+    {
+      "author_name": "A Karasahin",
+      "author_url": "https://www.google.com/maps/contrib/114672075260701936921/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocI0HMA_Y6PfbmFcs_AgEcG08dD5xSJSgD4YO8_nU1nILyE_xuY=s128-c0x00000000-cc-rp-mo-ba5",
+      "rating": 5,
+      "relative_time_description": "a month ago",
+      "text": "I saw the Pantheon from the outside, and sat there for some time in the square in front of it. You can catch a beautiful glimpse of the Eiffel Tower and the cityscape. I was there on a windy afternoon, so your experience may vary, but I had a really calm and peaceful pause here before moving onto the more bustling streets of Paris🗼",
+      "time": 1755671307,
+      "translated": false
+    },
+    {
+      "author_name": "Andrew",
+      "author_url": "https://www.google.com/maps/contrib/101764783000564446427/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXsxi_s6zl0J0NQXMRhJWUBZ-I54GaS3EmzwmA-akJSgfNgWco=s128-c0x00000000-cc-rp-mo-ba5",
+      "rating": 5,
+      "relative_time_description": "3 weeks ago",
+      "text": "Pantheon is an incredible mausoleum unlike any I’ve seen before. You truly have to be inside it grasp its scale and grandeur. The architecture, artworks and sculptures are definitely worth seeing not to mention the crypt of distinguished French citizens such as Rousseau and Voltaire. The line to get a ticket was fairly large and it moved very slow so I definitely recommend getting a ticket in advance. You should be able to see everything in a couple hours.",
+      "time": 1758271347,
+      "translated": false
+    }
+  ],
+  "opening_hours": {
+    "open_now": false,
+    "periods": [
+      {
+        "close": {
+          "day": 0,
+          "time": "1830"
+        },
+        "open": {
+          "day": 0,
+          "time": "1000"
+        }
+      },
+      {
+        "close": {
+          "day": 1,
+          "time": "1830"
+        },
+        "open": {
+          "day": 1,
+          "time": "1000"
+        }
+      },
+      {
+        "close": {
+          "day": 2,
+          "time": "1830"
+        },
+        "open": {
+          "day": 2,
+          "time": "1000"
+        }
+      },
+      {
+        "close": {
+          "day": 3,
+          "time": "1830"
+        },
+        "open": {
+          "day": 3,
+          "time": "1000"
+        }
+      },
+      {
+        "close": {
+          "day": 4,
+          "time": "1830"
+        },
+        "open": {
+          "day": 4,
+          "time": "1000"
+        }
+      },
+      {
+        "close": {
+          "day": 5,
+          "time": "1830"
+        },
+        "open": {
+          "day": 5,
+          "time": "1000"
+        }
+      },
+      {
+        "close": {
+          "day": 6,
+          "time": "1830"
+        },
+        "open": {
+          "day": 6,
+          "time": "1000"
+        }
+      }
+    ],
+    "weekday_text": [
+      "Monday: 10:00 AM – 6:30 PM",
+      "Tuesday: 10:00 AM – 6:30 PM",
+      "Wednesday: 10:00 AM – 6:30 PM",
+      "Thursday: 10:00 AM – 6:30 PM",
+      "Friday: 10:00 AM – 6:30 PM",
+      "Saturday: 10:00 AM – 6:30 PM",
+      "Sunday: 10:00 AM – 6:30 PM"
+    ]
+  }
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_place_details`
+
+<Expandable title="Details">
+```json arguments
+{
+	"place_id":"ChIJG5Qwtitu5kcR2CNEsYy9cdA"
 }
 
 ```
@@ -1202,80 +1486,80 @@ Now let me get detailed information about each attraction, including opening hou
 <Expandable title="Details">
 ```json arguments
 {
-	"place_id": "ChIJc8mX0udx5kcRWKcjTwDr5QA"
+	"place_id":"ChIJLU7jZClu5kcR4PcOOO6p3I0"
 }
 
 ```
 
 ```json output_result
 {
-  "name": "Panthéon",
-  "formatted_address": "Pl. du Panthéon, 75005 Paris, France",
+  "name": "Eiffel Tower",
+  "formatted_address": "Av. Gustave Eiffel, 75007 Paris, France",
   "location": {
-    "lat": 48.8462218,
-    "lng": 2.3464138
+    "lat": 48.85837009999999,
+    "lng": 2.2944813
   },
-  "website": "https://www.paris-pantheon.fr/",
-  "rating": 4.6,
+  "website": "https://www.toureiffel.paris/fr",
+  "rating": 4.7,
   "reviews": [
     {
-      "author_name": "John Abrahamson",
-      "author_url": "https://www.google.com/maps/contrib/110242012295636893027/reviews",
+      "author_name": "Aryan Patel",
+      "author_url": "https://www.google.com/maps/contrib/108763739082590762673/reviews",
       "language": "en",
       "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUPtm3fAG__B1l-zrEC2Mc_m0ltuH2gRDllr7V0ydyWe-4EkFTy8A=s128-c0x00000000-cc-rp-mo-ba8",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWN-HE_k5z5pJXS1qcI21MOWRQysPDimTv3SBv4uYyK53zGpc3LxQ=s128-c0x00000000-cc-rp-mo-ba3",
       "rating": 5,
-      "relative_time_description": "a month ago",
-      "text": "Sizable place. Beautiful building. I liked how there were multiple themes going on with the art. (Christianity, Genevieve, etc) The crypt is interesting because there are many famous/important historical figures in there. But all the crypts are the same/redone. The rooftop was closed.on my day.",
-      "time": 1756754031,
+      "relative_time_description": "a week ago",
+      "text": "A Magical Day at the Eiffel Tower\n\nI visited the Eiffel Tower today and it absolutely lived up to the hype. From the moment I stepped onto the Champ de Mars, the Iron Lady’s latticework felt both grand and surprisingly graceful. The views from the top are breathtaking—Paris stretches out in every direction like a living postcard, with the Seine curving through the city and landmarks popping up everywhere you look.\n\nThe experience felt smooth and well-organized. Staff were friendly, and even with the crowds, the lines moved faster than I expected. I loved taking my time on each level—there’s something special about pausing with a coffee and just soaking in the panorama. As evening fell, the tower’s sparkle made the whole scene feel downright romantic and cinematic.\n\nIf you’re planning a visit, I’d recommend booking tickets ahead of time and going a bit before sunset so you catch daylight, golden hour, and the first twinkle after dark. Whether you take the elevator or brave the stairs, the journey itself is part of the fun.\n\nAll in all, today’s visit was unforgettable. The Eiffel Tower isn’t just a must-see—it’s a must-feel. Five stars! ⭐️⭐️⭐️⭐️⭐️",
+      "time": 1759495706,
       "translated": false
     },
     {
-      "author_name": "Chris Oh! Boylesque",
-      "author_url": "https://www.google.com/maps/contrib/109351158112901398069/reviews",
+      "author_name": "Leena Gale",
+      "author_url": "https://www.google.com/maps/contrib/106566144260087343783/reviews",
       "language": "en",
       "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXeHKgTy736503mXGzXE5ptnxyJvMAHJw3do7HuRUqHOuqgH8aTdg=s128-c0x00000000-cc-rp-mo-ba6",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUWNW8qef3UHdDzJEKwtH2kr9FMkkYjmiAJalqctMnbnrabg1UT=s128-c0x00000000-cc-rp-mo-ba6",
       "rating": 5,
-      "relative_time_description": "a month ago",
-      "text": "Just beautiful! The murals on the walls are exceptional, the space awe inspiring, and the tombs a sobering reminder of some of the great people that helped form the French identity.\n\nIt truly was a special experience, informative, and a nice pause from the hustle and bustle of the city.",
-      "time": 1756136335,
+      "relative_time_description": "in the last week",
+      "text": "Love it. Worth the 30 minute wait in the queue. Took the lift to the top. Fabulous views. Glass of champagne is 24euros. But you can keep the plastic glass as a souvenir. It's tapered so you can't put it down. Was crowded so you have to be patient but amazing visit and definitely as must whilst in Paris",
+      "time": 1760130643,
       "translated": false
     },
     {
-      "author_name": "Sebahat Kaçar",
-      "author_url": "https://www.google.com/maps/contrib/105521470722270886854/reviews",
+      "author_name": "VIJAY Singh",
+      "author_url": "https://www.google.com/maps/contrib/104142760539490840954/reviews",
       "language": "en",
       "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjV6aUsn3UV9bVx2xU3ERUo-1dpGBtzKAAFtOlRabBAE3YmsYs0=s128-c0x00000000-cc-rp-mo",
-      "rating": 5,
-      "relative_time_description": "a month ago",
-      "text": "The Panthéon was truly impressive. It wasn’t crowded, which made the visit very enjoyable. Inside, it’s fascinating to see the tombs of great figures like Victor Hugo, Voltaire, Rousseau, and Marie Curie. The grand dome and frescoes are breathtaking, and Foucault’s Pendulum is a highlight – a simple yet powerful demonstration of Earth’s rotation. Unfortunately, the terrace was temporarily closed – I would have loved to see the Paris view from there. Overall, a peaceful and historic site, definitely worth a visit.",
-      "time": 1757259600,
-      "translated": false
-    },
-    {
-      "author_name": "A Karasahin",
-      "author_url": "https://www.google.com/maps/contrib/114672075260701936921/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocI0HMA_Y6PfbmFcs_AgEcG08dD5xSJSgD4YO8_nU1nILyE_xuY=s128-c0x00000000-cc-rp-mo-ba5",
-      "rating": 5,
-      "relative_time_description": "a month ago",
-      "text": "I saw the Pantheon from the outside, and sat there for some time in the square in front of it. You can catch a beautiful glimpse of the Eiffel Tower and the cityscape. I was there on a windy afternoon, so your experience may vary, but I had a really calm and peaceful pause here before moving onto the more bustling streets of Paris🗼",
-      "time": 1755671307,
-      "translated": false
-    },
-    {
-      "author_name": "Andrew",
-      "author_url": "https://www.google.com/maps/contrib/101764783000564446427/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXsxi_s6zl0J0NQXMRhJWUBZ-I54GaS3EmzwmA-akJSgfNgWco=s128-c0x00000000-cc-rp-mo-ba5",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUFesP1izWpN2xPX9Rc8KA4_OqwkfVgly9yg9I_UD5sXs9xhqk=s128-c0x00000000-cc-rp-mo-ba4",
       "rating": 5,
       "relative_time_description": "4 weeks ago",
-      "text": "Pantheon is an incredible mausoleum unlike any I’ve seen before. You truly have to be inside it grasp its scale and grandeur. The architecture, artworks and sculptures are definitely worth seeing not to mention the crypt of distinguished French citizens such as Rousseau and Voltaire. The line to get a ticket was fairly large and it moved very slow so I definitely recommend getting a ticket in advance. You should be able to see everything in a couple hours.",
-      "time": 1758271347,
+      "text": "Visiting the Eiffel Tower is an experience that truly lives up to its iconic reputation. From the moment you approach the base, the sheer scale and elegance of this iron masterpiece leave you in awe. Whether you’re a first-time visitor or returning, the view of the tower from the surrounding Champ de Mars and Trocadéro Gardens is breathtaking, offering perfect photo opportunities.\n\nThe structure itself is a marvel of engineering. As you ascend via the elevator or the stairs, each level provides a unique perspective of Paris. The panoramic views from the top are absolutely stunning—you can see the Seine River winding through the city, historic landmarks like Notre-Dame and Sacré-Cœur, and the charming rooftops of Paris stretching into the horizon.\n\nThe atmosphere around the Eiffel Tower is lively yet romantic. Street performers, souvenir shops, and cafes create a vibrant ambiance, while evening visits offer the unforgettable sight of the tower sparkling every hour on the hour. Dining at one of its restaurants is a special treat, combining fine cuisine with unparalleled views.\n\nTips for visitors: arrive early to avoid long lines, book tickets online if possible, and don’t forget your camera—every angle is Instagram-worthy. Whether you’re traveling solo, with friends, or on a romantic getaway, the Eiffel Tower offers a timeless experience that captures the heart of Paris. A visit here isn’t just sightseeing—it’s creating memories that will last a lifetime.\n\n⭐⭐⭐⭐⭐ Highly recommended for anyone visiting Paris!",
+      "time": 1758172536,
+      "translated": false
+    },
+    {
+      "author_name": "Louie Farhat",
+      "author_url": "https://www.google.com/maps/contrib/107211163946124799833/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWx3AGjQDuhM6RWEwIPYcIun6ilA8wfik6EbPnY69ugh5TviQ5I5Q=s128-c0x00000000-cc-rp-mo-ba6",
+      "rating": 5,
+      "relative_time_description": "2 weeks ago",
+      "text": "I just had the most incredible experience at the Eiffel Tower with VIP access! Skipping the long lines made everything effortless, and I could fully enjoy every moment without feeling rushed. The elevator ride itself is amazing, giving you a sense of the tower’s grandeur as you rise above the city.\n\nOnce at the top, the views are absolutely breathtaking – the Seine winding through Paris, the Champs-Élysées stretching toward the Arc de Triomphe, and the city’s landmarks unfolding in every direction. Being able to linger, take photos, and simply soak in the atmosphere made the experience truly special.\n\nThe tower’s architecture is stunning up close, and from the observation decks, Paris feels alive, endless, and magical. VIP access made it all seamless and comfortable, turning an iconic visit into a relaxed, unforgettable adventure. This was one of the highlights of my trip – a breathtaking, once-in-a-lifetime experience I’ll never forget",
+      "time": 1759413369,
+      "translated": false
+    },
+    {
+      "author_name": "Jesus Arevalo Merino",
+      "author_url": "https://www.google.com/maps/contrib/101791241702766088668/reviews",
+      "language": "en",
+      "original_language": "en",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjW7Hx6KJmyVBOAuHkrEFVgcOWEfzY96qNPzxrlcG-ZFlBLRDymTMg=s128-c0x00000000-cc-rp-mo-ba4",
+      "rating": 5,
+      "relative_time_description": "2 weeks ago",
+      "text": "Being up there is like a dream! Lots of fun and most people are just happy to be there! You can also buy drinks up there! I had like four glasses of wine👹. HOWEVER! Don’t even waste your time trying to eat at the restaurant. The hostess is delightful, but the servers are obviously unhappy with their existence. I’m willing to pay the prices and these people don’t want to serve me? Come on! ALSO! Buy a drink at a restaurant and use the bathroom before heading there. The bathrooms there are outrageous! So many people, and if you speak English, overweight French people will yell at you! Girl I am just in line to use the bathroom! What did I do to you?😂 Just tell them you don’t understand and walk away🥰.",
+      "time": 1759374972,
       "translated": false
     }
   ],
@@ -1285,271 +1569,88 @@ Now let me get detailed information about each attraction, including opening hou
       {
         "close": {
           "day": 0,
-          "time": "1830"
+          "time": "2300"
         },
         "open": {
           "day": 0,
-          "time": "1000"
+          "time": "0930"
         }
       },
       {
         "close": {
           "day": 1,
-          "time": "1830"
+          "time": "2300"
         },
         "open": {
           "day": 1,
-          "time": "1000"
+          "time": "0930"
         }
       },
       {
         "close": {
           "day": 2,
-          "time": "1830"
+          "time": "2300"
         },
         "open": {
           "day": 2,
-          "time": "1000"
+          "time": "0930"
         }
       },
       {
         "close": {
           "day": 3,
-          "time": "1830"
+          "time": "2300"
         },
         "open": {
           "day": 3,
-          "time": "1000"
+          "time": "0930"
         }
       },
       {
         "close": {
           "day": 4,
-          "time": "1830"
+          "time": "2300"
         },
         "open": {
           "day": 4,
-          "time": "1000"
+          "time": "0930"
         }
       },
       {
         "close": {
           "day": 5,
-          "time": "1830"
+          "time": "2300"
         },
         "open": {
           "day": 5,
-          "time": "1000"
+          "time": "0930"
         }
       },
       {
         "close": {
           "day": 6,
-          "time": "1830"
+          "time": "2300"
         },
         "open": {
           "day": 6,
-          "time": "1000"
+          "time": "0930"
         }
       }
     ],
     "weekday_text": [
-      "Monday: 10:00 AM – 6:30 PM",
-      "Tuesday: 10:00 AM – 6:30 PM",
-      "Wednesday: 10:00 AM – 6:30 PM",
-      "Thursday: 10:00 AM – 6:30 PM",
-      "Friday: 10:00 AM – 6:30 PM",
-      "Saturday: 10:00 AM – 6:30 PM",
-      "Sunday: 10:00 AM – 6:30 PM"
+      "Monday: 9:30 AM – 11:00 PM",
+      "Tuesday: 9:30 AM – 11:00 PM",
+      "Wednesday: 9:30 AM – 11:00 PM",
+      "Thursday: 9:30 AM – 11:00 PM",
+      "Friday: 9:30 AM – 11:00 PM",
+      "Saturday: 9:30 AM – 11:00 PM",
+      "Sunday: 9:30 AM – 11:00 PM"
     ]
   }
 }
 ```
 
 </Expandable>
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_place_details`
-
-<Expandable title="Details">
-```json arguments
-{
-	"place_id": "ChIJo6qq6i5u5kcRCpYBp4rQP9w"
-}
-
-```
-
-```json output_result
-{
-  "name": "Musée de l'Orangerie",
-  "formatted_address": "Jardin des Tuileries, 75001 Paris, France",
-  "location": {
-    "lat": 48.8637884,
-    "lng": 2.3226724
-  },
-  "formatted_phone_number": "01 44 50 43 00",
-  "website": "https://www.musee-orangerie.fr/fr",
-  "rating": 4.6,
-  "reviews": [
-    {
-      "author_name": "Off to see the World",
-      "author_url": "https://www.google.com/maps/contrib/116679525275898110510/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVObP4uUNIl9rTKwxnHNRCAwZxzKd_yiegl7LI9DjtLXDNuFlgXNQ=s128-c0x00000000-cc-rp-mo-ba4",
-      "rating": 5,
-      "relative_time_description": "a month ago",
-      "text": "One of our favorite museums. Our kids enjoyed coming here.  It’s a meditation space, which we didn’t realize until going there.  It’s such a beautiful space and being a meditation space made it even better. You get to be wrapped around with Monet’s work, it was purely amazing! We got to paint with our travel paint set and pastels. There’s also a very cool kids space downstairs. We got tickets in advance but there’s a line if you don’t have tickets.",
-      "time": 1758199181,
-      "translated": false
-    },
-    {
-      "author_name": "Guy Mosenson",
-      "author_url": "https://www.google.com/maps/contrib/105978665193638539680/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjU5TGT9c9YBKqiFn-Kovf5A_r4d7v3JyXiQkPcnVJB01Icdd7Fb=s128-c0x00000000-cc-rp-mo-ba3",
-      "rating": 5,
-      "relative_time_description": "3 weeks ago",
-      "text": "Remarkable oval rooms showing Monet's Nymphéas paintings, and a nice collection of Impressionist and Post-Impressionist works.\n\nI specifically liked the selection and size, strolled slowly and attentively through it all in about 2 hours.\n\nYou can walk in and by tickets, if the online tickets are sold out. At 10am there was no queue, and you can buy combo ticket also for the near by huge Musée d'Orsay",
-      "time": 1758706755,
-      "translated": false
-    },
-    {
-      "author_name": "Jiwon Kokomong Kim",
-      "author_url": "https://www.google.com/maps/contrib/117067688537958368601/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXpjHLL_8JigoZH93AcgDa7OaDFKrfl9YB6Ajw1cCtHZcSllz6Q=s128-c0x00000000-cc-rp-mo-ba7",
-      "rating": 4,
-      "relative_time_description": "3 weeks ago",
-      "text": "If you don’t have time to visit other museums in Paris, this is a place where you can quickly see a lot of Monet’s works. Once you’ve admired his most famous masterpiece, there isn’t much else in the museum that feels particularly noteworthy. I recommend booking tickets in advance, but if you go early in the morning, you can usually buy them on-site without waiting in line.",
-      "time": 1758954093,
-      "translated": false
-    },
-    {
-      "author_name": "Chiara Riccioni",
-      "author_url": "https://www.google.com/maps/contrib/108682707256816699312/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocIgyk8UEWD_spyaL6mDtU_AhCQohVdoszwiKzJtUhzmwXQMcEk=s128-c0x00000000-cc-rp-mo-ba3",
-      "rating": 5,
-      "relative_time_description": "a month ago",
-      "text": "very beautiful. quite small in comparison to the others in the city bit there is a lot of beautiful art. there is famous painters but  also minor ones.\nthe collection of Monet's Nympheas is fantastic, suggestive, and very unique.\nits not expensive at all and you dont have to wait much to enter. really recommended",
-      "time": 1756243270,
-      "translated": false
-    },
-    {
-      "author_name": "Kit Jan",
-      "author_url": "https://www.google.com/maps/contrib/117806965578521652952/reviews",
-      "language": "en",
-      "original_language": "en",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjWRWM33yj1rJMM_i3-veyf5b7m_eMBY0chwfaUjHRdrSyDrXfd2=s128-c0x00000000-cc-rp-mo-ba4",
-      "rating": 5,
-      "relative_time_description": "2 months ago",
-      "text": "I can’t put into words how incredible this museum was!\nI came specifically to see Monet’s work, and it truly blew me away — so serene and moving.\n\nEven if you’re not usually into art, I’d still highly recommend a visit. The atmosphere is calming, and there’s something for everyone. They even have a children’s activity area, which is a lovely touch for families, as well as a few other types of art exhibitions beyond Impressionism.",
-      "time": 1754120015,
-      "translated": false
-    }
-  ],
-  "opening_hours": {
-    "open_now": false,
-    "periods": [
-      {
-        "close": {
-          "day": 0,
-          "time": "1800"
-        },
-        "open": {
-          "day": 0,
-          "time": "0900"
-        }
-      },
-      {
-        "close": {
-          "day": 1,
-          "time": "1800"
-        },
-        "open": {
-          "day": 1,
-          "time": "0900"
-        }
-      },
-      {
-        "close": {
-          "day": 3,
-          "time": "1800"
-        },
-        "open": {
-          "day": 3,
-          "time": "0900"
-        }
-      },
-      {
-        "close": {
-          "day": 4,
-          "time": "1800"
-        },
-        "open": {
-          "day": 4,
-          "time": "0900"
-        }
-      },
-      {
-        "close": {
-          "day": 5,
-          "time": "1800"
-        },
-        "open": {
-          "day": 5,
-          "time": "0900"
-        }
-      },
-      {
-        "close": {
-          "day": 6,
-          "time": "1800"
-        },
-        "open": {
-          "day": 6,
-          "time": "0900"
-        }
-      }
-    ],
-    "weekday_text": [
-      "Monday: 9:00 AM – 6:00 PM",
-      "Tuesday: Closed",
-      "Wednesday: 9:00 AM – 6:00 PM",
-      "Thursday: 9:00 AM – 6:00 PM",
-      "Friday: 9:00 AM – 6:00 PM",
-      "Saturday: 9:00 AM – 6:00 PM",
-      "Sunday: 9:00 AM – 6:00 PM"
-    ]
-  }
-}
-```
-
-</Expandable>
-</div>
-
-<div className="thinking-box">
-🧐`Agent`
-
-Now I need to determine which attractions are on the Rive Droite (Right Bank) vs Rive Gauche (Left Bank). The Seine River divides Paris, and based on the coordinates and my knowledge of Paris:
-
-**Rive Droite (Right Bank) - Day 1:**
-- Louvre Museum (48.8606111, 2.337644) - 1st arrondissement
-- Musée de l'Orangerie (48.8637884, 2.3226724) - 1st arrondissement  
-- Arc de Triomphe (48.8737917, 2.2950275) - 8th arrondissement
-
-**Rive Gauche (Left Bank) - Day 2:**
-- Notre Dame Cathedral (48.85296820000001, 2.3499021) - 4th arrondissement (technically on Île de la Cité, but starting point)
-- Eiffel Tower (48.85837009999999, 2.2944813) - 7th arrondissement
-- Musée d'Orsay (48.8599614, 2.3265614) - 7th arrondissement
-- Panthéon (48.8462218, 2.3464138) - 5th arrondissement
-
-Now I need to calculate walking distances and times between these locations to create optimal routes for each day.
 </div>
 
 <div className="result-box">
@@ -1558,13 +1659,76 @@ Now I need to calculate walking distances and times between these locations to c
 <Expandable title="Details">
 ```json arguments
 {
-	"origin": "Notre Dame Cathedral,
-	 Paris,
+	"origin":"75001 Paris,
 	 France",
-	 "destination": "Louvre Museum,
-	 Paris,
+	"destination":"Jardin des Tuileries,
+	 75001 Paris,
 	 France",
-	 "mode": "walking"
+	"mode":"walking"
+}
+
+```
+
+```json output_result
+{
+  "routes": [
+    {
+      "summary": "Rue de Rivoli",
+      "distance": {
+        "text": "0.3 km",
+        "value": 322
+      },
+      "duration": {
+        "text": "4 mins",
+        "value": 260
+      },
+      "steps": [
+        {
+          "instructions": "Head <b>northwest</b> on <b>Rue de Rivoli</b> toward <b>Rue du 29 Juillet</b>",
+          "distance": {
+            "text": "0.3 km",
+            "value": 308
+          },
+          "duration": {
+            "text": "4 mins",
+            "value": 247
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> onto <b>All. de Castiglione</b><div style=\"font-size:0.9em\">Take the stairs</div>",
+          "distance": {
+            "text": "14 m",
+            "value": 14
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 13
+          },
+          "travel_mode": "WALKING"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_directions`
+
+<Expandable title="Details">
+```json arguments
+{
+	"origin":"6 Parvis Notre-Dame - Pl. Jean-Paul II,
+	 75004 Paris,
+	 France",
+	"destination":"Louvre Museum,
+	 75001 Paris,
+	 France",
+	"mode":"walking"
 }
 
 ```
@@ -1576,22 +1740,22 @@ Now I need to calculate walking distances and times between these locations to c
       "summary": "Pont des Arts",
       "distance": {
         "text": "1.3 km",
-        "value": 1329
+        "value": 1328
       },
       "duration": {
         "text": "18 mins",
-        "value": 1103
+        "value": 1102
       },
       "steps": [
         {
           "instructions": "Head <b>southwest</b> toward <b>Prom. Maurice Carême</b>",
           "distance": {
-            "text": "53 m",
-            "value": 53
+            "text": "52 m",
+            "value": 52
           },
           "duration": {
             "text": "1 min",
-            "value": 43
+            "value": 42
           },
           "travel_mode": "WALKING"
         },
@@ -1670,13 +1834,234 @@ Now I need to calculate walking distances and times between these locations to c
 <Expandable title="Details">
 ```json arguments
 {
-	"origin": "Louvre Museum,
-	 Paris,
+	"origin":"Jardin des Tuileries,
+	 75001 Paris,
 	 France",
-	 "destination": "Musée de l'Orangerie,
-	 Paris,
+	"destination":"Pl. Charles de Gaulle,
+	 75008 Paris,
 	 France",
-	 "mode": "walking"
+	"mode":"walking"
+}
+
+```
+
+```json output_result
+{
+  "routes": [
+    {
+      "summary": "Av. des Champs-Élysées",
+      "distance": {
+        "text": "2.6 km",
+        "value": 2637
+      },
+      "duration": {
+        "text": "38 mins",
+        "value": 2287
+      },
+      "steps": [
+        {
+          "instructions": "Head <b>southwest</b>",
+          "distance": {
+            "text": "5 m",
+            "value": 5
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 5
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b>",
+          "distance": {
+            "text": "0.6 km",
+            "value": 621
+          },
+          "duration": {
+            "text": "9 mins",
+            "value": 515
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> toward <b>Allée du Commandant Massoud</b>",
+          "distance": {
+            "text": "25 m",
+            "value": 25
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 23
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> onto <b>Allée du Commandant Massoud</b>",
+          "distance": {
+            "text": "27 m",
+            "value": 27
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 23
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> toward <b>Av. des Champs-Élysées</b>",
+          "distance": {
+            "text": "35 m",
+            "value": 35
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 28
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> onto <b>Av. des Champs-Élysées</b>",
+          "distance": {
+            "text": "1.1 km",
+            "value": 1118
+          },
+          "duration": {
+            "text": "16 mins",
+            "value": 953
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> to stay on <b>Av. des Champs-Élysées</b>",
+          "distance": {
+            "text": "10 m",
+            "value": 10
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 28
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> to stay on <b>Av. des Champs-Élysées</b>",
+          "distance": {
+            "text": "0.7 km",
+            "value": 714
+          },
+          "duration": {
+            "text": "11 mins",
+            "value": 642
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b>",
+          "distance": {
+            "text": "12 m",
+            "value": 12
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 10
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b><div style=\"font-size:0.9em\">Take the stairs</div><div style=\"font-size:0.9em\">Destination will be on the right</div>",
+          "distance": {
+            "text": "70 m",
+            "value": 70
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 60
+          },
+          "travel_mode": "WALKING"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_directions`
+
+<Expandable title="Details">
+```json arguments
+{
+	"origin":"75001 Paris,
+	 France",
+	"destination":"Jardin des Tuileries,
+	 75001 Paris,
+	 France",
+	"mode":"walking"
+}
+
+```
+
+```json output_result
+{
+  "routes": [
+    {
+      "summary": "Rue de Rivoli",
+      "distance": {
+        "text": "0.3 km",
+        "value": 322
+      },
+      "duration": {
+        "text": "4 mins",
+        "value": 260
+      },
+      "steps": [
+        {
+          "instructions": "Head <b>northwest</b> on <b>Rue de Rivoli</b> toward <b>Rue du 29 Juillet</b>",
+          "distance": {
+            "text": "0.3 km",
+            "value": 308
+          },
+          "duration": {
+            "text": "4 mins",
+            "value": 247
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> onto <b>All. de Castiglione</b><div style=\"font-size:0.9em\">Take the stairs</div>",
+          "distance": {
+            "text": "14 m",
+            "value": 14
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 13
+          },
+          "travel_mode": "WALKING"
+        }
+      ]
+    }
+  ]
+}
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_directions`
+
+<Expandable title="Details">
+```json arguments
+{
+	"origin":"48.8606111,
+	2.337644",
+	"destination":"48.8637884,
+	2.3226724",
+	"mode":"walking"
 }
 
 ```
@@ -1687,28 +2072,76 @@ Now I need to calculate walking distances and times between these locations to c
     {
       "summary": "",
       "distance": {
-        "text": "1.2 km",
-        "value": 1158
+        "text": "1.3 km",
+        "value": 1340
       },
       "duration": {
-        "text": "16 mins",
-        "value": 942
+        "text": "18 mins",
+        "value": 1085
       },
       "steps": [
         {
-          "instructions": "Head <b>south</b>",
+          "instructions": "Head <b>west</b> toward <b>Pass. de Richelieu</b><div style=\"font-size:0.9em\">Take the stairs</div>",
           "distance": {
-            "text": "49 m",
-            "value": 49
+            "text": "0.1 km",
+            "value": 100
           },
           "duration": {
             "text": "1 min",
-            "value": 39
+            "value": 79
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b>",
+          "distance": {
+            "text": "54 m",
+            "value": 54
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 43
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b>",
+          "distance": {
+            "text": "22 m",
+            "value": 22
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 17
           },
           "travel_mode": "WALKING"
         },
         {
           "instructions": "Turn <b>right</b>",
+          "distance": {
+            "text": "90 m",
+            "value": 90
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 71
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b>",
+          "distance": {
+            "text": "10 m",
+            "value": 10
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 8
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b>",
           "distance": {
             "text": "0.1 km",
             "value": 132
@@ -1876,14 +2309,14 @@ Now I need to calculate walking distances and times between these locations to c
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Slight <b>left</b>",
+          "instructions": "Slight <b>left</b><div style=\"font-size:0.9em\">Destination will be on the left</div>",
           "distance": {
-            "text": "72 m",
-            "value": 72
+            "text": "27 m",
+            "value": 27
           },
           "duration": {
             "text": "1 min",
-            "value": 58
+            "value": 22
           },
           "travel_mode": "WALKING"
         }
@@ -1902,13 +2335,13 @@ Now I need to calculate walking distances and times between these locations to c
 <Expandable title="Details">
 ```json arguments
 {
-	"origin": "Musée de l'Orangerie,
-	 Paris,
+	"origin":"6 Parvis Notre-Dame - Pl. Jean-Paul II,
+	 75004 Paris,
 	 France",
-	 "destination": "Arc de Triomphe,
-	 Paris,
+	"destination":"Pl. du Panthéon,
+	 75005 Paris,
 	 France",
-	 "mode": "walking"
+	"mode":"walking"
 }
 
 ```
@@ -1917,57 +2350,81 @@ Now I need to calculate walking distances and times between these locations to c
 {
   "routes": [
     {
-      "summary": "Av. des Champs-Élysées",
+      "summary": "Rue Lagrange",
       "distance": {
-        "text": "2.5 km",
-        "value": 2472
+        "text": "1.1 km",
+        "value": 1070
       },
       "duration": {
-        "text": "36 mins",
-        "value": 2159
+        "text": "16 mins",
+        "value": 969
       },
       "steps": [
         {
-          "instructions": "Head <b>northwest</b> toward <b>Terr. de l'Orangerie</b>",
+          "instructions": "Head <b>southwest</b> toward <b>Prom. Maurice Carême</b>",
           "distance": {
-            "text": "7 m",
-            "value": 7
+            "text": "52 m",
+            "value": 52
           },
           "duration": {
             "text": "1 min",
-            "value": 6
+            "value": 42
           },
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>left</b> onto <b>Terr. de l'Orangerie</b>",
+          "instructions": "Continue onto <b>Pont au Double</b>",
+          "distance": {
+            "text": "52 m",
+            "value": 52
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 40
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Continue onto <b>Rue Lagrange</b>",
+          "distance": {
+            "text": "82 m",
+            "value": 82
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 75
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> to stay on <b>Rue Lagrange</b>",
+          "distance": {
+            "text": "0.2 km",
+            "value": 164
+          },
+          "duration": {
+            "text": "2 mins",
+            "value": 135
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> onto <b>Rue Frédéric Sauton</b>/<wbr/><b>Pl. Maubert</b>",
+          "distance": {
+            "text": "37 m",
+            "value": 37
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 32
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> onto <b>Bd Saint-Germain</b>",
           "distance": {
             "text": "19 m",
             "value": 19
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 15
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b>",
-          "distance": {
-            "text": "7 m",
-            "value": 7
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 5
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b><div style=\"font-size:0.9em\">Take the stairs</div>",
-          "distance": {
-            "text": "17 m",
-            "value": 17
           },
           "duration": {
             "text": "1 min",
@@ -1976,134 +2433,74 @@ Now I need to calculate walking distances and times between these locations to c
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>left</b>",
+          "instructions": "Turn <b>left</b> onto <b>Rue des Carmes</b>",
           "distance": {
-            "text": "14 m",
-            "value": 14
+            "text": "0.2 km",
+            "value": 243
+          },
+          "duration": {
+            "text": "4 mins",
+            "value": 263
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Continue onto <b>Rue Valette</b>",
+          "distance": {
+            "text": "0.2 km",
+            "value": 174
+          },
+          "duration": {
+            "text": "3 mins",
+            "value": 164
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> toward <b>Pl. du Panthéon</b>",
+          "distance": {
+            "text": "93 m",
+            "value": 93
           },
           "duration": {
             "text": "1 min",
-            "value": 11
+            "value": 78
           },
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>right</b>",
+          "instructions": "Turn <b>left</b> toward <b>Pl. du Panthéon</b>",
           "distance": {
-            "text": "0.3 km",
-            "value": 324
-          },
-          "duration": {
-            "text": "5 mins",
-            "value": 276
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> toward <b>Allée du Commandant Massoud</b>",
-          "distance": {
-            "text": "25 m",
-            "value": 25
+            "text": "85 m",
+            "value": 85
           },
           "duration": {
             "text": "1 min",
-            "value": 23
+            "value": 69
           },
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>right</b> onto <b>Allée du Commandant Massoud</b>",
+          "instructions": "Slight <b>left</b> onto <b>Pl. du Panthéon</b>",
           "distance": {
-            "text": "27 m",
-            "value": 27
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 23
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> toward <b>Av. des Champs-Élysées</b>",
-          "distance": {
-            "text": "35 m",
-            "value": 35
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 28
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> onto <b>Av. des Champs-Élysées</b>",
-          "distance": {
-            "text": "1.1 km",
-            "value": 1118
-          },
-          "duration": {
-            "text": "16 mins",
-            "value": 953
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> to stay on <b>Av. des Champs-Élysées</b>",
-          "distance": {
-            "text": "10 m",
-            "value": 10
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 28
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> to stay on <b>Av. des Champs-Élysées</b>",
-          "distance": {
-            "text": "0.7 km",
-            "value": 714
-          },
-          "duration": {
-            "text": "11 mins",
-            "value": 642
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b>",
-          "distance": {
-            "text": "12 m",
-            "value": 12
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 10
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b><div style=\"font-size:0.9em\">Take the stairs</div>",
-          "distance": {
-            "text": "0.1 km",
-            "value": 133
-          },
-          "duration": {
-            "text": "2 mins",
-            "value": 110
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Sharp <b>left</b><div style=\"font-size:0.9em\">Take the stairs</div><div style=\"font-size:0.9em\">Destination will be on the right</div>",
-          "distance": {
-            "text": "10 m",
-            "value": 10
+            "text": "16 m",
+            "value": 16
           },
           "duration": {
             "text": "1 min",
             "value": 13
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> to stay on <b>Pl. du Panthéon</b>",
+          "distance": {
+            "text": "53 m",
+            "value": 53
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 42
           },
           "travel_mode": "WALKING"
         }
@@ -2116,25 +2513,19 @@ Now I need to calculate walking distances and times between these locations to c
 </Expandable>
 </div>
 
-<div className="thinking-box">
-🧐`Agent`
-
-Now let me get the directions for Day 2 (Left Bank attractions):
-</div>
-
 <div className="result-box">
 <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_directions`
 
 <Expandable title="Details">
 ```json arguments
 {
-	"origin": "Notre Dame Cathedral,
-	 Paris,
+	"origin":"Pl. du Panthéon,
+	 75005 Paris,
 	 France",
-	 "destination": "Musée d'Orsay,
-	 Paris,
+	"destination":"Esplanade Valéry Giscard d'Estaing,
+	 75007 Paris,
 	 France",
-	 "mode": "walking"
+	"mode":"walking"
 }
 
 ```
@@ -2143,18 +2534,18 @@ Now let me get the directions for Day 2 (Left Bank attractions):
 {
   "routes": [
     {
-      "summary": "Prom. Marceline Loridan-Ivens",
+      "summary": "Rue de l'Université",
       "distance": {
-        "text": "2.2 km",
-        "value": 2161
+        "text": "2.6 km",
+        "value": 2573
       },
       "duration": {
-        "text": "30 mins",
-        "value": 1777
+        "text": "35 mins",
+        "value": 2091
       },
       "steps": [
         {
-          "instructions": "Head <b>southwest</b> toward <b>Prom. Maurice Carême</b>",
+          "instructions": "Head <b>west</b> on <b>Pl. du Panthéon</b> toward <b>Rue Clotaire</b>",
           "distance": {
             "text": "53 m",
             "value": 53
@@ -2166,86 +2557,182 @@ Now let me get the directions for Day 2 (Left Bank attractions):
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>right</b> onto <b>Prom. Maurice Carême</b><div style=\"font-size:0.9em\">Take the stairs</div>",
+          "instructions": "Turn <b>right</b> to stay on <b>Pl. du Panthéon</b>",
           "distance": {
-            "text": "0.1 km",
-            "value": 136
-          },
-          "duration": {
-            "text": "2 mins",
-            "value": 124
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> onto <b>Petit Pont - Cardinal Lustiger</b>",
-          "distance": {
-            "text": "37 m",
-            "value": 37
+            "text": "77 m",
+            "value": 77
           },
           "duration": {
             "text": "1 min",
-            "value": 41
+            "value": 59
           },
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>right</b><div style=\"font-size:0.9em\">Take the stairs</div>",
-          "distance": {
-            "text": "0.7 km",
-            "value": 684
-          },
-          "duration": {
-            "text": "9 mins",
-            "value": 539
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Slight <b>left</b> onto <b>Prom. Marceline Loridan-Ivens</b><div style=\"font-size:0.9em\">Take the stairs</div>",
-          "distance": {
-            "text": "0.8 km",
-            "value": 800
-          },
-          "duration": {
-            "text": "11 mins",
-            "value": 660
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> onto <b>Quai Voltaire</b>",
-          "distance": {
-            "text": "75 m",
-            "value": 75
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 65
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Continue onto <b>Quai Valéry Giscard d'Estaing</b>",
+          "instructions": "<b>Pl. du Panthéon</b> turns slightly <b>left</b> and becomes <b>Rue Soufflot</b>",
           "distance": {
             "text": "0.3 km",
-            "value": 324
+            "value": 281
           },
           "duration": {
             "text": "4 mins",
-            "value": 256
+            "value": 215
           },
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>left</b> onto <b>Rue de la Légion d'Honneur</b><div style=\"font-size:0.9em\">Destination will be on the left</div>",
+          "instructions": "Turn <b>right</b> onto <b>Pl. Edmond Rostand</b>",
           "distance": {
-            "text": "52 m",
-            "value": 52
+            "text": "10 m",
+            "value": 10
           },
           "duration": {
             "text": "1 min",
-            "value": 49
+            "value": 7
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> to stay on <b>Pl. Edmond Rostand</b>",
+          "distance": {
+            "text": "47 m",
+            "value": 47
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 47
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> onto <b>Rue de Médicis</b>",
+          "distance": {
+            "text": "0.2 km",
+            "value": 177
+          },
+          "duration": {
+            "text": "2 mins",
+            "value": 140
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Slight <b>left</b> to stay on <b>Rue de Médicis</b>",
+          "distance": {
+            "text": "43 m",
+            "value": 43
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 31
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Continue onto <b>Rue de Vaugirard</b>",
+          "distance": {
+            "text": "0.1 km",
+            "value": 101
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 75
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> onto <b>Rue de Tournon</b>",
+          "distance": {
+            "text": "0.2 km",
+            "value": 242
+          },
+          "duration": {
+            "text": "3 mins",
+            "value": 191
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Continue onto <b>Rue de Seine</b>",
+          "distance": {
+            "text": "0.3 km",
+            "value": 338
+          },
+          "duration": {
+            "text": "5 mins",
+            "value": 276
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> onto <b>Rue Jacob</b>",
+          "distance": {
+            "text": "0.4 km",
+            "value": 429
+          },
+          "duration": {
+            "text": "6 mins",
+            "value": 366
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Continue onto <b>Rue de l'Université</b>",
+          "distance": {
+            "text": "0.5 km",
+            "value": 492
+          },
+          "duration": {
+            "text": "7 mins",
+            "value": 406
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> onto <b>Rue de Poitiers</b>",
+          "distance": {
+            "text": "0.1 km",
+            "value": 123
+          },
+          "duration": {
+            "text": "2 mins",
+            "value": 100
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> onto <b>Rue de Lille</b>",
+          "distance": {
+            "text": "0.1 km",
+            "value": 105
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 85
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>right</b> onto <b>Esp. Valéry Giscard d'Estaing</b><div style=\"font-size:0.9em\">Take the stairs</div>",
+          "distance": {
+            "text": "15 m",
+            "value": 15
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 16
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> to stay on <b>Esp. Valéry Giscard d'Estaing</b>",
+          "distance": {
+            "text": "40 m",
+            "value": 40
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 34
           },
           "travel_mode": "WALKING"
         }
@@ -2264,13 +2751,13 @@ Now let me get the directions for Day 2 (Left Bank attractions):
 <Expandable title="Details">
 ```json arguments
 {
-	"origin": "Musée d'Orsay,
-	 Paris,
+	"origin":"Esplanade Valéry Giscard d'Estaing,
+	 75007 Paris,
 	 France",
-	 "destination": "Eiffel Tower,
-	 Paris,
+	"destination":"Av. Gustave Eiffel,
+	 75007 Paris,
 	 France",
-	 "mode": "walking"
+	"mode":"walking"
 }
 
 ```
@@ -2281,23 +2768,35 @@ Now let me get the directions for Day 2 (Left Bank attractions):
     {
       "summary": "Rue de l'Université",
       "distance": {
-        "text": "2.4 km",
-        "value": 2363
+        "text": "2.5 km",
+        "value": 2513
       },
       "duration": {
-        "text": "33 mins",
-        "value": 1989
+        "text": "35 mins",
+        "value": 2109
       },
       "steps": [
         {
-          "instructions": "Head <b>southwest</b> on <b>Rue de la Légion d'Honneur</b> toward <b>Esp. Valéry Giscard d'Estaing</b>",
+          "instructions": "Head <b>west</b> on <b>Esp. Valéry Giscard d'Estaing</b> toward <b>Rue de la Légion d'Honneur</b><div style=\"font-size:0.9em\">Take the stairs</div>",
           "distance": {
-            "text": "46 m",
-            "value": 46
+            "text": "23 m",
+            "value": 23
           },
           "duration": {
             "text": "1 min",
-            "value": 35
+            "value": 21
+          },
+          "travel_mode": "WALKING"
+        },
+        {
+          "instructions": "Turn <b>left</b> onto <b>Rue de la Légion d'Honneur</b>",
+          "distance": {
+            "text": "42 m",
+            "value": 42
+          },
+          "duration": {
+            "text": "1 min",
+            "value": 32
           },
           "travel_mode": "WALKING"
         },
@@ -2362,258 +2861,26 @@ Now let me get the directions for Day 2 (Left Bank attractions):
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Turn <b>left</b><div style=\"font-size:0.9em\">Destination will be on the right</div>",
+          "instructions": "Turn <b>left</b> toward <b>Av. Gustave Eiffel</b>",
           "distance": {
             "text": "0.1 km",
-            "value": 104
+            "value": 110
           },
           "duration": {
             "text": "1 min",
-            "value": 84
-          },
-          "travel_mode": "WALKING"
-        }
-      ]
-    }
-  ]
-}
-```
-
-</Expandable>
-</div>
-
-<div className="result-box">
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_directions`
-
-<Expandable title="Details">
-```json arguments
-{
-	"origin": "Eiffel Tower,
-	 Paris,
-	 France",
-	 "destination": "Panthéon,
-	 Paris,
-	 France",
-	 "mode": "walking"
-}
-
-```
-
-```json output_result
-{
-  "routes": [
-    {
-      "summary": "Rue de l'Université",
-      "distance": {
-        "text": "4.6 km",
-        "value": 4617
-      },
-      "duration": {
-        "text": "1 hour 6 mins",
-        "value": 3954
-      },
-      "steps": [
-        {
-          "instructions": "Head <b>northwest</b>",
-          "distance": {
-            "text": "52 m",
-            "value": 52
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 41
+            "value": 89
           },
           "travel_mode": "WALKING"
         },
         {
-          "instructions": "Slight <b>right</b> toward <b>Rue de l'Université</b>",
-          "distance": {
-            "text": "52 m",
-            "value": 52
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 42
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> onto <b>Rue de l'Université</b>",
-          "distance": {
-            "text": "68 m",
-            "value": 68
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 50
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> onto <b>Av. de la Bourdonnais</b>",
-          "distance": {
-            "text": "5 m",
-            "value": 5
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 16
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> onto <b>Rue de l'Université</b>",
-          "distance": {
-            "text": "2.7 km",
-            "value": 2720
-          },
-          "duration": {
-            "text": "38 mins",
-            "value": 2284
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Continue onto <b>Rue Jacob</b>",
-          "distance": {
-            "text": "0.4 km",
-            "value": 429
-          },
-          "duration": {
-            "text": "6 mins",
-            "value": 357
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> onto <b>Rue de Seine</b>",
-          "distance": {
-            "text": "0.2 km",
-            "value": 176
-          },
-          "duration": {
-            "text": "3 mins",
-            "value": 160
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> onto <b>Bd Saint-Germain</b>",
+          "instructions": "Turn <b>right</b> onto <b>Av. Gustave Eiffel</b>",
           "distance": {
             "text": "0.1 km",
-            "value": 138
+            "value": 125
           },
           "duration": {
             "text": "2 mins",
-            "value": 113
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> onto <b>Carr de l'Odéon</b>/<wbr/><b>Bd Saint-Germain</b><div style=\"font-size:0.9em\">Continue to follow Carr de l'Odéon</div>",
-          "distance": {
-            "text": "76 m",
-            "value": 76
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 86
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> to stay on <b>Carr de l'Odéon</b>",
-          "distance": {
-            "text": "17 m",
-            "value": 17
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 14
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Continue onto <b>Rue Monsieur le Prince</b>",
-          "distance": {
-            "text": "0.3 km",
-            "value": 341
-          },
-          "duration": {
-            "text": "5 mins",
-            "value": 309
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> onto <b>Rue de Vaugirard</b>",
-          "distance": {
-            "text": "93 m",
-            "value": 93
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 69
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> onto <b>Bd Saint-Michel</b>",
-          "distance": {
-            "text": "55 m",
-            "value": 55
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 58
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b> onto <b>Rue Cujas</b>",
-          "distance": {
-            "text": "0.3 km",
-            "value": 331
-          },
-          "duration": {
-            "text": "5 mins",
-            "value": 300
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b> onto <b>Pl. du Panthéon</b>",
-          "distance": {
-            "text": "18 m",
-            "value": 18
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 17
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>left</b>",
-          "distance": {
-            "text": "8 m",
-            "value": 8
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 7
-          },
-          "travel_mode": "WALKING"
-        },
-        {
-          "instructions": "Turn <b>right</b><div style=\"font-size:0.9em\">Destination will be on the left</div>",
-          "distance": {
-            "text": "38 m",
-            "value": 38
-          },
-          "duration": {
-            "text": "1 min",
-            "value": 31
+            "value": 97
           },
           "travel_mode": "WALKING"
         }
@@ -2624,26 +2891,6 @@ Now let me get the directions for Day 2 (Left Bank attractions):
 ```
 
 </Expandable>
-</div>
-
-<div className="thinking-box">
-🧐`Agent`
-
-Now I have all the information needed to create the itinerary. Based on the analysis:
-
-**Day 1 (Monday) - Rive Droite (Right Bank):**
-- Starting from Notre Dame Cathedral
-- Louvre Museum (1.3 km, 18 min walk)
-- Musée de l'Orangerie (1.2 km, 16 min walk)
-- Arc de Triomphe (2.5 km, 36 min walk)
-
-**Day 2 (Tuesday) - Rive Gauche (Left Bank):**
-- Starting from Notre Dame Cathedral 
-- Musée d'Orsay (2.2 km, 30 min walk)
-- Eiffel Tower (2.4 km, 33 min walk)
-- Panthéon (4.6 km, 66 min walk)
-
-Let me create the itinerary file:
 </div>
 
 <div className="result-box">
@@ -2655,25 +2902,89 @@ workspace/Paris_Itinerary.json
 {
   "day1": [
     {
-      "name": "Notre Dame Cathedral",
-      "address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
-      "opening_hours": "Monday: 7:50 AM – 7:00 PM",
+      "name": "Louvre Museum",
+      "address": "75001 Paris, France",
+      "opening_hours": "Monday: 9:00	AM  :00	PM",
       "distance_to_next": "1.3 km",
       "time_spent_to_next": "18 min"
     },
     {
+      "name": "Mus e9e de l'Orangerie",
+      "address": "Jardin des Tuileries, 75001 Paris, France",
+      "opening_hours": "Monday: 9:00	AM  :00	PM",
+      "distance_to_next": "2.6 km",
+      "time_spent_to_next": "38 min"
+    },
+    {
+      "name": "Arc de Triomphe",
+      "address": "Pl. Charles de Gaulle, 75008 Paris, France",
+      "opening_hours": "Monday: 10:00	AM  10:30	PM",
+      "distance_to_next": null,
+      "time_spent_to_next": null
+    }
+  ],
+  "day2": [
+    {
+      "name": "Notre-Dame Cathedral of Paris",
+      "address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
+      "opening_hours": "Tuesday: 7:50	AM  7:00	PM",
+      "distance_to_next": "1.1 km",
+      "time_spent_to_next": "16 min"
+    },
+    {
+      "name": "Panth e9on",
+      "address": "Pl. du Panth e9on, 75005 Paris, France",
+      "opening_hours": "Tuesday: 10:00	AM  6:30	PM",
+      "distance_to_next": "2.6 km",
+      "time_spent_to_next": "35 min"
+    },
+    {
+      "name": "Mus e9e d'Orsay",
+      "address": "Esplanade Val e9ry Giscard d'Estaing, 75007 Paris, France",
+      "opening_hours": "Tuesday: 9:30	AM  6:00	PM",
+      "distance_to_next": "2.5 km",
+      "time_spent_to_next": "35 min"
+    },
+    {
+      "name": "Eiffel Tower",
+      "address": "Av. Gustave Eiffel, 75007 Paris, France",
+      "opening_hours": "Tuesday: 9:30	AM  11:00	PM",
+      "distance_to_next": null,
+      "time_spent_to_next": null
+    }
+  ]
+}
+
+```
+
+```json output_result
+Successfully wrote to /workspace/dumps/workspace/Paris_Itinerary.json
+```
+
+</Expandable>
+</div>
+
+<div className="result-box">
+<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="14px" height="14px" style={{margin: 0, padding: 0, display: 'inline-block'}}><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg> `google_map maps_directions`
+
+<Expandable title="Details">
+```json arguments
+workspace/Paris_Itinerary.json
+{
+  "day1": [
+    {
       "name": "Louvre Museum",
       "address": "75001 Paris, France",
       "opening_hours": "Monday: 9:00 AM – 6:00 PM",
-      "distance_to_next": "1.2 km",
-      "time_spent_to_next": "16 min"
+      "distance_to_next": "1.3 km",
+      "time_spent_to_next": "18 min"
     },
     {
       "name": "Musée de l'Orangerie",
       "address": "Jardin des Tuileries, 75001 Paris, France",
       "opening_hours": "Monday: 9:00 AM – 6:00 PM",
-      "distance_to_next": "2.5 km",
-      "time_spent_to_next": "36 min"
+      "distance_to_next": "2.6 km",
+      "time_spent_to_next": "38 min"
     },
     {
       "name": "Arc de Triomphe",
@@ -2685,30 +2996,30 @@ workspace/Paris_Itinerary.json
   ],
   "day2": [
     {
-      "name": "Notre Dame Cathedral",
+      "name": "Notre-Dame Cathedral of Paris",
       "address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France",
       "opening_hours": "Tuesday: 7:50 AM – 7:00 PM",
-      "distance_to_next": "2.2 km",
-      "time_spent_to_next": "30 min"
-    },
-    {
-      "name": "Musée d'Orsay",
-      "address": "Esplanade Valéry Giscard d'Estaing, 75007 Paris, France",
-      "opening_hours": "Tuesday: 9:30 AM – 6:00 PM",
-      "distance_to_next": "2.4 km",
-      "time_spent_to_next": "33 min"
-    },
-    {
-      "name": "Eiffel Tower",
-      "address": "Av. Gustave Eiffel, 75007 Paris, France",
-      "opening_hours": "Tuesday: 9:30 AM – 11:00 PM",
-      "distance_to_next": "4.6 km",
-      "time_spent_to_next": "66 min"
+      "distance_to_next": "1.1 km",
+      "time_spent_to_next": "16 min"
     },
     {
       "name": "Panthéon",
       "address": "Pl. du Panthéon, 75005 Paris, France",
       "opening_hours": "Tuesday: 10:00 AM – 6:30 PM",
+      "distance_to_next": "2.6 km",
+      "time_spent_to_next": "35 min"
+    },
+    {
+      "name": "Musée d'Orsay",
+      "address": "Esplanade Valéry Giscard d'Estaing, 75007 Paris, France",
+      "opening_hours": "Tuesday: 9:30 AM – 6:00 PM",
+      "distance_to_next": "2.5 km",
+      "time_spent_to_next": "35 min"
+    },
+    {
+      "name": "Eiffel Tower",
+      "address": "Av. Gustave Eiffel, 75007 Paris, France",
+      "opening_hours": "Tuesday: 9:30 AM – 11:00 PM",
       "distance_to_next": null,
       "time_spent_to_next": null
     }
@@ -2718,7 +3029,7 @@ workspace/Paris_Itinerary.json
 ```
 
 ```json output_result
-Successfully wrote to Paris_Itinerary.json
+Successfully wrote to /workspace/dumps/workspace/Paris_Itinerary.json
 ```
 
 </Expandable>
@@ -2727,34 +3038,15 @@ Successfully wrote to Paris_Itinerary.json
 <div className="thinking-box">
 🧐`Agent`
 
-Perfect! I've created your two-day Paris travel itinerary based on your wishlist and requirements. Here's a summary of your optimized walking route:
+I created a two-day walking itinerary using your wishlist and saved it to /workspace/dumps/workspace/Paris_Itinerary.json following the required format.
 
-## **Day 1 (Monday) - Rive Droite (Right Bank)**
-Starting from Notre Dame Cathedral, you'll visit:
-1. **Notre Dame Cathedral** → **Louvre Museum** (1.3 km, 18 min walk)
-2. **Louvre Museum** → **Musée de l'Orangerie** (1.2 km, 16 min walk) 
-3. **Musée de l'Orangerie** → **Arc de Triomphe** (2.5 km, 36 min walk)
+Notes:
+- Day 1 (Monday): Right Bank only. Starting from Notre-Dame (as your starting point), the route goes: Louvre Museum → Musée de l’Orangerie → Arc de Triomphe. Distances and times between attractions are the shortest walking routes.
+- Day 2 (Tuesday): Remaining attractions: Notre-Dame Cathedral → Panthéon → Musée d’Orsay → Eiffel Tower. Again, shortest walking routes selected.
+- Opening hours are filled for the specific weekday of each visit.
+- The last destination of each day has distance_to_next set to null, as requested.
 
-**Total walking distance for Day 1:** 5.0 km (70 minutes of walking)
-
-## **Day 2 (Tuesday) - Rive Gauche (Left Bank)**  
-Starting again from Notre Dame Cathedral, you'll visit:
-1. **Notre Dame Cathedral** → **Musée d'Orsay** (2.2 km, 30 min walk)
-2. **Musée d'Orsay** → **Eiffel Tower** (2.4 km, 33 min walk)
-3. **Eiffel Tower** → **Panthéon** (4.6 km, 66 min walk)
-
-**Total walking distance for Day 2:** 9.2 km (129 minutes of walking)
-
-## **Key Features of Your Itinerary:**
-- ✅ All attractions from your wishlist included
-- ✅ Day 1 focuses exclusively on Rive Droite attractions
-- ✅ Day 2 covers the remaining Rive Gauche attractions  
-- ✅ Optimized walking routes with shortest distances
-- ✅ Opening hours provided for each day (Monday/Tuesday)
-- ✅ Proper JSON format as requested
-- ✅ Last destination of each day has `null` values for distance_to_next
-
-The itinerary has been saved as **'Paris_Itinerary.json'** in your workspace. Enjoy your Paris adventure!
+If you need any adjustments (e.g., swapping order or adding lunch break spots), let me know.
 </div>
 
 </Accordion>
