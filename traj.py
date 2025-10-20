@@ -1,7 +1,7 @@
 import argparse
 from ast import arguments, literal_eval
 import os
-from tqdm import tqdm
+# from tqdm import tqdm
 import json
 import re
 from icon import icon_map
@@ -92,7 +92,7 @@ def main(args):
     clear(task_dir)
 
     mdx_files = find_mdx_files_with_underscore(task_dir)
-    for f in tqdm(mdx_files):
+    for f in mdx_files:
         f_prefix = f.replace("_.mdx", "")
         task_id = int(f_prefix.split("/")[-1])
         
