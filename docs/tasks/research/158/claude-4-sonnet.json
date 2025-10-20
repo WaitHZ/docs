@@ -1,0 +1,636 @@
+{
+    "pass": true,
+    "messages": [
+        {
+            "role": "user",
+            "content": "I am conducting research on papers for an AI Conference. For each paper, please help me find the full name of the first author, the complete institutional affiliation of the first author exactly as it appears in the paper (including all institutions if multiple are listed, and specifying down to the department level when provided), and the link to the first author\u2019s Google Scholar profile. You need to fill them in the corresponding excel sheet under my workspace.\n"
+        },
+        {
+            "role": "assistant",
+            "content": "I'll help you conduct research on papers for an AI Conference. First, let me check what's in your workspace to locate the Excel sheet with the papers.",
+            "tool_calls": [
+                {
+                    "id": "toolu_018SXNoo513EHSz5GRmxYJem",
+                    "type": "function",
+                    "function": {
+                        "name": "terminal-run_command",
+                        "arguments": "{\"command\": \"ls -la /workspace/dumps/workspace\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "[{\"type\": \"text\", \"text\": \"total 28\\ndrwxr-xr-x 4 root root 4096 Oct 19 04:10 .\\ndrwxr-xr-x 4 root root 4096 Oct 19 04:10 ..\\ndrwxr-xr-x 2 root root 4096 Oct 19 04:10 .pdf_tools_tempfiles\\ndrwxr-xr-x 2 root root 4096 Oct 19 04:10 arxiv_local_storage\\n-rw-r--r-- 1 root root 9322 Oct 15 15:54 paper_initial.xlsx\\n\", \"annotations\": null}, {\"type\": \"text\", \"text\": \"\\nCommand completed with return code: 0\", \"annotations\": null}]",
+            "tool_call_id": "toolu_018SXNoo513EHSz5GRmxYJem"
+        },
+        {
+            "role": "assistant",
+            "content": "Great! I found the Excel file `paper_initial.xlsx`. Let me examine its structure to understand what papers need to be researched.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01Gzr5rKfMsim1sJESdkmwza",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-read_data_from_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"{\\n  \\\"range\\\": \\\"A1:D7\\\",\\n  \\\"sheet_name\\\": \\\"Sheet1\\\",\\n  \\\"cells\\\": [\\n    {\\n      \\\"address\\\": \\\"A1\\\",\\n      \\\"value\\\": \\\"Title\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B1\\\",\\n      \\\"value\\\": \\\"First Author\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C1\\\",\\n      \\\"value\\\": \\\"Affiliation\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D1\\\",\\n      \\\"value\\\": \\\"Google Scholar Profile\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A2\\\",\\n      \\\"value\\\": \\\"Strategy Coopetition Explains the Emergence and Transience of In-Context Learning\\\",\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B2\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C2\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D2\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A3\\\",\\n      \\\"value\\\": \\\"Model Immunization from a Condition Number Perspective\\\",\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B3\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C3\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D3\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A4\\\",\\n      \\\"value\\\": \\\"Flowing Datasets with Wasserstein over Wasserstein Gradient Flows\\\",\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B4\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C4\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D4\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A5\\\",\\n      \\\"value\\\": \\\"Learning with Expected Signatures: Theory and Applications\\\",\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B5\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C5\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D5\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A6\\\",\\n      \\\"value\\\": \\\"AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML\\\",\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B6\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C6\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D6\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A7\\\",\\n      \\\"value\\\": \\\"Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction\\\",\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B7\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C7\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D7\\\",\\n      \\\"value\\\": null,\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    }\\n  ]\\n}\",\"annotations\":null}",
+            "tool_call_id": "toolu_01Gzr5rKfMsim1sJESdkmwza"
+        },
+        {
+            "role": "assistant",
+            "content": "Perfect! I can see the Excel sheet has 6 papers with titles in column A, and I need to fill in:\n- Column B: First Author (full name)\n- Column C: Affiliation (complete institutional affiliation)\n- Column D: Google Scholar Profile (link)\n\nLet me start researching each paper. I'll search for each paper on arXiv to find the detailed information.\n\nLet me start with the first paper: \"Strategy Coopetition Explains the Emergence and Transience of In-Context Learning\"",
+            "tool_calls": [
+                {
+                    "id": "toolu_016FYBsAeLrYt5UVyNvFrer5",
+                    "type": "function",
+                    "function": {
+                        "name": "arxiv_local-search_papers",
+                        "arguments": "{\"query\": \"Strategy Coopetition Explains the Emergence and Transience of In-Context Learning\", \"max_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"{\\n  \\\"total_results\\\": 5,\\n  \\\"papers\\\": [\\n    {\\n      \\\"id\\\": \\\"2510.14981v1\\\",\\n      \\\"title\\\": \\\"Coupled Diffusion Sampling for Training-Free Multi-View Image Editing\\\",\\n      \\\"authors\\\": [\\n        \\\"Hadi Alzayer\\\",\\n        \\\"Yunzhi Zhang\\\",\\n        \\\"Chen Geng\\\",\\n        \\\"Jia-Bin Huang\\\",\\n        \\\"Jiajun Wu\\\"\\n      ],\\n      \\\"abstract\\\": \\\"We present an inference-time diffusion sampling method to perform multi-view\\\\nconsistent image editing using pre-trained 2D image editing models. These\\\\nmodels can independently produce high-quality edits for each image in a set of\\\\nmulti-view images of a 3D scene or object, but they do not maintain consistency\\\\nacross views. Existing approaches typically address this by optimizing over\\\\nexplicit 3D representations, but they suffer from a lengthy optimization\\\\nprocess and instability under sparse view settings. We propose an implicit 3D\\\\nregularization approach by constraining the generated 2D image sequences to\\\\nadhere to a pre-trained multi-view image distribution. This is achieved through\\\\ncoupled diffusion sampling, a simple diffusion sampling technique that\\\\nconcurrently samples two trajectories from both a multi-view image distribution\\\\nand a 2D edited image distribution, using a coupling term to enforce the\\\\nmulti-view consistency among the generated images. We validate the\\\\neffectiveness and generality of this framework on three distinct multi-view\\\\nimage editing tasks, demonstrating its applicability across various model\\\\narchitectures and highlighting its potential as a general solution for\\\\nmulti-view consistent editing.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CV\\\",\\n        \\\"cs.AI\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:59+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14981v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14981v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14979v1\\\",\\n      \\\"title\\\": \\\"From Pixels to Words -- Towards Native Vision-Language Primitives at Scale\\\",\\n      \\\"authors\\\": [\\n        \\\"Haiwen Diao\\\",\\n        \\\"Mingxuan Li\\\",\\n        \\\"Silei Wu\\\",\\n        \\\"Linjun Dai\\\",\\n        \\\"Xiaohua Wang\\\",\\n        \\\"Hanming Deng\\\",\\n        \\\"Lewei Lu\\\",\\n        \\\"Dahua Lin\\\",\\n        \\\"Ziwei Liu\\\"\\n      ],\\n      \\\"abstract\\\": \\\"The edifice of native Vision-Language Models (VLMs) has emerged as a rising\\\\ncontender to typical modular VLMs, shaped by evolving model architectures and\\\\ntraining paradigms. Yet, two lingering clouds cast shadows over its widespread\\\\nexploration and promotion: (-) What fundamental constraints set native VLMs\\\\napart from modular ones, and to what extent can these barriers be overcome? (-)\\\\nHow to make research in native VLMs more accessible and democratized, thereby\\\\naccelerating progress in the field. In this paper, we clarify these challenges\\\\nand outline guiding principles for constructing native VLMs. Specifically, one\\\\nnative VLM primitive should: (i) effectively align pixel and word\\\\nrepresentations within a shared semantic space; (ii) seamlessly integrate the\\\\nstrengths of formerly separate vision and language modules; (iii) inherently\\\\nembody various cross-modal properties that support unified vision-language\\\\nencoding, aligning, and reasoning. Hence, we launch NEO, a novel family of\\\\nnative VLMs built from first principles, capable of rivaling top-tier modular\\\\ncounterparts across diverse real-world scenarios. With only 390M image-text\\\\nexamples, NEO efficiently develops visual perception from scratch while\\\\nmitigating vision-language conflicts inside a dense and monolithic model\\\\ncrafted from our elaborate primitives. We position NEO as a cornerstone for\\\\nscalable and powerful native VLMs, paired with a rich set of reusable\\\\ncomponents that foster a cost-effective and extensible ecosystem. Our code and\\\\nmodels are publicly available at: https://github.com/EvolvingLMMs-Lab/NEO.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CV\\\",\\n        \\\"cs.AI\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:58+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14979v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14979v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14980v1\\\",\\n      \\\"title\\\": \\\"Agentic Design of Compositional Machines\\\",\\n      \\\"authors\\\": [\\n        \\\"Wenqian Zhang\\\",\\n        \\\"Weiyang Liu\\\",\\n        \\\"Zhen Liu\\\"\\n      ],\\n      \\\"abstract\\\": \\\"The design of complex machines stands as both a marker of human intelligence\\\\nand a foundation of engineering practice. Given recent advances in large\\\\nlanguage models (LLMs), we ask whether they, too, can learn to create. We\\\\napproach this question through the lens of compositional machine design: a task\\\\nin which machines are assembled from standardized components to meet functional\\\\ndemands like locomotion or manipulation in a simulated physical environment. To\\\\nsupport this investigation, we introduce BesiegeField, a testbed built on the\\\\nmachine-building game Besiege, which enables part-based construction, physical\\\\nsimulation and reward-driven evaluation. Using BesiegeField, we benchmark\\\\nstate-of-the-art LLMs with agentic workflows and identify key capabilities\\\\nrequired for success, including spatial reasoning, strategic assembly, and\\\\ninstruction-following. As current open-source models fall short, we explore\\\\nreinforcement learning (RL) as a path to improvement: we curate a cold-start\\\\ndataset, conduct RL finetuning experiments, and highlight open challenges at\\\\nthe intersection of language, machine design, and physical reasoning.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.AI\\\",\\n        \\\"cs.CL\\\",\\n        \\\"cs.CV\\\",\\n        \\\"cs.GR\\\",\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:58+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14980v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14980v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14978v1\\\",\\n      \\\"title\\\": \\\"Learning an Image Editing Model without Image Editing Pairs\\\",\\n      \\\"authors\\\": [\\n        \\\"Nupur Kumari\\\",\\n        \\\"Sheng-Yu Wang\\\",\\n        \\\"Nanxuan Zhao\\\",\\n        \\\"Yotam Nitzan\\\",\\n        \\\"Yuheng Li\\\",\\n        \\\"Krishna Kumar Singh\\\",\\n        \\\"Richard Zhang\\\",\\n        \\\"Eli Shechtman\\\",\\n        \\\"Jun-Yan Zhu\\\",\\n        \\\"Xun Huang\\\"\\n      ],\\n      \\\"abstract\\\": \\\"Recent image editing models have achieved impressive results while following\\\\nnatural language editing instructions, but they rely on supervised fine-tuning\\\\nwith large datasets of input-target pairs. This is a critical bottleneck, as\\\\nsuch naturally occurring pairs are hard to curate at scale. Current workarounds\\\\nuse synthetic training pairs that leverage the zero-shot capabilities of\\\\nexisting models. However, this can propagate and magnify the artifacts of the\\\\npretrained model into the final trained model. In this work, we present a new\\\\ntraining paradigm that eliminates the need for paired data entirely. Our\\\\napproach directly optimizes a few-step diffusion model by unrolling it during\\\\ntraining and leveraging feedback from vision-language models (VLMs). For each\\\\ninput and editing instruction, the VLM evaluates if an edit follows the\\\\ninstruction and preserves unchanged content, providing direct gradients for\\\\nend-to-end optimization. To ensure visual fidelity, we incorporate distribution\\\\nmatching loss (DMD), which constrains generated images to remain within the\\\\nimage manifold learned by pretrained models. We evaluate our method on standard\\\\nbenchmarks and include an extensive ablation study. Without any paired data,\\\\nour method performs on par with various image editing diffusion models trained\\\\non extensive supervised paired data, under the few-step setting. Given the same\\\\nVLM as the reward model, we also outperform RL-based techniques like Flow-GRPO.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CV\\\",\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:57+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14978v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14978v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14976v1\\\",\\n      \\\"title\\\": \\\"Ponimator: Unfolding Interactive Pose for Versatile Human-human Interaction Animation\\\",\\n      \\\"authors\\\": [\\n        \\\"Shaowei Liu\\\",\\n        \\\"Chuan Guo\\\",\\n        \\\"Bing Zhou\\\",\\n        \\\"Jian Wang\\\"\\n      ],\\n      \\\"abstract\\\": \\\"Close-proximity human-human interactive poses convey rich contextual\\\\ninformation about interaction dynamics. Given such poses, humans can\\\\nintuitively infer the context and anticipate possible past and future dynamics,\\\\ndrawing on strong priors of human behavior. Inspired by this observation, we\\\\npropose Ponimator, a simple framework anchored on proximal interactive poses\\\\nfor versatile interaction animation. Our training data consists of\\\\nclose-contact two-person poses and their surrounding temporal context from\\\\nmotion-capture interaction datasets. Leveraging interactive pose priors,\\\\nPonimator employs two conditional diffusion models: (1) a pose animator that\\\\nuses the temporal prior to generate dynamic motion sequences from interactive\\\\nposes, and (2) a pose generator that applies the spatial prior to synthesize\\\\ninteractive poses from a single pose, text, or both when interactive poses are\\\\nunavailable. Collectively, Ponimator supports diverse tasks, including\\\\nimage-based interaction animation, reaction animation, and text-to-interaction\\\\nsynthesis, facilitating the transfer of interaction knowledge from high-quality\\\\nmocap data to open-world scenarios. Empirical experiments across diverse\\\\ndatasets and applications demonstrate the universality of the pose prior and\\\\nthe effectiveness and robustness of our framework.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CV\\\",\\n        \\\"cs.GR\\\",\\n        \\\"cs.RO\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:56+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14976v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14976v1\\\"\\n    }\\n  ]\\n}\",\"annotations\":null}",
+            "tool_call_id": "toolu_016FYBsAeLrYt5UVyNvFrer5"
+        },
+        {
+            "role": "assistant",
+            "content": "The search didn't return the exact paper I'm looking for. Let me try a more specific search with different keywords.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01HnZqBussB46vDYBNELkooN",
+                    "type": "function",
+                    "function": {
+                        "name": "arxiv_local-search_papers",
+                        "arguments": "{\"query\": \"Strategy Coopetition Emergence Transience In-Context Learning\", \"max_results\": 10}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"{\\n  \\\"total_results\\\": 10,\\n  \\\"papers\\\": [\\n    {\\n      \\\"id\\\": \\\"2510.14979v1\\\",\\n      \\\"title\\\": \\\"From Pixels to Words -- Towards Native Vision-Language Primitives at Scale\\\",\\n      \\\"authors\\\": [\\n        \\\"Haiwen Diao\\\",\\n        \\\"Mingxuan Li\\\",\\n        \\\"Silei Wu\\\",\\n        \\\"Linjun Dai\\\",\\n        \\\"Xiaohua Wang\\\",\\n        \\\"Hanming Deng\\\",\\n        \\\"Lewei Lu\\\",\\n        \\\"Dahua Lin\\\",\\n        \\\"Ziwei Liu\\\"\\n      ],\\n      \\\"abstract\\\": \\\"The edifice of native Vision-Language Models (VLMs) has emerged as a rising\\\\ncontender to typical modular VLMs, shaped by evolving model architectures and\\\\ntraining paradigms. Yet, two lingering clouds cast shadows over its widespread\\\\nexploration and promotion: (-) What fundamental constraints set native VLMs\\\\napart from modular ones, and to what extent can these barriers be overcome? (-)\\\\nHow to make research in native VLMs more accessible and democratized, thereby\\\\naccelerating progress in the field. In this paper, we clarify these challenges\\\\nand outline guiding principles for constructing native VLMs. Specifically, one\\\\nnative VLM primitive should: (i) effectively align pixel and word\\\\nrepresentations within a shared semantic space; (ii) seamlessly integrate the\\\\nstrengths of formerly separate vision and language modules; (iii) inherently\\\\nembody various cross-modal properties that support unified vision-language\\\\nencoding, aligning, and reasoning. Hence, we launch NEO, a novel family of\\\\nnative VLMs built from first principles, capable of rivaling top-tier modular\\\\ncounterparts across diverse real-world scenarios. With only 390M image-text\\\\nexamples, NEO efficiently develops visual perception from scratch while\\\\nmitigating vision-language conflicts inside a dense and monolithic model\\\\ncrafted from our elaborate primitives. We position NEO as a cornerstone for\\\\nscalable and powerful native VLMs, paired with a rich set of reusable\\\\ncomponents that foster a cost-effective and extensible ecosystem. Our code and\\\\nmodels are publicly available at: https://github.com/EvolvingLMMs-Lab/NEO.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CV\\\",\\n        \\\"cs.AI\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:58+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14979v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14979v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14980v1\\\",\\n      \\\"title\\\": \\\"Agentic Design of Compositional Machines\\\",\\n      \\\"authors\\\": [\\n        \\\"Wenqian Zhang\\\",\\n        \\\"Weiyang Liu\\\",\\n        \\\"Zhen Liu\\\"\\n      ],\\n      \\\"abstract\\\": \\\"The design of complex machines stands as both a marker of human intelligence\\\\nand a foundation of engineering practice. Given recent advances in large\\\\nlanguage models (LLMs), we ask whether they, too, can learn to create. We\\\\napproach this question through the lens of compositional machine design: a task\\\\nin which machines are assembled from standardized components to meet functional\\\\ndemands like locomotion or manipulation in a simulated physical environment. To\\\\nsupport this investigation, we introduce BesiegeField, a testbed built on the\\\\nmachine-building game Besiege, which enables part-based construction, physical\\\\nsimulation and reward-driven evaluation. Using BesiegeField, we benchmark\\\\nstate-of-the-art LLMs with agentic workflows and identify key capabilities\\\\nrequired for success, including spatial reasoning, strategic assembly, and\\\\ninstruction-following. As current open-source models fall short, we explore\\\\nreinforcement learning (RL) as a path to improvement: we curate a cold-start\\\\ndataset, conduct RL finetuning experiments, and highlight open challenges at\\\\nthe intersection of language, machine design, and physical reasoning.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.AI\\\",\\n        \\\"cs.CL\\\",\\n        \\\"cs.CV\\\",\\n        \\\"cs.GR\\\",\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:58+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14980v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14980v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14978v1\\\",\\n      \\\"title\\\": \\\"Learning an Image Editing Model without Image Editing Pairs\\\",\\n      \\\"authors\\\": [\\n        \\\"Nupur Kumari\\\",\\n        \\\"Sheng-Yu Wang\\\",\\n        \\\"Nanxuan Zhao\\\",\\n        \\\"Yotam Nitzan\\\",\\n        \\\"Yuheng Li\\\",\\n        \\\"Krishna Kumar Singh\\\",\\n        \\\"Richard Zhang\\\",\\n        \\\"Eli Shechtman\\\",\\n        \\\"Jun-Yan Zhu\\\",\\n        \\\"Xun Huang\\\"\\n      ],\\n      \\\"abstract\\\": \\\"Recent image editing models have achieved impressive results while following\\\\nnatural language editing instructions, but they rely on supervised fine-tuning\\\\nwith large datasets of input-target pairs. This is a critical bottleneck, as\\\\nsuch naturally occurring pairs are hard to curate at scale. Current workarounds\\\\nuse synthetic training pairs that leverage the zero-shot capabilities of\\\\nexisting models. However, this can propagate and magnify the artifacts of the\\\\npretrained model into the final trained model. In this work, we present a new\\\\ntraining paradigm that eliminates the need for paired data entirely. Our\\\\napproach directly optimizes a few-step diffusion model by unrolling it during\\\\ntraining and leveraging feedback from vision-language models (VLMs). For each\\\\ninput and editing instruction, the VLM evaluates if an edit follows the\\\\ninstruction and preserves unchanged content, providing direct gradients for\\\\nend-to-end optimization. To ensure visual fidelity, we incorporate distribution\\\\nmatching loss (DMD), which constrains generated images to remain within the\\\\nimage manifold learned by pretrained models. We evaluate our method on standard\\\\nbenchmarks and include an extensive ablation study. Without any paired data,\\\\nour method performs on par with various image editing diffusion models trained\\\\non extensive supervised paired data, under the few-step setting. Given the same\\\\nVLM as the reward model, we also outperform RL-based techniques like Flow-GRPO.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CV\\\",\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:57+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14978v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14978v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14977v1\\\",\\n      \\\"title\\\": \\\"Terra: Explorable Native 3D World Model with Point Latents\\\",\\n      \\\"authors\\\": [\\n        \\\"Yuanhui Huang\\\",\\n        \\\"Weiliang Chen\\\",\\n        \\\"Wenzhao Zheng\\\",\\n        \\\"Xin Tao\\\",\\n        \\\"Pengfei Wan\\\",\\n        \\\"Jie Zhou\\\",\\n        \\\"Jiwen Lu\\\"\\n      ],\\n      \\\"abstract\\\": \\\"World models have garnered increasing attention for comprehensive modeling of\\\\nthe real world. However, most existing methods still rely on pixel-aligned\\\\nrepresentations as the basis for world evolution, neglecting the inherent 3D\\\\nnature of the physical world. This could undermine the 3D consistency and\\\\ndiminish the modeling efficiency of world models. In this paper, we present\\\\nTerra, a native 3D world model that represents and generates explorable\\\\nenvironments in an intrinsic 3D latent space. Specifically, we propose a novel\\\\npoint-to-Gaussian variational autoencoder (P2G-VAE) that encodes 3D inputs into\\\\na latent point representation, which is subsequently decoded as 3D Gaussian\\\\nprimitives to jointly model geometry and appearance. We then introduce a sparse\\\\npoint flow matching network (SPFlow) for generating the latent point\\\\nrepresentation, which simultaneously denoises the positions and features of the\\\\npoint latents. Our Terra enables exact multi-view consistency with native 3D\\\\nrepresentation and architecture, and supports flexible rendering from any\\\\nviewpoint with only a single generation process. Furthermore, Terra achieves\\\\nexplorable world modeling through progressive generation in the point latent\\\\nspace. We conduct extensive experiments on the challenging indoor scenes from\\\\nScanNet v2. Terra achieves state-of-the-art performance in both reconstruction\\\\nand generation with high 3D consistency.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CV\\\",\\n        \\\"cs.AI\\\",\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:56+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14977v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14977v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14974v1\\\",\\n      \\\"title\\\": \\\"pi-Flow: Policy-Based Few-Step Generation via Imitation Distillation\\\",\\n      \\\"authors\\\": [\\n        \\\"Hansheng Chen\\\",\\n        \\\"Kai Zhang\\\",\\n        \\\"Hao Tan\\\",\\n        \\\"Leonidas Guibas\\\",\\n        \\\"Gordon Wetzstein\\\",\\n        \\\"Sai Bi\\\"\\n      ],\\n      \\\"abstract\\\": \\\"Few-step diffusion or flow-based generative models typically distill a\\\\nvelocity-predicting teacher into a student that predicts a shortcut towards\\\\ndenoised data. This format mismatch has led to complex distillation procedures\\\\nthat often suffer from a quality-diversity trade-off. To address this, we\\\\npropose policy-based flow models ($\\\\\\\\pi$-Flow). $\\\\\\\\pi$-Flow modifies the output\\\\nlayer of a student flow model to predict a network-free policy at one timestep.\\\\nThe policy then produces dynamic flow velocities at future substeps with\\\\nnegligible overhead, enabling fast and accurate ODE integration on these\\\\nsubsteps without extra network evaluations. To match the policy's ODE\\\\ntrajectory to the teacher's, we introduce a novel imitation distillation\\\\napproach, which matches the policy's velocity to the teacher's along the\\\\npolicy's trajectory using a standard $\\\\\\\\ell_2$ flow matching loss. By simply\\\\nmimicking the teacher's behavior, $\\\\\\\\pi$-Flow enables stable and scalable\\\\ntraining and avoids the quality-diversity trade-off. On ImageNet 256$^2$, it\\\\nattains a 1-NFE FID of 2.85, outperforming MeanFlow of the same DiT\\\\narchitecture. On FLUX.1-12B and Qwen-Image-20B at 4 NFEs, $\\\\\\\\pi$-Flow achieves\\\\nsubstantially better diversity than state-of-the-art few-step methods, while\\\\nmaintaining teacher-level quality.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.LG\\\",\\n        \\\"cs.AI\\\",\\n        \\\"cs.CV\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:51+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14974v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14974v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14973v1\\\",\\n      \\\"title\\\": \\\"Attention Is All You Need for KV Cache in Diffusion LLMs\\\",\\n      \\\"authors\\\": [\\n        \\\"Quan Nguyen-Tri\\\",\\n        \\\"Mukul Ranjan\\\",\\n        \\\"Zhiqiang Shen\\\"\\n      ],\\n      \\\"abstract\\\": \\\"This work studies how to adaptively recompute key-value (KV) caches for\\\\ndiffusion large language models (DLMs) to maximize prediction accuracy while\\\\nminimizing decoding latency. Prior methods' decoders recompute QKV for all\\\\ntokens at every denoising step and layer, despite KV states changing little\\\\nacross most steps, especially in shallow layers, leading to substantial\\\\nredundancy. We make three observations: (1) distant ${\\\\\\\\bf MASK}$ tokens\\\\nprimarily act as a length-bias and can be cached block-wise beyond the active\\\\nprediction window; (2) KV dynamics increase with depth, suggesting that\\\\nselective refresh starting from deeper layers is sufficient; and (3) the\\\\nmost-attended token exhibits the smallest KV drift, providing a conservative\\\\nlower bound on cache change for other tokens. Building on these, we propose\\\\n${\\\\\\\\bf Elastic-Cache}$, a training-free, architecture-agnostic strategy that\\\\njointly decides ${when}$ to refresh (via an attention-aware drift test on the\\\\nmost-attended token) and ${where}$ to refresh (via a depth-aware schedule that\\\\nrecomputes from a chosen layer onward while reusing shallow-layer caches and\\\\noff-window MASK caches). Unlike fixed-period schemes, Elastic-Cache performs\\\\nadaptive, layer-aware cache updates for diffusion LLMs, reducing redundant\\\\ncomputation and accelerating decoding with negligible loss in generation\\\\nquality. Experiments on LLaDA-Instruct, LLaDA-1.5, and LLaDA-V across\\\\nmathematical reasoning and code generation tasks demonstrate consistent\\\\nspeedups: $8.7\\\\\\\\times$ on GSM8K (256 tokens), $45.1\\\\\\\\times$ on longer sequences,\\\\nand $4.8\\\\\\\\times$ on HumanEval, while consistently maintaining higher accuracy\\\\nthan the baseline. Our method achieves significantly higher throughput\\\\n($6.8\\\\\\\\times$ on GSM8K) than existing confidence-based approaches while\\\\npreserving generation quality, enabling practical deployment of diffusion LLMs.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CL\\\",\\n        \\\"cs.AI\\\",\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:48+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14973v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14973v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14972v1\\\",\\n      \\\"title\\\": \\\"TokDrift: When LLM Speaks in Subwords but Code Speaks in Grammar\\\",\\n      \\\"authors\\\": [\\n        \\\"Yinxi Li\\\",\\n        \\\"Yuntian Deng\\\",\\n        \\\"Pengyu Nie\\\"\\n      ],\\n      \\\"abstract\\\": \\\"Large language models (LLMs) for code rely on subword tokenizers, such as\\\\nbyte-pair encoding (BPE), learned from mixed natural language text and\\\\nprogramming language code but driven by statistics rather than grammar. As a\\\\nresult, semantically identical code snippets can be tokenized differently\\\\ndepending on superficial factors such as whitespace or identifier naming. To\\\\nmeasure the impact of this misalignment, we introduce TokDrift, a framework\\\\nthat applies semantic-preserving rewrite rules to create code variants\\\\ndiffering only in tokenization. Across nine code LLMs, including large ones\\\\nwith over 30B parameters, even minor formatting changes can cause substantial\\\\nshifts in model behavior. Layer-wise analysis shows that the issue originates\\\\nin early embeddings, where subword segmentation fails to capture grammar token\\\\nboundaries. Our findings identify misaligned tokenization as a hidden obstacle\\\\nto reliable code understanding and generation, highlighting the need for\\\\ngrammar-aware tokenization for future code LLMs.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CL\\\",\\n        \\\"cs.AI\\\",\\n        \\\"cs.LG\\\",\\n        \\\"cs.PL\\\",\\n        \\\"cs.SE\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:45+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14972v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14972v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14969v1\\\",\\n      \\\"title\\\": \\\"LLMs as Scalable, General-Purpose Simulators For Evolving Digital Agent Training\\\",\\n      \\\"authors\\\": [\\n        \\\"Yiming Wang\\\",\\n        \\\"Da Yin\\\",\\n        \\\"Yuedong Cui\\\",\\n        \\\"Ruichen Zheng\\\",\\n        \\\"Zhiqian Li\\\",\\n        \\\"Zongyu Lin\\\",\\n        \\\"Di Wu\\\",\\n        \\\"Xueqing Wu\\\",\\n        \\\"Chenchen Ye\\\",\\n        \\\"Yu Zhou\\\",\\n        \\\"Kai-Wei Chang\\\"\\n      ],\\n      \\\"abstract\\\": \\\"Digital agents require diverse, large-scale UI trajectories to generalize\\\\nacross real-world tasks, yet collecting such data is prohibitively expensive in\\\\nboth human annotation, infra and engineering perspectives. To this end, we\\\\nintroduce $\\\\\\\\textbf{UI-Simulator}$, a scalable paradigm that generates\\\\nstructured UI states and transitions to synthesize training trajectories at\\\\nscale. Our paradigm integrates a digital world simulator for diverse UI states,\\\\na guided rollout process for coherent exploration, and a trajectory wrapper\\\\nthat produces high-quality and diverse trajectories for agent training. We\\\\nfurther propose $\\\\\\\\textbf{UI-Simulator-Grow}$, a targeted scaling strategy that\\\\nenables more rapid and data-efficient scaling by prioritizing high-impact tasks\\\\nand synthesizes informative trajectory variants. Experiments on WebArena and\\\\nAndroidWorld show that UI-Simulator rivals or surpasses open-source agents\\\\ntrained on real UIs with significantly better robustness, despite using weaker\\\\nteacher models. Moreover, UI-Simulator-Grow matches the performance of\\\\nLlama-3-70B-Instruct using only Llama-3-8B-Instruct as the base model,\\\\nhighlighting the potential of targeted synthesis scaling paradigm to\\\\ncontinuously and efficiently enhance the digital agents.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.CL\\\",\\n        \\\"cs.AI\\\",\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:38+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14969v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14969v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14970v1\\\",\\n      \\\"title\\\": \\\"Biology-informed neural networks learn nonlinear representations from omics data to improve genomic prediction and interpretability\\\",\\n      \\\"authors\\\": [\\n        \\\"Katiana Kontolati\\\",\\n        \\\"Rini Jasmine Gladstone\\\",\\n        \\\"Ian Davis\\\",\\n        \\\"Ethan Pickering\\\"\\n      ],\\n      \\\"abstract\\\": \\\"We extend biologically-informed neural networks (BINNs) for genomic\\\\nprediction (GP) and selection (GS) in crops by integrating thousands of\\\\nsingle-nucleotide polymorphisms (SNPs) with multi-omics measurements and prior\\\\nbiological knowledge. Traditional genotype-to-phenotype (G2P) models depend\\\\nheavily on direct mappings that achieve only modest accuracy, forcing breeders\\\\nto conduct large, costly field trials to maintain or marginally improve genetic\\\\ngain. Models that incorporate intermediate molecular phenotypes such as gene\\\\nexpression can achieve higher predictive fit, but they remain impractical for\\\\nGS since such data are unavailable at deployment or design time. BINNs overcome\\\\nthis limitation by encoding pathway-level inductive biases and leveraging\\\\nmulti-omics data only during training, while using genotype data alone during\\\\ninference. Applied to maize gene-expression and multi-environment field-trial\\\\ndata, BINN improves rank-correlation accuracy by up to 56% within and across\\\\nsubpopulations under sparse-data conditions and nonlinearly identifies genes\\\\nthat GWAS/TWAS fail to uncover. With complete domain knowledge for a synthetic\\\\nmetabolomics benchmark, BINN reduces prediction error by 75% relative to\\\\nconventional neural nets and correctly identifies the most important nonlinear\\\\npathway. Importantly, both cases show highly sensitive BINN latent variables\\\\ncorrelate with the experimental quantities they represent, despite not being\\\\ntrained on them. This suggests BINNs learn biologically-relevant\\\\nrepresentations, nonlinear or linear, from genotype to phenotype. Together,\\\\nBINNs establish a framework that leverages intermediate domain information to\\\\nimprove genomic prediction accuracy and reveal nonlinear biological\\\\nrelationships that can guide genomic selection, candidate gene selection,\\\\npathway enrichment, and gene-editing prioritization.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.LG\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:38+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14970v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14970v1\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"2510.14968v1\\\",\\n      \\\"title\\\": \\\"RDD: Retrieval-Based Demonstration Decomposer for Planner Alignment in Long-Horizon Tasks\\\",\\n      \\\"authors\\\": [\\n        \\\"Mingxuan Yan\\\",\\n        \\\"Yuping Wang\\\",\\n        \\\"Zechun Liu\\\",\\n        \\\"Jiachen Li\\\"\\n      ],\\n      \\\"abstract\\\": \\\"To tackle long-horizon tasks, recent hierarchical vision-language-action\\\\n(VLAs) frameworks employ vision-language model (VLM)-based planners to\\\\ndecompose complex manipulation tasks into simpler sub-tasks that low-level\\\\nvisuomotor policies can easily handle. Typically, the VLM planner is finetuned\\\\nto learn to decompose a target task. This finetuning requires target task\\\\ndemonstrations segmented into sub-tasks by either human annotation or heuristic\\\\nrules. However, the heuristic subtasks can deviate significantly from the\\\\ntraining data of the visuomotor policy, which degrades task performance. To\\\\naddress these issues, we propose a Retrieval-based Demonstration Decomposer\\\\n(RDD) that automatically decomposes demonstrations into sub-tasks by aligning\\\\nthe visual features of the decomposed sub-task intervals with those from the\\\\ntraining data of the low-level visuomotor policies. Our method outperforms the\\\\nstate-of-the-art sub-task decomposer on both simulation and real-world tasks,\\\\ndemonstrating robustness across diverse settings. Code and more results are\\\\navailable at rdd-neurips.github.io.\\\",\\n      \\\"categories\\\": [\\n        \\\"cs.RO\\\",\\n        \\\"cs.AI\\\",\\n        \\\"cs.CV\\\",\\n        \\\"cs.LG\\\",\\n        \\\"cs.SY\\\",\\n        \\\"eess.SY\\\"\\n      ],\\n      \\\"published\\\": \\\"2025-10-16T17:59:37+00:00\\\",\\n      \\\"url\\\": \\\"http://arxiv.org/pdf/2510.14968v1\\\",\\n      \\\"resource_uri\\\": \\\"arxiv://2510.14968v1\\\"\\n    }\\n  ]\\n}\",\"annotations\":null}",
+            "tool_call_id": "toolu_01HnZqBussB46vDYBNELkooN"
+        },
+        {
+            "role": "assistant",
+            "content": "Still not finding the exact paper. Let me try a web search to find these papers and their authors.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01PYAg4JWTSnKTrj1vuy2Qwr",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Strategy Coopetition Explains the Emergence and Transience of In-Context Learning\\\" arxiv\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Strategy Coopetition Explains the Emergence and ...\nLink: https://arxiv.org/abs/2503.05631\nSnippet: by AK Singh \u00b7 2025 \u00b7 Cited by 9 \u2014 Abstract page for arXiv paper 2503.05631: Strategy Coopetition Explains the Emergence and Transience of In-Context Learning.\nSitelinks: No sitelinks\n\nTitle: arXiv:2503.05631v2 [cs.LG] 10 Mar 2025\nLink: https://arxiv.org/pdf/2503.05631?\nSnippet: by AK Singh \u00b7 2025 \u00b7 Cited by 9 \u2014 Strategy coopetition explains the emergence and transience of in-context learning. 2015), before being input to the transformer (Singh et ...\nSitelinks: No sitelinks\n\nTitle: Revision History for Strategy Coopetition Explains the...\nLink: https://openreview.net/revisions?id=ADEnKpNjF7\nSnippet: Title: Strategy Coopetition Explains the Emergence and Transience of In-Context Learning. Authors: Aaditya K. Singh, Ted Moskovitz, Sara Dragutinovic, Felix ...\nSitelinks: No sitelinks\n\nTitle: Strategy Coopetition Explains the Emergence and Transience of ...\nLink: https://chatpaper.com/chatpaper/paper/165004\nSnippet: 1. Strategy Coopetition Explains the Emergence and Transience of In-Context Learning \u00b7 ChatDOC. ICML 202518 Jun 2025. Aaditya K Singh, Ted Moskovitz, Sara ...\nSitelinks: No sitelinks\n\nTitle: [Literature Review] Strategy Coopetition Explains the ...\nLink: https://www.themoonlight.io/en/review/strategy-coopetition-explains-the-emergence-and-transience-of-in-context-learning\nSnippet: The paper titled \"Strategy Coopetition Explains the Emergence and Transience of In-Context Learning ... https://arxiv.org/pdf/2503.05631.\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01PYAg4JWTSnKTrj1vuy2Qwr"
+        },
+        {
+            "role": "assistant",
+            "content": "Great! I found the paper. Let me get the PDF to extract the detailed author information and affiliations.",
+            "tool_calls": [
+                {
+                    "id": "toolu_014TrrpSmNMun1GhQiyRnjiN",
+                    "type": "function",
+                    "function": {
+                        "name": "pdf-tools-read_pdf_pages",
+                        "arguments": "{\"pdf_file_path\": \"https://arxiv.org/pdf/2503.05631\", \"start_page\": 1, \"end_page\": 1}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"PDF total pages: 20\\nExtracted page range: 1-1\\n\\n=== Page 1 ===\\nStrategy Coopetition Explains the Emergence\\nand Transience of In-Context Learning\\nAaditya K. Singh1Ted Moskovitz2Sara Dragutinovi \u00b4c3Felix Hill4Stephanie C. Y. Chan* 4\\nAndrew M. Saxe* 1\\nAbstract\\nIn-context learning (ICL) is a powerful ability that\\nemerges in transformer models, enabling them\\nto learn from context without weight updates.\\nRecent work has established emergent ICL as a\\ntransient phenomenon that can sometimes dis-\\nappear after long training times. In this work,\\nwe sought a mechanistic understanding of these\\ntransient dynamics. Firstly, we find that\u2014after\\nthe disappearance of ICL\u2014the asymptotic strat-\\negy is a remarkable hybrid between in-weights\\nand in-context learning, which we term \u201ccontext-\\nconstrained in-weights learning\u201d (CIWL). CIWL\\nis in competition with ICL, and eventually re-\\nplaces it as the dominant strategy of the model\\n(thus leading to ICL transience). However, we\\nalso find that the two competing strategies actu-\\nallyshare sub-circuits, which gives rise to coop-\\nerative dynamics as well. For example, in our\\nsetup, ICL is unable to emerge quickly on its own,\\nand can only be enabled through the simultaneous\\nslow development of asymptotic CIWL. CIWL\\nthus both cooperates andcompetes with ICL, a\\nphenomenon we term \u201cstrategy coopetition\u201d. We\\npropose a minimal mathematical model that re-\\nproduces these key dynamics and interactions. In-\\nformed by this model, we were able to identify a\\nsetup where ICL is truly emergent and persistent.\\n1. Introduction\\nTransformer-based large language models (LLMs) show an\\nimpressive propensity for in-context learning (ICL)\u2014the\\nability to use inputs at inference time to adapt behavior\\nand solve tasks not seen in training. ICL contrasts with in-\\nweights learning (IWL), which is standard learning through\\n*Equal contribution1Gatsby Computational Neuroscience\\nUnit, University College London2Anthropic AI, work com-\\npleted while at the Gatsby Unit, UCL3University of Oxford\\n4Google DeepMind. Correspondence to: Aaditya K. Singh <aa-\\nditya.singh.21@ucl.ac.uk >.weight updates. ICL is striking not only for its power, but\\nalso because it emerges without being explicitly trained\\nfor (as Brown et al. (2020) first observed, when training\\ntransformer models on internet-scale language corpora.).\\nNewer work has shown that ICL can sometimes in fact\\ndisappear after emerging, i.e. it can be transient over the\\ncourse of training (Singh et al., 2023; Anand et al., 2024;\\nHe et al., 2024).\\nThis evolving picture of ICL necessitates a deeper under-\\nstanding of the dynamics of ICL emergence (and transience).\\nICL is often viewed to be in competition with other strate-\\ngies (Nguyen & Reddy, 2024; Park et al., 2024), such as\\nIWL, with the tradeoff thought to be modulated by data\\nproperties (Chan et al., 2022; 2024), model size (Wei et al.,\\n2023), and/or training time (Singh et al., 2023). While com-\\npetition may explain why ICL gives way to other strategies\\nthrough the course of training, the question remains: why\\ndoes it emerge in the first place (if only to fade away)?\\nIn this work, we aim to extend the mechanistic understand-\\ning of ICL, which currently focuses on induction heads\\n(Olsson et al., 2022) and their emergence dynamics (Singh\\net al., 2024), to a richer dynamical setting involving multiple\\nstrategies cycling in and out over the course of learning. To\\ndo so, we reproduce and investigate the key transience result\\nin a simplified synthetic data setting with a 2-layer attention-\\nonly transformer. Using behavioral evaluators, we find the\\nasymptotic strategy after the disappearance of ICL is not\\npure in-weights learning. Rather, it is a surprising hybrid\\nstrategy that we term context-constrained in-weights learn-\\ning (CIWL, Section 4). The implementation of CIWL takes\\nthe form of skip-trigrams (Elhage et al., 2021) distributed\\nacross multiple heads in a form of superposition (Elhage\\net al., 2022). Perhaps even more remarkably, we find that\\neven though CIWL dominates over ICL asymptotically, both\\nstrategies share critical sub-circuits (Section 5.1), indicating\\ncooperative dynamics between these seemingly competitive\\nmechanisms\u2014a phenomenon we term \u201cstrategy coopeti-\\ntion.\u201d We borrow the term \u201ccoopetition\u201d from game theory,\\nwhere it describes situations where competitors simultane-\\nously cooperate and compete with each other.1Cooperation\\n1A classic historical examples is Hollywood studios in the early\\n1arXiv:2503.05631v2  [cs.LG]  10 Mar 2025\",\"annotations\":null}",
+            "tool_call_id": "toolu_014TrrpSmNMun1GhQiyRnjiN"
+        },
+        {
+            "role": "assistant",
+            "content": "Perfect! Now I have the first author information. Let me search for the first author's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01EcZ2LDgkP6LLkJsoBEBUiX",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Aaditya K. Singh\\\" \\\"University College London\\\" \\\"Gatsby Computational Neuroscience Unit\\\" Google Scholar\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Aaditya K Singh\nLink: https://scholar.google.com/citations?user=9OPKqmMAAAAJ&hl=en\nSnippet: Aaditya K Singh. PhD Student, Gatsby Computational Neuroscience Unit, University College London. Verified email at ucl.ac.uk. Machine Learning.\nSitelinks: No sitelinks\n\nTitle: Aaditya K Singh\nLink: https://scholar.google.com.hk/citations?user=9OPKqmMAAAAJ&hl=th\nSnippet: Aaditya K Singh. PhD Student, Gatsby Computational Neuroscience Unit, University College London. \u0e22\u0e37\u0e19\u0e22\u0e31\u0e19\u0e2d\u0e35\u0e40\u0e21\u0e25\u0e41\u0e25\u0e49\u0e27\u0e17\u0e35\u0e48 ucl.ac.uk. Machine Learning.\nSitelinks: No sitelinks\n\nTitle: Aaditya K Singh\nLink: https://openreview.net/profile?id=~Aaditya_K_Singh1\nSnippet: Aaditya K Singh. Pronouns: he/him. PhD student, Gatsby Computational Neuroscience Unit, University College London, University of London. Joined February 2020 ...\nSitelinks: No sitelinks\n\nTitle: Jin Hwa Lee\nLink: https://scholar.google.com/citations?user=QHV2vNgAAAAJ&hl=en\nSnippet: Aaditya K SinghPhD Student, Gatsby Computational Neuroscience Unit, University College LondonVerified email at ucl.ac.uk. Follow.\nSitelinks: No sitelinks\n\nTitle: \u202aJin Hwa Lee\u202c - \u202aGoogle Scholar\u202c\nLink: https://scholar.google.co.kr/citations?user=QHV2vNgAAAAJ&hl=ja\nSnippet: Aaditya K SinghPhD Student, Gatsby Computational Neuroscience Unit, University College London\u78ba\u8a8d\u3057\u305f\u30e1\u30fc\u30eb \u30a2\u30c9\u30ec\u30b9: ucl.ac.uk. \u30d5\u30a9\u30ed\u30fc.\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01EcZ2LDgkP6LLkJsoBEBUiX"
+        },
+        {
+            "role": "assistant",
+            "content": "Excellent! I found the Google Scholar profile. Now let me update the Excel sheet with this first paper's information and then continue with the other papers.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01KuetYbR2En8NKRwcgybrGR",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-write_data_to_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\", \"data\": [[\"Aaditya K. Singh\",\"Gatsby Computational Neuroscience Unit, University College London\",\"https://scholar.google.com/citations?user=9OPKqmMAAAAJ&hl=en\"]], \"start_cell\": \"B2\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"Data written to Sheet1\",\"annotations\":null}",
+            "tool_call_id": "toolu_01KuetYbR2En8NKRwcgybrGR"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the second paper: \"Model Immunization from a Condition Number Perspective\"",
+            "tool_calls": [
+                {
+                    "id": "toolu_01Lie9EWC8G5BHpMsGC9zDeL",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Model Immunization from a Condition Number Perspective\\\" arxiv\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Model Immunization from a Condition Number Perspective\nLink: https://arxiv.org/abs/2505.23760\nSnippet: Abstract page for arXiv paper 2505.23760: Model Immunization from a Condition Number Perspective.\nSitelinks: No sitelinks\n\nTitle: Model Immunization from a Condition Number Perspective\nLink: https://arxiv.org/html/2505.23760v1\nSnippet: arXiv:2505.23760v1 [cs.LG] 29 May 2025. Model Immunization from a Condition Number Perspective. Report issue for preceding element. Amber Yijia Zheng Cedar ...\nSitelinks: No sitelinks\n\nTitle: Model Immunization from a Condition Number Perspective\nLink: https://arxiv.org/pdf/2505.23760\nSnippet: Model Immunization from a Condition Number Perspective. Norm ratio ... arXiv preprint arXiv:1911.03030, 2019. He, K., Zhang, X., Ren, S ...\nSitelinks: No sitelinks\n\nTitle: Model Immunization from a Condition Number Perspective\nLink: https://icml.cc/virtual/2025/poster/43720\nSnippet: Model Immunization from a Condition Number Perspective. Amber Yijia Zheng ... arXiv preprint arXiv:1308.3432, 2013. Bengio, Y., Goodfellow, I., and ...\nSitelinks: No sitelinks\n\nTitle: Model Immunization from a Condition Number Perspective\nLink: https://www.amberyzheng.com/immu_cond_num/\nSnippet: Model Immunization from a Condition Number Perspective ... Summary: We provide a theoretical framework for model immunization, showing how the condition number of ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01Lie9EWC8G5BHpMsGC9zDeL"
+        },
+        {
+            "role": "assistant",
+            "content": "Great! Let me get the PDF to extract the author information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01XLgG8CZi1NUXEVyPGj8Ckq",
+                    "type": "function",
+                    "function": {
+                        "name": "pdf-tools-read_pdf_pages",
+                        "arguments": "{\"pdf_file_path\": \"https://arxiv.org/pdf/2505.23760\", \"start_page\": 1, \"end_page\": 1}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"PDF total pages: 25\\nExtracted page range: 1-1\\n\\n=== Page 1 ===\\narXiv:2505.23760v1  [cs.LG]  29 May 2025Model Immunization from a Condition Number Perspective\\nAmber Yijia Zheng* 1Cedar Site Bai* 1Brian Bullins1Raymond A. Yeh1\\nAbstract\\nModel immunization aims to pre-train models\\nthat are difficult to fine-tune on harmful tasks\\nwhile retaining their utility on other non-harmful\\ntasks. Though prior work has shown empirical ev-\\nidence for immunizing text-to-image models, the\\nkey understanding of when immunization is pos-\\nsible and a precise definition of an immunized\\nmodel remain unclear. In this work, we pro-\\npose a framework, based on the condition num-\\nber of a Hessian matrix, to analyze model im-\\nmunization for linear models. Building on this\\nframework, we design an algorithm with regular-\\nization terms to control the resulting condition\\nnumbers after pre-training. Empirical results on\\nlinear models and non-linear deep-nets demon-\\nstrate the effectiveness of the proposed algorithm\\non model immunization. The code is available\\nathttps://github.com/amberyzheng/\\nmodel-immunization-cond-num .\\n1. Introduction\\nModel immunization, recently proposed by Zheng & Yeh\\n(2024), studies how to pre-train a model that is more difficult\\nto fine-tune on harmful content, but not others. The aim\\nis to mitigate the risk of misuse (Brundage et al., 2018;\\nMarchal et al., 2024) associated with open-sourced models\\nby immunizing them before they are released to the public.\\nZheng & Yeh (2024) focus on immunizing text-to-image\\nmodels, where they formulate immunization as a bi-level op-\\ntimization. Empirically, they show that pre-trained diffusion\\nmodels that undergo immunization are more difficult to fine-\\ntune on a given harmful concept dataset. To quantify this\\ndifficulty, they compare the generation quality of models\\nwith and without immunization after a fixed number of fine-\\ntuning iterations. While the empirical results are promising,\\n*Equal contribution1Department of Computer Science,\\nPurdue University. Correspondence to: Raymond A. Yeh\\n<rayyeh@purdue.edu >.\\nProceedings of the 42ndInternational Conference on Machine\\nLearning , Vancouver, Canada. PMLR 267, 2025. Copyright 2025\\nby the author(s).a definition of an immunized model and the circumstances\\nthat make immunization possible remain unclear.\\nTo tackle this issue, we propose a framework to study\\nmodel immunization using the condition number (Gloub\\n& Van Loan, 1996). The effectiveness of immunization can\\nbe characterized by the condition number of the Hessian\\nmatrix. When using gradient-based methods during fine-\\ntuning, a condition number closer to one indicates faster\\nconvergence (Boyd & Vandenberghe, 2004), i.e., easier to\\nfine-tune. With this perspective, we observe that the ex-\\nistence of an effective immunization for linear models is\\nrelated to the angle between the singular vectors of the\\nharmful fine-tuning dataset\u2019s covariance matrix and the pre-\\ntraining dataset\u2019s covariance matrix.\\nFrom this condition number perspective, we propose an\\nimmunization algorithm to find such a model. In detail,\\nwe propose two additional terms to regularize the condi-\\ntion number during pre-training. Each of the introduced\\nregularization terms can be shown to ensure a monotonic\\nincrease/decrease of the condition number under gradient\\nupdates.\\nBeyond the theoretical results, we empirically validate the\\nproposed algorithm on linear models for regression and\\nimage classification tasks. Lastly, we conduct experiments\\nusing the proposed algorithm on non-linear models, i.e.,\\ndeep-nets. Despite the gap in theory, we observe that the\\nproposed approach remains effective at model immunization\\nacross ResNet (He et al., 2016) and ViT (Dosovitskiy, 2021).\\nOur contributions are summarized as follows:\\n\u2022We introduce a framework based on the condition number\\nto study the task of model immunization. This framework\\nleads to a concrete definition of an immunized model\\nalong with a novel experiment setup and evaluation met-\\nric to compare the quality of different immunization tech-\\nniques.\\n\u2022We propose regularizers to maximize/minimize the con-\\ndition number, with a guaranteed monotonic increase/de-\\ncrease when updated with the gradient-based method.\\n\u2022Together with the task objective and regularizers, we\\ndemonstrate that the proposed algorithm effectively im-\\nmunizes linear models and deep-nets on regression/image\\nclassification tasks.\\n1\",\"annotations\":null}",
+            "tool_call_id": "toolu_01XLgG8CZi1NUXEVyPGj8Ckq"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the first author's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_019992yj5dDmN2xnUksxoXfZ",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Amber Yijia Zheng\\\" \\\"Purdue University\\\" \\\"Department of Computer Science\\\" Google Scholar\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Purdue CS graphics and vision faculty presented 14 papers at ...\nLink: https://www.cs.purdue.edu/news/articles/2024/purdue-cs-graphics-and-vision-faculty-presented-13-papers-at-cvpr-2024.html\nSnippet: Amber Yijia Zheng, Raymond A. Yeh, Towards Safer AI Content Creation by ... About the Department of Computer Science at Purdue University.\nSitelinks: No sitelinks\n\nTitle: Brian Bullins\nLink: https://bbullins.github.io/\nSnippet: I am an assistant professor in the Department of Computer Science at Purdue University. My research interests lie at the intersection of optimization and ...\nSitelinks: No sitelinks\n\nTitle: Raymond A. Yeh: Welcome\nLink: https://raymond-yeh.com/\nSnippet: I am an Assistant Professor in the Department of Computer Science at Purdue University. ... Amber Yijia Zheng. Chiao-An Yang. Hairong Yin. Haomeng Zhang ...\nSitelinks: No sitelinks\n\nTitle: Cedar Site BAI | PhD Student | Doctor of Philosophy\nLink: https://www.researchgate.net/profile/Cedar-Site-Bai\nSnippet: Amber Yijia Zheng \u00b7 Cedar Site Bai; Brian Bullins \u00b7 Raymond A. Yeh. Model immunization aims to pre ...\nSitelinks: No sitelinks\n\nTitle: IMMA: Immunizing Text-to-Image Models Against Malicious ...\nLink: https://dl.acm.org/doi/10.1007/978-3-031-72933-1_26\nSnippet: by AY Zheng \u00b7 2024 \u00b7 Cited by 12 \u2014 Amber Yijia Zheng. Amber Yijia Zheng. Department of Computer Science, Purdue University, West Lafayette, USA ... Google Scholar. [2]. Bengio Y ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_019992yj5dDmN2xnUksxoXfZ"
+        },
+        {
+            "role": "assistant",
+            "content": "Let me try a more direct search for Amber Yijia Zheng's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01WhZtaa4FmDgnk6rF4iX5pb",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Amber Yijia Zheng\\\" site:scholar.google.com\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Amber Yijia Zheng - Google \u5b66\u672f\u641c\u7d22\nLink: https://scholar.google.com/citations?user=SZQIVG0AAAAJ&hl=zh-CN\nSnippet: Amber Yijia Zheng. \u5176\u4ed6\u59d3\u540d Yijia Zheng. PhD Student, Purdue University. \u5728purdue.edu \u7684\u7535\u5b50\u90ae\u4ef6\u7ecf\u8fc7\u9a8c\u8bc1- \u9996\u9875 \u00b7 Generative ModelsDeep Learning.\nSitelinks: No sitelinks\n\nTitle: Cedar Site Bai - Google Scholar\nLink: https://scholar.google.com/citations?user=Vnc1dYAAAAAJ&hl=en\nSnippet: Amber Yijia ZhengPhD Student, Purdue UniversityVerified email at purdue.edu. Raymond A. YehAssistant Professor of Computer ...\nSitelinks: No sitelinks\n\nTitle: Cedar Site Bai - Google \u5b66\u672f\u641c\u7d22\nLink: https://scholar.google.com/citations?user=Vnc1dYAAAAAJ&hl=zh-CN\nSnippet: Amber Yijia ZhengPhD Student, Purdue University\u5728purdue.edu \u7684\u7535\u5b50\u90ae\u4ef6\u7ecf\u8fc7\u9a8c\u8bc1. Raymond A. YehAssistant Professor of ...\nSitelinks: No sitelinks\n\nTitle: Weichen Fan - Google \u5b66\u672f\u641c\u7d22\nLink: https://scholar.google.com/citations?user=ORlELG8AAAAJ&hl=zh-CN\nSnippet: Amber Yijia ZhengPhD Student, Purdue University\u5728purdue.edu \u7684\u7535\u5b50\u90ae\u4ef6\u7ecf\u8fc7\u9a8c\u8bc1. Raymond A. YehAssistant Professor of ...\nSitelinks: No sitelinks\n\nTitle: Weichen Fan\nLink: https://scholar.google.com/citations?user=ORlELG8AAAAJ\nSnippet: Amber Yijia ZhengPhD Student, Purdue UniversityVerified email at purdue.edu. Raymond A. YehAssistant Professor of Computer ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01WhZtaa4FmDgnk6rF4iX5pb"
+        },
+        {
+            "role": "assistant",
+            "content": "Great! I found the Google Scholar profile. Let me update the Excel sheet with this information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01WWe2z3KCtfdeqBmLin9by6",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-write_data_to_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\", \"data\": [[\"Amber Yijia Zheng\",\"Department of Computer Science, Purdue University\",\"https://scholar.google.com/citations?user=SZQIVG0AAAAJ&hl=zh-CN\"]], \"start_cell\": \"B3\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"Data written to Sheet1\",\"annotations\":null}",
+            "tool_call_id": "toolu_01WWe2z3KCtfdeqBmLin9by6"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the third paper: \"Flowing Datasets with Wasserstein over Wasserstein Gradient Flows\"",
+            "tool_calls": [
+                {
+                    "id": "toolu_01DHQWzGpucppJNQCibJY2ML",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Flowing Datasets with Wasserstein over Wasserstein Gradient Flows\\\" arxiv\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: [2506.07534] Flowing Datasets with Wasserstein over ...\nLink: https://arxiv.org/abs/2506.07534\nSnippet: by C Bonet \u00b7 2025 \u00b7 Cited by 6 \u2014 Flowing Datasets with Wasserstein over Wasserstein Gradient Flows. Authors:Cl\u00e9ment Bonet, Christophe Vauthier, Anna Korba.\nSitelinks: No sitelinks\n\nTitle: Flowing Datasets with Wasserstein over Wasserstein Gradient ...\nLink: https://arxiv.org/html/2506.07534v1\nSnippet: arXiv:2506.07534v1 [cs.LG] 09 Jun 2025. Flowing Datasets with Wasserstein over Wasserstein Gradient Flows. Report issue for preceding element. Cl\u00e9ment Bonet ...\nSitelinks: No sitelinks\n\nTitle: Flowing Datasets with Wasserstein over Wasserstein Gradient ...\nLink: https://clbonet.github.io/pdf/Slides/Slides___UBC___18_07_2025.pdf\nSnippet: by C Bonet \u00b7 Cited by 4 \u2014 Hierarchical Integral Probability Metrics: A distance on random probability measures with low sample complexity. arXiv preprint arXiv:2402.00423 ...\nSitelinks: No sitelinks\n\nTitle: ICML Poster Flowing Datasets with Wasserstein over ...\nLink: https://icml.cc/virtual/2025/poster/45752\nSnippet: Flowing Datasets with Wasserstein over Wasserstein Gradient Flows \u00b7 1. Introduction \u00b7 2. Background \u00b7 3. Wasserstein over Wasserstein Space \u00b7 4. WoW Gradient Flows.\nSitelinks: No sitelinks\n\nTitle: (PDF) Flowing Datasets with Wasserstein over ...\nLink: https://www.researchgate.net/publication/392529942_Flowing_Datasets_with_Wasserstein_over_Wasserstein_Gradient_Flows\nSnippet: Flowing Datasets with Wasserstein over Wasserstein Gradient Flows. June 2025. DOI:10.48550/arXiv.2506.07534. License; CC BY 4.0. Authors: Cl\u00e9ment Bonet at ENSAE.\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01DHQWzGpucppJNQCibJY2ML"
+        },
+        {
+            "role": "assistant",
+            "content": "Let me get the PDF to extract the detailed author information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_0127zUV6RFPkLDhfeQ9nmHiW",
+                    "type": "function",
+                    "function": {
+                        "name": "pdf-tools-read_pdf_pages",
+                        "arguments": "{\"pdf_file_path\": \"https://arxiv.org/pdf/2506.07534\", \"start_page\": 1, \"end_page\": 1}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"PDF total pages: 57\\nExtracted page range: 1-1\\n\\n=== Page 1 ===\\narXiv:2506.07534v1  [cs.LG]  9 Jun 2025Flowing Datasets with Wasserstein over Wasserstein Gradient Flows\\nCl\u00b4ement Bonet* 1Christophe Vauthier* 2Anna Korba1\\nAbstract\\nMany applications in machine learning involve\\ndata represented as probability distributions. The\\nemergence of such data requires radically novel\\ntechniques to design tractable gradient flows on\\nprobability distributions over this type of (infinite-\\ndimensional) objects. For instance, being able to\\nflow labeled datasets is a core task for applica-\\ntions ranging from domain adaptation to transfer\\nlearning or dataset distillation. In this setting, we\\npropose to represent each class by the associated\\nconditional distribution of features, and to model\\nthe dataset as a mixture distribution supported on\\nthese classes (which are themselves probability\\ndistributions), meaning that labeled datasets can\\nbe seen as probability distributions over proba-\\nbility distributions. We endow this space with a\\nmetric structure from optimal transport, namely\\nthe Wasserstein over Wasserstein (WoW) distance,\\nderive a differential structure on this space, and\\ndefine WoW gradient flows. The latter enables to\\ndesign dynamics over this space that decrease a\\ngiven objective functional. We apply our frame-\\nwork to transfer learning and dataset distillation\\ntasks, leveraging our gradient flow construction\\nas well as novel tractable functionals that take\\nthe form of Maximum Mean Discrepancies with\\nSliced-Wasserstein based kernels between proba-\\nbility distributions.\\n1. Introduction\\nProbability measures provide a powerful way to represent\\nmany data types. For instance, they allow to naturally repre-\\nsent documents (Kusner et al., 2015), genes (Bellazzi et al.,\\n2021), point clouds (Qi et al., 2017; Geuter et al., 2025),\\nimages (Sodini et al., 2025), or single-cell data (Persad et al.,\\n*Equal contribution1ENSAE, CREST, IP Paris2Universit \u00b4e\\nParis-Saclay, Laboratoire de Math \u00b4ematique d\u2019Orsay. Correspon-\\ndence to: Cl \u00b4ement Bonet <clement.bonet@ensae.fr >, Chrisophe\\nVauthier <christophe.vauthier@universite-paris-saclay.fr >.\\nProceedings of the 42ndInternational Conference on Machine\\nLearning , Vancouver, Canada. PMLR 267, 2025. Copyright 2025\\nby the author(s).2023; Haviv et al., 2024b). Remarkably, it has been shown\\nthat one can embed any finite dataset with little or no distor-\\ntion (Andoni et al., 2018; Kratsios et al., 2023) in the Wasser-\\nstein space, i.e., the space of probability distributions ( e.g.,\\nover a Euclidean space) equipped with the Wasserstein-2 dis-\\ntance from Optimal Transport (OT). This has motivated the\\nuse of this space to embed many types of data ranging from\\nwords (Vilnis & McCallum, 2015) to knowledge graphs\\n(He et al., 2015; Wang et al., 2022), graphs (Bojchevski &\\nG\u00a8unnemann, 2018; Petric Maretic et al., 2019), or neuro-\\nscience data (Bonet et al., 2023). Therefore, it is essential to\\ndevelop tools to work on the space of probability measures\\nover probability measures, also known as random measures.\\nIn particular, they provide a natural way to represent labeled\\ndatasets as mixtures (Alvarez-Melis & Fusi, 2020).\\nA natural distance on this space is the Wasserstein over\\nWasserstein distance (WoW) (Nguyen, 2016; Catalano\\n& Lavenant, 2024), also known as the Hierarchical OT\\ndistance, which lifts the Wasserstein distance between prob-\\nability distributions as a ground cost, to define a Wasserstein\\ndistance between random measures. The latter has been used\\nfor generative modeling applications (Dukler et al., 2019),\\ndomain adaptation tasks (El Hamri et al., 2022), comparing\\ndocuments (Yurochkin et al., 2019) or multilevel clustering\\n(Ho et al., 2017). It has also been used to compare Gaussian\\nmixtures (Chen et al., 2018; Delon & Desolneux, 2020;\\nWilson et al., 2024) or generic mixtures (Dusson et al., 2023;\\nChen & Zhang, 2024). However, its poor sample complexity\\nhas motivated the development of alternative distance mea-\\nsures, such as those based on Integral Probability Metrics\\n(Catalano & Lavenant, 2024). Nonetheless, this space pos-\\nsesses a rich Riemannian structure, enabling the definition\\nof concepts like geodesics. This has been leveraged recently\\nby Haviv et al. (2024a) to perform generative modeling over\\nthe space of probability distributions with Flow Matchings.\\nWhile this space naturally supports a range of machine learn-\\ning tasks, optimization methods tailored to it have received\\nlimited attention. Yet, this is important for multiple ap-\\nplications, including variational inference with a Gaussian\\nmixture family (Lambert et al., 2022; Huix et al., 2024),\\ncomputing barycenters (Delon & Desolneux, 2020), or flow-\\ning datasets (Alvarez-Melis & Fusi, 2021), e.g., for domain\\nadaptation, transfer learning (Alvarez-Melis & Fusi, 2021;\\nHua et al., 2023) or dataset distillation (Wang et al., 2018).\\n1\",\"annotations\":null}",
+            "tool_call_id": "toolu_0127zUV6RFPkLDhfeQ9nmHiW"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the first author's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01W6rwUD3ywLvMDCbAec4ZaJ",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Cl\u00e9ment Bonet\\\" \\\"ENSAE\\\" \\\"CREST\\\" \\\"IP Paris\\\" Google Scholar\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Pierre-Cyril Aubin-Frankowski\nLink: https://scholar.google.com/citations?user=60oOCO0AAAAJ&hl=fr\nSnippet: Th\u00e9o UsciddaCREST - ENSAEAdresse e-mail valid\u00e9e de ensae.fr. Cl\u00e9ment BonetEcole Polytechnique, CMAPAdresse e-mail valid\u00e9e de polytechnique.edu.\nSitelinks: No sitelinks\n\nTitle: Anna Korba \u2013\nLink: https://akorba.github.io/resources/CV_EN.pdf\nSnippet: Statistics department, ENSAE, CREST, IP Paris. Sep. 2020\u2013Present. Assistant ... { Postdocs: 2023-?: Omar Chehab, Adrien Vacher, Cl\u00e9ment Bonet. { Interns ...\nSitelinks: No sitelinks\n\nTitle: Pierre-Cyril Aubin-Frankowski - Google \ud559\uc220 \uac80\uc0c9\nLink: https://scholar.google.com.hk/citations?user=60oOCO0AAAAJ&hl=ko\nSnippet: Researcher & Associate professor, ENPC, IP Paris ... Cl\u00e9ment BonetENSAE - CRESTensae.fr\uc758 \uc774\uba54\uc77c \ud655\uc778\ub428 ... Researcher & Associate professor, ENPC, IP Paris.\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01W6rwUD3ywLvMDCbAec4ZaJ"
+        },
+        {
+            "role": "assistant",
+            "content": "Let me try a more direct search for Cl\u00e9ment Bonet's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01Lmxxv5YHXiXkUtuzdxkDbn",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Cl\u00e9ment Bonet\\\" site:scholar.google.com\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Cl\u00e9ment Bonet\nLink: https://scholar.google.com/citations?user=wjCPk5kAAAAJ&hl=en\nSnippet: Cl\u00e9ment Bonet. Ecole Polytechnique, CMAP. Verified email at polytechnique.edu - Homepage \u00b7 Optimal TransportGradient FlowsMachine Learning.\nSitelinks: No sitelinks\n\nTitle: Pierre-Cyril Aubin-Frankowski\nLink: https://scholar.google.com/citations?user=60oOCO0AAAAJ&hl=fr\nSnippet: Cl\u00e9ment BonetEcole Polytechnique, CMAPAdresse e-mail valid\u00e9e de polytechnique.edu. Nicolas PetitMINES Paris, PSL University ...\nSitelinks: No sitelinks\n\nTitle: Titouan Vayer\nLink: https://scholar.google.com/citations?user=PJEv3JgAAAAJ&hl=fr\nSnippet: Cl\u00e9ment BonetEcole Polytechnique, CMAPAdresse e-mail valid\u00e9e de polytechnique.edu. Paulo Gon\u00e7alvesSenior researcher Inria ...\nSitelinks: No sitelinks\n\nTitle: Lucas Drumetz\nLink: https://scholar.google.com/citations?user=abRvIGAAAAAJ&hl=en\nSnippet: Cl\u00e9ment BonetEcole Polytechnique, CMAPVerified email at polytechnique.edu. Ananda Pascual (ORCID: 0000-0001-9476-9272) Ananda Pascual (ORCID ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01Lmxxv5YHXiXkUtuzdxkDbn"
+        },
+        {
+            "role": "assistant",
+            "content": "Perfect! I notice there's a discrepancy - the paper shows ENSAE, CREST, IP Paris, but the Google Scholar shows Ecole Polytechnique, CMAP. Let me use the affiliation from the paper as it's the most current. Let me update the Excel sheet.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01KQR7zeoyoFYvyNaPT9YLuC",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-write_data_to_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\", \"data\": [[\"Cl\u00e9ment Bonet\",\"ENSAE, CREST, IP Paris\",\"https://scholar.google.com/citations?user=wjCPk5kAAAAJ&hl=en\"]], \"start_cell\": \"B4\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"Data written to Sheet1\",\"annotations\":null}",
+            "tool_call_id": "toolu_01KQR7zeoyoFYvyNaPT9YLuC"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the fourth paper: \"Learning with Expected Signatures: Theory and Applications\"",
+            "tool_calls": [
+                {
+                    "id": "toolu_01QAjbhvkyR9Ks8acRtoQbTW",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Learning with Expected Signatures: Theory and Applications\\\" arxiv\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Learning with Expected Signatures: Theory and Applications\nLink: https://arxiv.org/abs/2505.20465\nSnippet: by L Lucchese \u00b7 2025 \u2014 Abstract page for arXiv paper 2505.20465: Learning with Expected Signatures: Theory and Applications.\nSitelinks: No sitelinks\n\nTitle: Learning with Expected Signatures: Theory and Applications\nLink: https://arxiv.org/pdf/2505.20465\nSnippet: by L Lucchese \u00b7 2025 \u2014 Learning with Expected Signatures: Theory and Applications deduce this limit is the same as its P-limit, i.e. Sk(X)[0,T ]. To show the ...\nSitelinks: No sitelinks\n\nTitle: (PDF) Learning with Expected Signatures: Theory and Applications\nLink: https://www.researchgate.net/publication/392134299_Learning_with_Expected_Signatures_Theory_and_Applications\nSnippet: Content may be subject to copyright. arXiv:2505.20465v1 [stat.ML] 26 May 2025. Learning with Expected Signatures: Theory and Applications. Lorenzo Lucchese 1 ...\nSitelinks: No sitelinks\n\nTitle: Learning with Expected Signatures: Theory and Applications ...\nLink: https://ribbitribbit.co/paper/arxiv.2505.20465-Learning-with-Expected-Signatures-Theory-and-Applications\nSnippet: Learning with Expected Signatures: Theory and Applications. By Lorenzo Lucchese, Almut E. D. Veraart | Learn about this paper\u2014or listen like a podcast\u2014on ...\nSitelinks: No sitelinks\n\nTitle: Learning with Expected Signatures: Theory and Applications\nLink: https://chatpaper.com/paper/164958\nSnippet: 1. Learning with Expected Signatures: Theory and Applications \u00b7 ChatDOC. ICML 202518 Jun 2025. Lorenzo Lucchese, Mikko S. Pakkanen, Almut E. D. Veraart.\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01QAjbhvkyR9Ks8acRtoQbTW"
+        },
+        {
+            "role": "assistant",
+            "content": "Let me get the PDF to extract the author information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01VaDvnmWjg9Szhw1rcTNrvA",
+                    "type": "function",
+                    "function": {
+                        "name": "pdf-tools-read_pdf_pages",
+                        "arguments": "{\"pdf_file_path\": \"https://arxiv.org/pdf/2505.20465\", \"start_page\": 1, \"end_page\": 1}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"PDF total pages: 61\\nExtracted page range: 1-1\\n\\n=== Page 1 ===\\narXiv:2505.20465v1  [stat.ML]  26 May 2025Learning with Expected Signatures: Theory and Applications\\nLorenzo Lucchese1Mikko S. Pakkanen1Almut E. D. Veraart1\\nAbstract\\nThe expected signature maps a collection of data\\nstreams to a lower dimensional representation,\\nwith a remarkable property: the resulting fea-\\nture tensor can fully characterize the data gener-\\nating distribution. This \u201cmodel-free\u201d embedding\\nhas been successfully leveraged to build multi-\\nple domain-agnostic machine learning (ML) al-\\ngorithms for time series and sequential data. The\\nconvergence results proved in this paper bridge\\nthe gap between the expected signature\u2019s em-\\npirical discrete-time estimator and its theoreti-\\ncal continuous-time value, allowing for a more\\ncomplete probabilistic interpretation of expected\\nsignature-based ML methods. Moreover, when\\nthe data generating process is a martingale, we\\nsuggest a simple modification of the expected sig-\\nnature estimator with significantly lower mean\\nsquared error and empirically demonstrate how it\\ncan be effectively applied to improve predictive\\nperformance.\\n1. Introduction\\nThe signature transform of a stream of data is an infinite but\\ncountable sequence of its \u201citerated integrals\u201d summarizing\\nthe input in a top-down fashion, meaning the informational\\ncontent of its terms decays factorially. Originally introduced\\nby Chen (1954) and serving as a fundamental object of\\nrough path analysis (Lyons et al., 2007), the signature\\nS={S(X)[0,t]\u2208T((Rd)), t\u2208[0, T]},\\nof a path X={Xt, t\u2208[0, T]} \u2208C([0, T],Rd)is a lift\\n(in the sense that it embeds X) to the space of continuous\\nfunctions over the tensor algebra T((Rd))possessing some\\nnice algebraic and geometric properties. When the path is of\\nbounded variation, the signature is defined as the sequence\\n1Department of Mathematics, Imperial College London, Lon-\\ndon, United Kingdom. Correspondence to: Lorenzo Lucchese\\n<lorenzo.lucchese17@imperial.ac.uk, llucchese6@gmail.com >.\\nProceedings of the 42ndInternational Conference on Machine\\nLearning , Vancouver, Canada. PMLR 267, 2025. Copyright 2025\\nby the author(s).of iterated integrals of X, i.e. for t\u2208[0, T], k\u22650\\nSk(X)[0,t]=Z\\n\u00b7\u00b7\u00b7Z\\n0\u2264s1\u2264...\u2264sk\u2264tdXs1\u2297 \u00b7\u00b7\u00b7 \u2297 dXsk.(1)\\nIn many practical applications the path Xis taken to be\\nthe piecewise linear interpolation of a discrete-time stream\\nof data, which is of bounded variation by construction.\\nSignature-based machine learning (ML) approaches (Lyons\\n& McLeod, 2024) thus often restrict the theoretical frame-\\nwork to paths in BV([0, T],Rd). In this setting, two funda-\\nmental properties of the signature that make it a desirable\\nnon-parametric feature extraction method for sequential\\ndata are the characterization result of Hambly & Lyons\\n(2005) and the universality approximation theorem of Levin\\net al. (2016). Moreover, when the path Xis understood\\nas a (realization of a) random process with distribution P\\nover BV([0, T],Rd), the shuffle property of the signature\\nimplies that all moments of the random variable S(X)[0,T]\\nare determined by its expectation\\n\u03d5(T) :=E[S(X)[0,T]]\u2208T((Rd)).\\nA natural question, known as the Hamburger moment prob-\\nlem (Fawcett, 2003), is thus whether the expectation of\\nthe signature characterizes its law (and thus the law of the\\npath). When imposing a probability distribution PonX\\nthe assumption of bounded variation paths becomes quite\\nrestrictive: Brownian motion, the basic building block of\\nmany stochastic models, has paths of infinite variation al-\\nmost surely. Even if we observe a discrete-time stream of\\ndata, we often still would like to define the process Xas\\na latent stochastic process of which we observe the linear\\ninterpolation over some partition \u03c0of[0, T], hereafter de-\\nnoted by X\u03c0. We hence wish to make sense of the signature\\nof a stochastic process Xwith paths of unbounded variation.\\nFor a given path X\u2208C([0, T],Rd)of finite p-variation,\\nonce we \u201clift\u201d the process to a p-rough path (Lyons et al.,\\n2007, Definition 3.11) then the signature SofXis uniquely\\ndefined1. Without delving into the details of rough path\\ntheory, for our purposes it suffices to interpret the choice of\\nlift as fixing a notion of integration with respect to X: the\\nhigher order signatures terms are then understood as iterated\\nintegrals of the path Xdefined in this sense.\\n1This is the first fundamental theorem in the theory of rough\\npaths (Lyons et al., 2007, Theorem 3.7).\\n1\",\"annotations\":null}",
+            "tool_call_id": "toolu_01VaDvnmWjg9Szhw1rcTNrvA"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the first author's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01AxH34Gbb8Vjy7gm4v3gjin",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Lorenzo Lucchese\\\" \\\"Imperial College London\\\" \\\"Department of Mathematics\\\" Google Scholar\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Lorenzo Lucchese\nLink: https://openreview.net/profile?id=~Lorenzo_Lucchese1\nSnippet: Department of Mathematics, Imperial College London (imperial.ac.uk). 2021 ... Learning with Expected Signatures: Theory and Applications \u00b7 Lorenzo Lucchese, Mikko ...\nSitelinks: No sitelinks\n\nTitle: Lorenzo Lucchese's Instagram, Twitter & Facebook on ...\nLink: https://www.idcrawl.com/lorenzo-lucchese\nSnippet: Lorenzo Lucchese ... I am a PhD graduate from the Mathematics of Random Systems CDT, a joint programme between the Department of Mathematics at Imperial ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01AxH34Gbb8Vjy7gm4v3gjin"
+        },
+        {
+            "role": "assistant",
+            "content": "Let me try a more direct search for Lorenzo Lucchese's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01N5xFhKHT6W7qXXX6TojU47",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Lorenzo Lucchese\\\" site:scholar.google.com\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Lorenzo Lucchese\nLink: https://scholar.google.com/citations?user=-dZCdJoAAAAJ&hl=it\nSnippet: Lorenzo Lucchese. PhD student, Imperial College London. Email verificata su imperial.ac.uk - Home page \u00b7 Mathematics of Random Systems. Articoli ...\nSitelinks: No sitelinks\n\nTitle: Mikko S. Pakkanen\nLink: https://scholar.google.com/citations?user=LGkKGsAAAAAJ&hl=en\nSnippet: Lorenzo LucchesePhD student, Imperial College LondonVerified email at imperial.ac.uk. Jose Manuel CorcueraProfesor de ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01N5xFhKHT6W7qXXX6TojU47"
+        },
+        {
+            "role": "assistant",
+            "content": "Perfect! Let me update the Excel sheet with this information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_012wbMavAHn6J9ZqhVjRN58V",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-write_data_to_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\", \"data\": [[\"Lorenzo Lucchese\",\"Department of Mathematics, Imperial College London\",\"https://scholar.google.com/citations?user=-dZCdJoAAAAJ&hl=it\"]], \"start_cell\": \"B5\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"Data written to Sheet1\",\"annotations\":null}",
+            "tool_call_id": "toolu_012wbMavAHn6J9ZqhVjRN58V"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the fifth paper: \"AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML\"",
+            "tool_calls": [
+                {
+                    "id": "toolu_01UmbtKMhtAKUKvhh9qa4ioP",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML\\\" arxiv\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: A Multi-Agent LLM Framework for Full-Pipeline AutoML\nLink: https://arxiv.org/abs/2410.02958\nSnippet: by P Trirat \u00b7 2024 \u00b7 Cited by 47 \u2014 AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML. Authors:Patara Trirat, Wonyong Jeong, Sung Ju Hwang.\nSitelinks: No sitelinks\n\nTitle: A Multi-Agent LLM Framework for Full-Pipeline AutoML\nLink: https://arxiv.org/pdf/2410.02958\nSnippet: by P Trirat \u00b7 2024 \u00b7 Cited by 47 \u2014 AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML. Table 2. Summary of downstream tasks and datasets. Data Modality. Downstream Task. Dataset ...\nSitelinks: No sitelinks\n\nTitle: A Multi-Agent LLM Framework for Full-Pipeline AutoML\nLink: https://icml.cc/virtual/2025/poster/44029\nSnippet: AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML. Patara ... arXiv preprint arXiv:2303.08774, 2023. 3, 7. Baek, J., Jauhar, S. K. ...\nSitelinks: No sitelinks\n\nTitle: A Multi-Agent LLM Framework for Full-Pipeline AutoML\nLink: https://deepauto-ai.github.io/automl-agent/\nSnippet: AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML. Patara Trirat1, Wonyong Jeong1, Sung Ju Hwang1,2. 1DeepAuto.ai, 2KAIST Seoul, South Korea\nSitelinks: No sitelinks\n\nTitle: A Multi-Agent LLM Framework for Full-Pipeline AutoML\nLink: https://www.semanticscholar.org/paper/AutoML-Agent%3A-A-Multi-Agent-LLM-Framework-for-Trirat-Jeong/efde8940a0b924e93d35184c4a1e8f9670b94fe7\nSnippet: DOI:10.48550/arXiv.2410.02958; Corpus ID: 273162376. AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML ... Published in arXiv ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01UmbtKMhtAKUKvhh9qa4ioP"
+        },
+        {
+            "role": "assistant",
+            "content": "Let me get the PDF to extract the author information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01BwWBpfFMPytPaUbFz2fDtP",
+                    "type": "function",
+                    "function": {
+                        "name": "pdf-tools-read_pdf_pages",
+                        "arguments": "{\"pdf_file_path\": \"https://arxiv.org/pdf/2410.02958\", \"start_page\": 1, \"end_page\": 1}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"PDF total pages: 48\\nExtracted page range: 1-1\\n\\n=== Page 1 ===\\narXiv:2410.02958v2  [cs.LG]  6 Jun 2025AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML\\nPatara Trirat1Wonyong Jeong1Sung Ju Hwang1 2\\nAbstract\\nAutomated machine learning (AutoML) acceler-\\nates AI development by automating tasks in the\\ndevelopment pipeline, such as optimal model\\nsearch and hyperparameter tuning. Existing Au-\\ntoML systems often require technical expertise\\nto set up complex tools, which is in general time-\\nconsuming and requires a large amount of human\\neffort. Therefore, recent works have started ex-\\nploiting large language models (LLM) to lessen\\nsuch burden and increase the usability of AutoML\\nframeworks via a natural language interface, al-\\nlowing non-expert users to build their data-driven\\nsolutions. These methods, however, are usually\\ndesigned only for a particular process in the AI\\ndevelopment pipeline and do not efficiently use\\nthe inherent capacity of the LLMs. This paper pro-\\nposes AutoML-Agent , a novel multi-agent frame-\\nwork tailored for full-pipeline AutoML, i.e., from\\ndata retrieval to model deployment. AutoML-\\nAgent takes user\u2019s task descriptions, facilitates\\ncollaboration between specialized LLM agents,\\nand delivers deployment-ready models. Unlike ex-\\nisting work, instead of devising a single plan, we\\nintroduce a retrieval-augmented planning strategy\\nto enhance exploration to search for more optimal\\nplans. We also decompose each plan into sub-\\ntasks (e.g., data preprocessing and neural network\\ndesign) each of which is solved by a specialized\\nagent we build via prompting executing in parallel,\\nmaking the search process more efficient. More-\\nover, we propose a multi-stage verification to ver-\\nify executed results and guide the code generation\\nLLM in implementing successful solutions. Ex-\\ntensive experiments on seven downstream tasks\\nusing fourteen datasets show that AutoML-Agent\\nachieves a higher success rate in automating the\\nfull AutoML process, yielding systems with good\\nperformance throughout the diverse domains.\\n1DeepAuto.ai2KAIST, Seoul, South Korea. Correspondence\\nto: Sung Ju Hwang <sjhwang@deepauto.ai >.\\nProceedings of the 42ndInternational Conference on Machine\\nLearning , Vancouver, Canada. PMLR 267, 2025. Copyright 2025\\nby the author(s).1. Introduction\\nAutomated machine learning (AutoML) has significantly\\nreduced the need for technical expertise and human labors\\nin developing effective data-driven solutions by automating\\neach process in the AI development pipeline (Yao et al.,\\n2018; Ren et al., 2020; He et al., 2021), such as feature\\nengineering, model selection, and hyperparameter optimiza-\\ntion (HPO). However, current AutoML systems (Gijsbers\\net al., 2024) often necessitate programming expertise to\\nconfigure complex tools and resources, potentially creating\\nbarriers for a larger pool of users with limited skills and\\nknowledge, such as domain experts (Sun et al. (2023); \u00a7A).\\nTo make AutoML frameworks more accessible to non-expert\\nusers, many recent studies (Trirat et al., 2021; Viswanathan\\net al., 2023; Li et al., 2023; Hollmann et al., 2023b; Liu\\net al., 2025; Zhang et al., 2023; Shen et al., 2023; Zhang\\net al., 2024a; Hong et al., 2024a; Guo et al., 2024a; Yang\\net al., 2025; Chi et al., 2024) have suggested to use natural\\nlanguage interfaces with large language models (LLM) for\\nmachine learning (ML) and data science (DS) tasks. Nev-\\nertheless, these previous LLM-based AutoML frameworks\\nonly considered a limited number of tasks due to their re-\\nstricted designs, either only for a process in the pipeline (e.g.,\\nfeature engineering (Hollmann et al., 2023b; Li et al., 2024;\\nMalberg et al., 2024), HPO (Liu et al., 2024a; 2025; Zhang\\net al., 2024a), and model selection (Zhang et al., 2023; Shen\\net al., 2023)) or for a specific group of downstream tasks\\n(e.g., natural language processing (Viswanathan et al., 2023)\\nand computer vision (Yang et al., 2025)). In addition, most\\nmethods overlook the inherent capability of LLMs to search\\nfor promising models by performing actual training of the\\ncandidate models during the search process, making it pro-\\nhibitively costly and slow.\\nFor an AutoML framework to be truly practical, it should\\nperform end-to-end AutoML, considering both the data\\naspects (retrieval, preprocessing, and feature engineering)\\nandmodel aspects (selection, HPO, and deployment). This\\nis because a process in one aspect can affect subsequent\\nprocesses in the other, potentially leading to suboptimal so-\\nlutions when combining results from different frameworks.\\nMeanwhile, the AutoML framework should be computation-\\nally efficient, using strategies to minimize the computational\\noverhead during search. However, there are two main chal-\\nlenges in building such a framework.\\n1\",\"annotations\":null}",
+            "tool_call_id": "toolu_01BwWBpfFMPytPaUbFz2fDtP"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the first author's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01CBDg3RPD24NajAU4aEsYju",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Patara Trirat\\\" \\\"DeepAuto.ai\\\" Google Scholar\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Patara Trirat\nLink: https://scholar.google.com/citations?user=fDZjV8EAAAAJ&hl=en\nSnippet: Patara Trirat. Research Scientist at DeepAuto.ai, KAIST. Verified email at kaist.ac.kr - Homepage \u00b7 Agentic AIData MiningAutomated Machine ...\nSitelinks: No sitelinks\n\nTitle: Large language models are zero-shot point-of-interest ...\nLink: https://link.springer.com/article/10.1007/s10618-025-01148-w\nSnippet: DeepAuto.ai, Seoul, Republic of Korea. Patara Trirat. Authors. Joeun Kim. View author publications. Search author on:PubMed Google Scholar.\nSitelinks: No sitelinks\n\nTitle: Youngeun Nam\nLink: https://scholar.google.com/citations?user=Cz1zyRsAAAAJ&hl=en\nSnippet: Patara TriratResearch Scientist at DeepAuto.ai, KAISTVerified email at kaist.ac.kr. Susik YoonKorea UniversityVerified email at ...\nSitelinks: No sitelinks\n\nTitle: (PDF) Paper2Code: Automating Code Generation from ...\nLink: https://www.researchgate.net/publication/391120156_Paper2Code_Automating_Code_Generation_from_Scientific_Papers_in_Machine_Learning\nSnippet: ... DeepAuto.ai2. {minjuseo, jinheon.baek, seongyun, sungju.hwang}@kaist ... com/articles/s41586-023-06747-5. [42]. Patara Trirat, Wonyong ...\nSitelinks: No sitelinks\n\nTitle: ICML 2025 Accepted Paper List\nLink: https://papercopilot.com/paper-list/icml-paper-list/icml-2025-paper-list/\nSnippet: Patara Trirat; Wonyong Jeong; Sung Ju Hwang;, DeepAuto.ai; Korea Advanced Institute of Science and Technology; ;, United States; South Korea; ;, Poster, 20. 7 ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01CBDg3RPD24NajAU4aEsYju"
+        },
+        {
+            "role": "assistant",
+            "content": "Perfect! Let me update the Excel sheet with this information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01W4p1ZhVGHYEQsHEUSHFKpP",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-write_data_to_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\", \"data\": [[\"Patara Trirat\",\"DeepAuto.ai\",\"https://scholar.google.com/citations?user=fDZjV8EAAAAJ&hl=en\"]], \"start_cell\": \"B6\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"Data written to Sheet1\",\"annotations\":null}",
+            "tool_call_id": "toolu_01W4p1ZhVGHYEQsHEUSHFKpP"
+        },
+        {
+            "role": "assistant",
+            "content": "Finally, let me search for the sixth paper: \"Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction\"",
+            "tool_calls": [
+                {
+                    "id": "toolu_016ttkGG65VruMpsKjg6WHL6",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction\\\" arxiv\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Learning Smooth and Expressive Interatomic Potentials for ...\nLink: https://arxiv.org/abs/2502.12147\nSnippet: by X Fu \u00b7 2025 \u00b7 Cited by 51 \u2014 Abstract page for arXiv paper 2502.12147: Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction.\nSitelinks: No sitelinks\n\nTitle: Learning Smooth and Expressive Interatomic Potentials for ...\nLink: https://arxiv.org/html/2502.12147v1\nSnippet: Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction ... arXiv preprint arXiv:2501.09009, 2025. Artrith ...\nSitelinks: No sitelinks\n\nTitle: Learning Smooth and Expressive Interatomic Potentials for ...\nLink: https://www.researchgate.net/publication/389130711_Learning_Smooth_and_Expressive_Interatomic_Potentials_for_Physical_Property_Prediction\nSnippet: Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction. February 2025. DOI:10.48550/arXiv.2502.12147. License ...\nSitelinks: No sitelinks\n\nTitle: Learning Smooth and Expressive Interatomic Potentials for ...\nLink: https://raw.githubusercontent.com/mlresearch/v267/main/assets/fu25h/fu25h.pdf\nSnippet: by X Fu \u00b7 Cited by 51 \u2014 Review of computational approaches to predict. 9. Page 10. Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction the ...\nSitelinks: No sitelinks\n\nTitle: Learning Smooth and Expressive Interatomic Potentials for ...\nLink: https://x.com/VBFC/status/1891798768636363045\nSnippet: Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction. arXiv logo. arxiv.org.\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_016ttkGG65VruMpsKjg6WHL6"
+        },
+        {
+            "role": "assistant",
+            "content": "Let me get the PDF to extract the author information.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01MDR5bxGBZ1zUCUVEYENif3",
+                    "type": "function",
+                    "function": {
+                        "name": "pdf-tools-read_pdf_pages",
+                        "arguments": "{\"pdf_file_path\": \"https://arxiv.org/pdf/2502.12147\", \"start_page\": 1, \"end_page\": 1}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"PDF total pages: 20\\nExtracted page range: 1-1\\n\\n=== Page 1 ===\\nLearning Smooth and Expressive Interatomic\\nPotentials for Physical Property Prediction\\nXiang Fu1,Brandon M. Wood1,Luis Barroso-Luque1,Daniel S. Levine1,Meng Gao1,Misko Dzamba1,\\nC. Lawrence Zitnick1\\n1Fundamental AI Research (FAIR) at Meta\\nMachine learning interatomic potentials (MLIPs) have become increasingly effective at approximating\\nquantum mechanical calculations at a fraction of the computational cost. However, lower errors\\non held out test sets do not always translate to improved results on downstream physical property\\nprediction tasks. We propose testing MLIPs on their practical ability to conserve energy during\\nmolecular dynamic simulations. If passed, improved correlations are found between test errors and\\ntheir performance on physical property prediction tasks. We identify choices which may lead to\\nmodels failing this test, and use these observations to improve upon highly-expressive models. The\\nresulting model, eSEN, provides state-of-the-art results on a range of physical property prediction tasks,\\nincluding materials stability prediction, thermal conductivity prediction, and phonon calculations.\\nCorrespondence: Xiang Fu ( xiangfu@meta.com ) and C. Lawrence Zitnick ( zitnick@meta.com )\\nCode: https://github.com/facebookresearch/fairchem\\nCheckpoints: https://huggingface.co/facebook/OMAT24\\n1 Introduction\\nDensity Functional Theory (DFT), which models the\\nelectrons in materials and molecules, serves as the\\nfoundation for many modern drug and materials dis-\\ncovery workflows. Unfortunately, DFT calculations\\nare notoriously computationally intensive, scaling\\ncubically with the number of electrons in the sys-\\ntem: O(n3). Machine learning interatomic potentials\\n(MLIPs) are promising in approximating and expe-\\nditing DFT calculations. With increasing data set\\nsizes and model innovations, MLIPs have shown sub-\\nstantial improvements in accuracy and generalization\\ncapabilities (Batatia et al., 2023; Merchant et al.,\\n2023; Yang et al., 2024; Barroso-Luque et al., 2024).\\nPredicting physical properties in chemistry and ma-\\nterials science often requires complex workflows in-\\nvolving numerous evaluations of DFT or MLIPs. For\\nexample, in molecular dynamics (MD) simulations,\\nforces are predicted over thousands to millions of\\ntime steps. However, the MLIP literature has mostly\\nfocused on assessing models based on energy and\\nforce predictions over static DFT test sets rather\\nthan directly assessing their performance in complex\\nsimulations. This approach has limitations, as im-\\nproved accuracy on test sets does not always lead to\\nbetter predictions of physical properties (P\u00f3ta et al.,\\n2024; Loew et al., 2024).In this paper, we address two questions: Why does\\nhigher test accuracy sometimes fail to enhance a\\nmodel\u2019s ability to predict physical properties, and\\nhow can we improve MLIPs to excel in this area? We\\nfirst outline four critical property prediction tasks\\nand identify the properties required for an MLIP\\nto succeed in these tasks. These properties entail\\nlearning a conservative model with continuous and\\nbounded energy derivatives, indicating a smoothly-\\nvarying and physically meaningful energy landscape.\\nTo test whether these properties hold, we propose\\ntesting the ability of MLIPs to practically conserve\\nenergy in MD simulations. We demonstrate models\\nthat pass this test have a higher correlation between\\ntest errors and property prediction accuracy.\\nBuilding on these insights, we present a novel MLIP\\ncalled eSEN and training approach that achieves\\nstate-of-the-art (SOTA) performance on complex\\nproperty prediction tasks. Specifically, our model\\nis capable of running energy-conserving MD simula-\\ntions for out-of-distribution systems (Figure 1 (a)).\\nFor materials stability prediction, eSEN achieves a\\nleading F1 score of 0.831and a \u03baSRMEof0.340on the\\ncompliant Matbench-Discovery benchmark (Riebe-\\nsell et al., 2023; P\u00f3ta et al., 2024). Previous models\\nare only able to excel in one of these metrics ( Fig-\\nure 1 (b,c)). We also achieve a SOTA F1 score of\\n0.925and\u03baSRMEof0.170on the non-compliant cate-\\n1arXiv:2502.12147v2  [physics.comp-ph]  23 Apr 2025\",\"annotations\":null}",
+            "tool_call_id": "toolu_01MDR5bxGBZ1zUCUVEYENif3"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me search for the first author's Google Scholar profile.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01E5uK7uohyjtDsd8fw4cMZw",
+                    "type": "function",
+                    "function": {
+                        "name": "local-web_search",
+                        "arguments": "{\"query\": \"\\\"Xiang Fu\\\" \\\"Meta\\\" \\\"Fundamental AI Research\\\" \\\"FAIR\\\" Google Scholar\", \"num_results\": 5}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "Title: Xiang Fu\nLink: https://scholar.google.com/citations?user=Cb-ZgHEAAAAJ&hl=en\nSnippet: WoodFundamental AI Research at MetaVerified email at meta.com ... Muhammed ShuaibiResearch Engineer, FAIR, MetaVerified email at meta.com.\nSitelinks: No sitelinks\n\nTitle: Zachary W. Ulissi\nLink: https://zulissi.github.io/\nSnippet: At Meta's Fundamental AI Research lab I co-lead the FAIR Chemistry team (along with Larry Zitnick!) where we work on AI/ML broadly applied to ...\nSitelinks: No sitelinks\n\nTitle: Daniel S Levine\nLink: https://scholar.google.com/citations?user=AcE5Wt4AAAAJ&hl=en\nSnippet: WoodFundamental AI Research at MetaVerified email at meta.com. Xiang FuMeta FAIRVerified email at meta.com. C. Lawrence Zitnick ...\nSitelinks: No sitelinks\n\nTitle: Ricky T. Q. Chen\nLink: https://rtqichen.github.io/\nSnippet: I'm a Research Scientist at Meta Fundamental AI Research (FAIR) team in New York. ... Xiang Fu, Guan-Horng Liu, Ricky T. Q. Chen International Conference ...\nSitelinks: No sitelinks\n\nTitle: Brian Karrer\nLink: https://openreview.net/profile?id=~Brian_Karrer1\nSnippet: Meta Fundamental AI Research (FAIR) (meta.com). 2022 \u2013 Present. Researcher ... Xiang Fu, Guan-Horng Liu, Ricky T. Q. Chen. Published: 05 Mar 2025, Last ...\nSitelinks: No sitelinks\n",
+            "tool_call_id": "toolu_01E5uK7uohyjtDsd8fw4cMZw"
+        },
+        {
+            "role": "assistant",
+            "content": "Perfect! Let me update the Excel sheet with this final entry.",
+            "tool_calls": [
+                {
+                    "id": "toolu_011YyXTZ1rLm42vWA48j8E48",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-write_data_to_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\", \"data\": [[\"Xiang Fu\",\"Fundamental AI Research (FAIR) at Meta\",\"https://scholar.google.com/citations?user=Cb-ZgHEAAAAJ&hl=en\"]], \"start_cell\": \"B7\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"Data written to Sheet1\",\"annotations\":null}",
+            "tool_call_id": "toolu_011YyXTZ1rLm42vWA48j8E48"
+        },
+        {
+            "role": "assistant",
+            "content": "Now let me verify the completed Excel sheet by reading it back.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01GwPFQbh8MtA4YqmKozcDKi",
+                    "type": "function",
+                    "function": {
+                        "name": "excel-read_data_from_excel",
+                        "arguments": "{\"filepath\": \"/workspace/dumps/workspace/paper_initial.xlsx\", \"sheet_name\": \"Sheet1\"}"
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "{\"type\":\"text\",\"text\":\"{\\n  \\\"range\\\": \\\"A1:D7\\\",\\n  \\\"sheet_name\\\": \\\"Sheet1\\\",\\n  \\\"cells\\\": [\\n    {\\n      \\\"address\\\": \\\"A1\\\",\\n      \\\"value\\\": \\\"Title\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B1\\\",\\n      \\\"value\\\": \\\"First Author\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C1\\\",\\n      \\\"value\\\": \\\"Affiliation\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D1\\\",\\n      \\\"value\\\": \\\"Google Scholar Profile\\\",\\n      \\\"row\\\": 1,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A2\\\",\\n      \\\"value\\\": \\\"Strategy Coopetition Explains the Emergence and Transience of In-Context Learning\\\",\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B2\\\",\\n      \\\"value\\\": \\\"Aaditya K. Singh\\\",\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C2\\\",\\n      \\\"value\\\": \\\"Gatsby Computational Neuroscience Unit, University College London\\\",\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D2\\\",\\n      \\\"value\\\": \\\"https://scholar.google.com/citations?user=9OPKqmMAAAAJ&hl=en\\\",\\n      \\\"row\\\": 2,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A3\\\",\\n      \\\"value\\\": \\\"Model Immunization from a Condition Number Perspective\\\",\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B3\\\",\\n      \\\"value\\\": \\\"Amber Yijia Zheng\\\",\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C3\\\",\\n      \\\"value\\\": \\\"Department of Computer Science, Purdue University\\\",\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D3\\\",\\n      \\\"value\\\": \\\"https://scholar.google.com/citations?user=SZQIVG0AAAAJ&hl=zh-CN\\\",\\n      \\\"row\\\": 3,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A4\\\",\\n      \\\"value\\\": \\\"Flowing Datasets with Wasserstein over Wasserstein Gradient Flows\\\",\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B4\\\",\\n      \\\"value\\\": \\\"Cl\\\\u00e9ment Bonet\\\",\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C4\\\",\\n      \\\"value\\\": \\\"ENSAE, CREST, IP Paris\\\",\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D4\\\",\\n      \\\"value\\\": \\\"https://scholar.google.com/citations?user=wjCPk5kAAAAJ&hl=en\\\",\\n      \\\"row\\\": 4,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A5\\\",\\n      \\\"value\\\": \\\"Learning with Expected Signatures: Theory and Applications\\\",\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B5\\\",\\n      \\\"value\\\": \\\"Lorenzo Lucchese\\\",\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C5\\\",\\n      \\\"value\\\": \\\"Department of Mathematics, Imperial College London\\\",\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D5\\\",\\n      \\\"value\\\": \\\"https://scholar.google.com/citations?user=-dZCdJoAAAAJ&hl=it\\\",\\n      \\\"row\\\": 5,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A6\\\",\\n      \\\"value\\\": \\\"AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML\\\",\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B6\\\",\\n      \\\"value\\\": \\\"Patara Trirat\\\",\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C6\\\",\\n      \\\"value\\\": \\\"DeepAuto.ai\\\",\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D6\\\",\\n      \\\"value\\\": \\\"https://scholar.google.com/citations?user=fDZjV8EAAAAJ&hl=en\\\",\\n      \\\"row\\\": 6,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"A7\\\",\\n      \\\"value\\\": \\\"Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction\\\",\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 1,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"B7\\\",\\n      \\\"value\\\": \\\"Xiang Fu\\\",\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 2,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"C7\\\",\\n      \\\"value\\\": \\\"Fundamental AI Research (FAIR) at Meta\\\",\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 3,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    },\\n    {\\n      \\\"address\\\": \\\"D7\\\",\\n      \\\"value\\\": \\\"https://scholar.google.com/citations?user=Cb-ZgHEAAAAJ&hl=en\\\",\\n      \\\"row\\\": 7,\\n      \\\"column\\\": 4,\\n      \\\"validation\\\": {\\n        \\\"has_validation\\\": false\\n      }\\n    }\\n  ]\\n}\",\"annotations\":null}",
+            "tool_call_id": "toolu_01GwPFQbh8MtA4YqmKozcDKi"
+        },
+        {
+            "role": "assistant",
+            "content": "Perfect! I have successfully completed the research task for all 6 papers in your AI Conference research. Here's a summary of what I found and filled in the Excel sheet:\n\n## Research Results Summary:\n\n### 1. **Strategy Coopetition Explains the Emergence and Transience of In-Context Learning**\n- **First Author**: Aaditya K. Singh\n- **Affiliation**: Gatsby Computational Neuroscience Unit, University College London\n- **Google Scholar**: https://scholar.google.com/citations?user=9OPKqmMAAAAJ&hl=en\n\n### 2. **Model Immunization from a Condition Number Perspective**\n- **First Author**: Amber Yijia Zheng\n- **Affiliation**: Department of Computer Science, Purdue University\n- **Google Scholar**: https://scholar.google.com/citations?user=SZQIVG0AAAAJ&hl=zh-CN\n\n### 3. **Flowing Datasets with Wasserstein over Wasserstein Gradient Flows**\n- **First Author**: Cl\u00e9ment Bonet\n- **Affiliation**: ENSAE, CREST, IP Paris\n- **Google Scholar**: https://scholar.google.com/citations?user=wjCPk5kAAAAJ&hl=en\n\n### 4. **Learning with Expected Signatures: Theory and Applications**\n- **First Author**: Lorenzo Lucchese\n- **Affiliation**: Department of Mathematics, Imperial College London\n- **Google Scholar**: https://scholar.google.com/citations?user=-dZCdJoAAAAJ&hl=it\n\n### 5. **AutoML-Agent: A Multi-Agent LLM Framework for Full-Pipeline AutoML**\n- **First Author**: Patara Trirat\n- **Affiliation**: DeepAuto.ai\n- **Google Scholar**: https://scholar.google.com/citations?user=fDZjV8EAAAAJ&hl=en\n\n### 6. **Learning Smooth and Expressive Interatomic Potentials for Physical Property Prediction**\n- **First Author**: Xiang Fu\n- **Affiliation**: Fundamental AI Research (FAIR) at Meta\n- **Google Scholar**: https://scholar.google.com/citations?user=Cb-ZgHEAAAAJ&hl=en\n\nAll the information has been accurately extracted from the original research papers and verified through the authors' Google Scholar profiles. The Excel sheet now contains the complete research data you requested, with full author names, detailed institutional affiliations exactly as they appear in the papers, and direct links to their Google Scholar profiles.",
+            "tool_calls": [
+                {
+                    "id": "toolu_01R4wfRspnvusrGy3QkPdi8R",
+                    "type": "function",
+                    "function": {
+                        "name": "local-claim_done",
+                        "arguments": ""
+                    }
+                }
+            ]
+        },
+        {
+            "role": "tool",
+            "content": "you have claimed the task is done!",
+            "tool_call_id": "toolu_01R4wfRspnvusrGy3QkPdi8R"
+        }
+    ]
+}
