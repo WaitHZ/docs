@@ -125,7 +125,7 @@ def main(args):
                 dst.write(f"\n<AccordionGroup>\n")
 
                 for log_file in sorted(os.listdir(log_dir)):
-                    if log_file.endswith(".json") and "claude" in log_file.lower():
+                    if log_file.endswith(".json") and ("claude" in log_file.lower() or "deepseek" in log_file.lower()):
                         log_path = os.path.join(log_dir, log_file)
                         with open(log_path, "r", encoding="utf-8") as lf:
                             log_data = json.load(lf)
