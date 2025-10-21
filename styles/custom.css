@@ -1119,6 +1119,182 @@ html[data-theme="dark"] .icon-container svg {
   }
 }
 
+/* ==================== 移动端表格换行优化 ==================== */
+
+/* 移动端表格内容自动换行 */
+@media (max-width: 768px) {
+  .performance-table .model-name-cell,
+  .performance-table .model-type-cell {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    hyphens: auto !important;
+    line-height: 1.3 !important;
+    max-width: 100% !important;
+  }
+  
+  /* 针对长模型名称的特殊处理 */
+  .performance-table .model-name-cell {
+    font-size: 10px !important;
+    font-weight: 600 !important;
+  }
+  
+  /* 针对模型类型的特殊处理 */
+  .performance-table .model-type-cell {
+    font-size: 9px !important;
+  }
+  
+  /* 数值列保持紧凑 */
+  .performance-table .score-cell {
+    white-space: nowrap !important;
+    font-size: 9px !important;
+  }
+  
+  /* Server表格移动端优化 */
+  .server-table {
+    font-size: 12px;
+    table-layout: fixed;
+    margin-bottom: 20px;
+  }
+  
+  .server-table th,
+  .server-table td {
+    padding: 8px 4px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.2;
+  }
+  
+  /* Server表格列宽分配 */
+  .server-table .server-name {
+    width: 20%;
+    min-width: 80px;
+  }
+  
+  .server-table .server-description {
+    width: 40%;
+    min-width: 120px;
+  }
+  
+  .server-table .server-link {
+    width: 30%;
+    min-width: 100px;
+  }
+  
+  .server-table .server-tools {
+    width: 10%;
+    min-width: 40px;
+  }
+  
+  /* Self-impl表格移动端优化 */
+  .self-impl-table {
+    font-size: 12px;
+    table-layout: fixed;
+    margin-bottom: 20px;
+  }
+  
+  .self-impl-table th,
+  .self-impl-table td {
+    padding: 8px 4px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.2;
+  }
+  
+  /* Self-impl表格列宽分配 */
+  .self-impl-table .server-name {
+    width: 25%;
+    min-width: 100px;
+  }
+  
+  .self-impl-table .server-impl-description {
+    width: 65%;
+    min-width: 150px;
+  }
+  
+  .self-impl-table .server-tools {
+    width: 10%;
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .performance-table .model-name-cell {
+    font-size: 9px !important;
+  }
+  
+  /* Server表格小屏幕优化 */
+  .server-table {
+    font-size: 10px;
+  }
+  
+  .server-table th,
+  .server-table td {
+    padding: 6px 2px;
+    font-size: 10px;
+  }
+  
+  /* Server表格列宽调整 */
+  .server-table .server-name {
+    width: 22%;
+    min-width: 70px;
+  }
+  
+  .server-table .server-description {
+    width: 38%;
+    min-width: 100px;
+  }
+  
+  .server-table .server-link {
+    width: 30%;
+    min-width: 80px;
+  }
+  
+  .server-table .server-tools {
+    width: 10%;
+    min-width: 30px;
+  }
+  
+  /* Self-impl表格小屏幕优化 */
+  .self-impl-table {
+    font-size: 10px;
+  }
+  
+  .self-impl-table th,
+  .self-impl-table td {
+    padding: 6px 2px;
+    font-size: 10px;
+  }
+  
+  /* Self-impl表格列宽调整 */
+  .self-impl-table .server-name {
+    width: 28%;
+    min-width: 80px;
+  }
+  
+  .self-impl-table .server-impl-description {
+    width: 62%;
+    min-width: 120px;
+  }
+  
+  .self-impl-table .server-tools {
+    width: 10%;
+    min-width: 30px;
+  }
+  
+  .performance-table .model-type-cell {
+    font-size: 8px !important;
+  }
+  
+  .performance-table .score-cell {
+    font-size: 8px !important;
+  }
+}
+
 /* ==================== 模型排行榜样式 ==================== */
 
 /* 排行榜主容器 */
@@ -1688,12 +1864,13 @@ html[data-theme="dark"] .performance-table th.sortable.active.desc::after {
   }
   
   .performance-table {
-    font-size: 14px;
+    font-size: 12px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     display: table;
     width: 100%;
-    table-layout: auto;
+    table-layout: fixed;
+    margin-bottom: 20px;
   }
   
   .performance-table thead,
@@ -1728,85 +1905,94 @@ html[data-theme="dark"] .performance-table th.sortable.active.desc::after {
     border: 1px solid #e5e7eb;
     position: static;
     padding: 8px 4px;
-    white-space: nowrap;
-    font-size: 12px;
+    white-space: normal;
+    font-size: 11px;
     text-align: center;
     vertical-align: middle;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.2;
   }
   
-  /* 根据表头内容设置具体列宽 */
+  /* 根据表头内容设置具体列宽 - 移动端自适应 */
   .performance-table th:nth-child(1),
   .performance-table td:nth-child(1) {
-    width: 140px;
-    min-width: 140px;
+    width: 15%;
+    min-width: 80px;
     text-align: left;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .performance-table th:nth-child(2),
   .performance-table td:nth-child(2) {
-    width: 90px;
-    min-width: 90px;
-    max-width: 90px;
+    width: 12%;
+    min-width: 60px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .performance-table th:nth-child(3),
   .performance-table td:nth-child(3) {
-    width: 100px;
-    min-width: 100px;
+    width: 10%;
+    min-width: 60px;
   }
   
   .performance-table th:nth-child(4),
   .performance-table td:nth-child(4) {
-    width: 100px;
-    min-width: 100px;
+    width: 10%;
+    min-width: 60px;
   }
   
   .performance-table th:nth-child(5),
   .performance-table td:nth-child(5) {
-    width: 100px;
-    min-width: 100px;
+    width: 10%;
+    min-width: 60px;
   }
   
   .performance-table th:nth-child(6),
   .performance-table td:nth-child(6) {
-    width: 100px;
-    min-width: 100px;
+    width: 10%;
+    min-width: 60px;
   }
   
   .performance-table th:nth-child(7),
   .performance-table td:nth-child(7) {
-    width: 100px;
-    min-width: 100px;
+    width: 10%;
+    min-width: 60px;
   }
   
   .performance-table th:nth-child(8),
   .performance-table td:nth-child(8) {
-    width: 100px;
-    min-width: 100px;
+    width: 10%;
+    min-width: 60px;
   }
   
   .performance-table th:nth-child(9),
   .performance-table td:nth-child(9) {
-    width: 90px;
-    min-width: 90px;
+    width: 8%;
+    min-width: 50px;
   }
   
   .performance-table th:nth-child(10),
   .performance-table td:nth-child(10) {
-    width: 90px;
-    min-width: 90px;
+    width: 8%;
+    min-width: 50px;
   }
   
   .performance-table th:nth-child(11),
   .performance-table td:nth-child(11) {
-    width: 90px;
-    min-width: 90px;
+    width: 8%;
+    min-width: 50px;
   }
   
   .performance-table th:nth-child(12),
   .performance-table td:nth-child(12) {
-    width: 80px;
-    min-width: 80px;
+    width: 7%;
+    min-width: 40px;
   }
   
 .performance-table th {
@@ -1876,12 +2062,18 @@ html[data-theme="dark"] .performance-table th.sortable.active.desc::after {
   }
   
   .leaderboard-table {
-    font-size: 14px;
+    font-size: 12px;
+    margin-bottom: 20px;
   }
   
   .leaderboard-table th,
   .leaderboard-table td {
     padding: 12px 8px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.2;
   }
   
   .model-name-cell {
@@ -1919,10 +2111,11 @@ html[data-theme="dark"] .performance-table th.sortable.active.desc::after {
   }
   
   .leaderboard-table {
-    font-size: 12px;
+    font-size: 10px;
     overflow-x: auto;
     display: block;
     white-space: nowrap;
+    margin-bottom: 20px;
   }
   
   .leaderboard-table thead,
@@ -3693,26 +3886,42 @@ html[data-theme="dark"] .view-leaderboard-link:hover {
 
 @media (max-width: 480px) {
   .performance-table {
-    font-size: 12px;
-    table-layout: auto;
+    font-size: 10px;
+    table-layout: fixed;
+    margin-bottom: 20px;
   }
   
   .performance-table th,
   .performance-table td {
-    padding: 6px 2px;
-    font-size: 10px;
+    padding: 6px 3px;
+    font-size: 9px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.2;
   }
   
   .performance-table th:nth-child(1),
   .performance-table td:nth-child(1) {
-    width: 120px;
-    min-width: 120px;
-    font-size: 12px;
+    width: 18%;
+    min-width: 70px;
+    font-size: 11px;
     text-align: left;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   .performance-table th:nth-child(2),
-  .performance-table td:nth-child(2),
+  .performance-table td:nth-child(2) {
+    width: 12%;
+    min-width: 50px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
   .performance-table th:nth-child(3),
   .performance-table td:nth-child(3),
   .performance-table th:nth-child(4),
@@ -3725,8 +3934,8 @@ html[data-theme="dark"] .view-leaderboard-link:hover {
   .performance-table td:nth-child(7),
   .performance-table th:nth-child(8),
   .performance-table td:nth-child(8) {
-    width: 100px;
-    min-width: 100px;
+    width: 10%;
+    min-width: 50px;
   }
   
   .performance-table th:nth-child(9),
@@ -3735,14 +3944,14 @@ html[data-theme="dark"] .view-leaderboard-link:hover {
   .performance-table td:nth-child(10),
   .performance-table th:nth-child(11),
   .performance-table td:nth-child(11) {
-    width: 70px;
-    min-width: 70px;
+    width: 8%;
+    min-width: 40px;
   }
   
   .performance-table th:nth-child(12),
   .performance-table td:nth-child(12) {
-    width: 70px;
-    min-width: 70px;
+    width: 6%;
+    min-width: 30px;
   }
   
   .performance-table .org-icon {
@@ -3983,10 +4192,22 @@ html[data-theme="dark"] .error-box .error-content {
 nav .navbar-brand img,
 nav .navbar-brand svg,
 header .navbar-brand img,
-header .navbar-brand svg {
+header .navbar-brand svg,
+/* More specific selectors for Mintlify */
+[data-testid="navbar"] img,
+[data-testid="navbar"] svg,
+.navbar img,
+.navbar svg,
+header img,
+header svg,
+/* Generic logo selectors */
+img[src*="toolathlon"],
+svg[src*="toolathlon"],
+img[alt*="Toolathlon"],
+svg[alt*="Toolathlon"] {
   height: 60px !important;
   width: auto !important;
-  max-width: 400px !important;
+  max-width: 350px !important;
   object-fit: contain !important;
 }
 
@@ -3997,8 +4218,33 @@ header .navbar-brand svg {
 .navbar .navbar-brand svg {
   height: 60px !important;
   width: auto !important;
-  max-width: 400px !important;
+  max-width: 350px !important;
   object-fit: contain !important;
+}
+
+/* Force logo size with very high specificity */
+.navbar-brand,
+.navbar-brand *,
+[class*="navbar"] [class*="brand"],
+[class*="navbar"] [class*="brand"] *,
+header [class*="brand"],
+header [class*="brand"] * {
+  height: 60px !important;
+  max-height: 60px !important;
+  width: auto !important;
+  max-width: 350px !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* Target the logo specifically by its source */
+img[src="/figs/toolathlon.svg"],
+svg[src="/figs/toolathlon.svg"] {
+  height: 60px !important;
+  width: auto !important;
+  max-width: 350px !important;
+  object-fit: contain !important;
+  display: block !important;
 }
 
 /* Logo container size */
@@ -4013,6 +4259,15 @@ header .navbar-brand,
   align-items: center !important;
   height: 70px !important;
   padding: 8px 0 !important;
+  min-height: 70px !important;
+}
+
+/* Force navbar to be taller */
+.navbar,
+header,
+[data-testid="navbar"] {
+  min-height: 70px !important;
+  height: auto !important;
 }
 
 /* Mobile logo size - only affects navbar logo */
@@ -4036,7 +4291,7 @@ header .navbar-brand,
   .mintlify-navbar .navbar-brand,
   nav .navbar-brand,
   header .navbar-brand {
-    height: 58px !important;
+    height: 60px !important;
   }
 }
 
@@ -4061,7 +4316,7 @@ header .navbar-brand,
   .mintlify-navbar .navbar-brand,
   nav .navbar-brand,
   header .navbar-brand {
-    height: 48px !important;
+    height: 50px !important;
   }
 }
 
