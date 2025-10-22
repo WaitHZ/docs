@@ -170,7 +170,7 @@ def main(args):
                                     if "tool_calls" in msg:
                                         if not (msg["content"] == "" or msg["content"] is None or msg["content"] == "null"):
                                             dst.write(f"<div className=\"thinking-box\">\n")
-                                            dst.write(f"🧐`Agent`\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}")}\n</div>\n\n")
+                                            dst.write(f"🧐`Agent`<sup>{turn_num}</sup>\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}")}\n</div>\n\n")
 
                                         parallel_tool_call_num = len(msg["tool_calls"])
                                         for msg_tool_call in msg["tool_calls"]:
