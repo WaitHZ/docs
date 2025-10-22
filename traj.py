@@ -86,6 +86,7 @@ def main(args):
     print(len(checked_tasks))
 
     tool_calls = dict()
+    tool_result_counter = [0]  # Use list to make it mutable
 
     task_dir = args.task_dir
 
@@ -295,7 +296,11 @@ def main(args):
 
                                     # dst.write(f"<div className=\"result-box\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\">\n")
 
-                                    dst.write(f"<div className=\"result-box\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\">\n")
+                                    # Generate unique ID for this tool result using counter
+                                    tool_result_counter[0] += 1
+                                    tool_result_id = f"tool-result-{task_id}-{tool_result_counter[0]}"
+                                    
+                                    dst.write(f"<div className=\"result-box\" id=\"{tool_result_id}\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\" id=\"{tool_result_id}\">\n")
 
                                     if tooloutput_type == "normal_tool_output":
                                         try:
@@ -317,51 +322,67 @@ def main(args):
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
 
                                         # dst.write(f"🔍`tool result`\n")
-                                        dst.write(f"{icon_map[server_name]} `{server_function_name}`\n\n" if server_name in icon_map else f"🛠 `{server_function_name}`\n\n")
-                                        dst.write(f"<Expandable title=\"Details\">\n")
+                                        dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
+                                        dst.write(f"<div className=\"tool-header\">\n")
+                                        dst.write(f"  <div className=\"tool-name\">{icon_map[server_name]} `{server_function_name}`</div>\n" if server_name in icon_map else f"  <div className=\"tool-name\">🛠 `{server_function_name}`</div>\n")
+                                        dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
+                                        dst.write(f"</div>\n")
+                                        dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n\n")
                                         else:
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n\n")
 
                                         dst.write(f"```json output_result\n{tool_res}\n```\n\n")
-                                        dst.write(f"</Expandable>\n")
+                                        dst.write(f"</div>\n")
                                     elif tooloutput_type == "error_in_tool_call":
                                         server_name = tool_call["server_name"]
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
-                                        dst.write(f"❌ `{server_function_name}`\n")
-                                        dst.write(f"<Expandable title=\"Details\">\n")
+                                        dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
+                                        dst.write(f"<div className=\"tool-header\">\n")
+                                        dst.write(f"  <div className=\"tool-name\">❌ `{server_function_name}`</div>\n")
+                                        dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
+                                        dst.write(f"</div>\n")
+                                        dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content'].split(":")[0]}\n```\n\n")
-                                        dst.write(f"</Expandable>\n")
+                                        dst.write(f"</div>\n")
                                     elif tooloutput_type == "overlong_tool_output":
                                         server_name = tool_call["server_name"]
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
-                                        dst.write(f"⚠️ `{server_function_name}`\n")
-                                        dst.write(f"<Expandable title=\"Details\">\n")
+                                        dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
+                                        dst.write(f"<div className=\"tool-header\">\n")
+                                        dst.write(f"  <div className=\"tool-name\">⚠️ `{server_function_name}`</div>\n")
+                                        dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
+                                        dst.write(f"</div>\n")
+                                        dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n\n")
-                                        dst.write(f"</Expandable>\n")
+                                        dst.write(f"</div>\n")
                                     elif tooloutput_type == "tool_name_not_found":
                                         server_name = tool_call["server_name"]
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
-                                        dst.write(f"❓ `{server_function_name}`\n")
-                                        dst.write(f"<Expandable title=\"Details\">\n")
+                                        dst.write(f"<div className=\"tool-header\">\n")
+                                        dst.write(f"  <div className=\"tool-name\">❓ `{server_function_name}`</div>\n")
+                                        dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
+                                        dst.write(f"</div>\n")
+                                        dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
+                                        dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
                                         else:
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n\n")
-                                        dst.write(f"</Expandable>\n")
+                                        dst.write(f"</div>\n")
                                     else:
                                         raise NotImplementedError(f"Unsupported tool output type: {tooloutput_type}")
                                     dst.write(f"</div>\n\n")
