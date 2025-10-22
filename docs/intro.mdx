@@ -1,17 +1,16 @@
 ---
-title: "About Toolathon"
+title: "Toolathlon Scaffold"
 mode: wide
 ---
+
+While existing agent benchmarks focus on narrow capabilities, we realized that realistic agent evaluation requires autonomy-first design where agents operate without intermediate user approval or artificial tool restrictions. The framework must support virtually any language model through standardized APIs, enabling fair comparison between proprietary models from Anthropic, OpenAI, Google, and open-source alternatives. Most importantly, real-world tool usage involves failures - API rate limits, network timeouts, malformed responses, and service outages - which the framework must handle gracefully without breaking the agent loop. Complex tasks also generate extensive conversation histories exceeding model context windows, requiring intelligent management to enable tasks with 100+ LLM calls. Moreover, to enable efficient parallel evaluation, proper isolation of resources and files is also required.
+
+## Agent Framework
 
 <div align="center">
   <img src="/figs/framework-1.png" width="100%" />
 </div>
 
-## Motivation
-
-While existing agent benchmarks focus on narrow capabilities, we realized that realistic agent evaluation requires autonomy-first design where agents operate without intermediate user approval or artificial tool restrictions. The framework must support virtually any language model through standardized APIs, enabling fair comparison between proprietary models from Anthropic, OpenAI, Google, and open-source alternatives. Most importantly, real-world tool usage involves failures - API rate limits, network timeouts, malformed responses, and service outages - which the framework must handle gracefully without breaking the agent loop. Complex tasks also generate extensive conversation histories exceeding model context windows, requiring intelligent management to enable tasks with 100+ LLM calls.
-
-## Technical Design
 
 Our agent framework is built on OpenAI-Agent-SDK (Version 0.0.15) with significant enhancements to make it robust and capable for complex evaluation. Our core design philosophy: **everything is a tool**. By implementing critical capabilities (context management, history search, overlong output handling) as tools rather than hard-coded logic, we enable full control through prompts - both system prompts and user inputs can instruct the agent how to manage its own execution.
 
@@ -31,10 +30,14 @@ Extended tasks accumulate massive conversation histories that exceed 32K-128K to
 
 Each task runs in complete isolation within Docker or Podman containers, ensuring that no agent can interfere with another's execution or access resources outside its designated workspace. The framework initializes each container with a predefined set of files, configurations, and environment variables specific to that task. When a task begins, the initial workspace is copied into the container, preprocessing scripts run to set up any necessary state like generating test data or configuring API endpoints, and then the agent receives full control over this environment. The agent can create, modify, and delete files, install software packages, run long-running processes, and make external API calls - all within the sandbox. This isolation is critical for reliable evaluation because it prevents state leakage between tasks and allows us to run the same task multiple times with identical starting conditions. After task completion, the entire workspace is preserved for evaluation, with ground truth validation scripts comparing the final state against expected outcomes.
 
-### Parallel Execution at Scale
+## Enhanced MCP Server
+
+In addition to improvements to the framework, we also modify—and in some cases completely rewrote—certain MCP servers. Taking the [Notion MCP Server](https://github.com/lockon-n/notion-mcp-server) as an example, we add new parameters to specify the resource paths that the tool is allowed to access. This ensures isolation of resource access between different tasks, thereby enabling concurrent evaluation of multiple tasks.
+
+## Parallel Execution at Scale
 
 <div align="center">
   <img src="/figs/parallel.png" width="100%" />
 </div>
 
-The framework is designed for efficient large-scale evaluation through concurrent task execution. The batch evaluation harness spawns multiple worker processes that independently run tasks in parallel, with each worker managing its own Docker container and agent instance. Each worker handles the complete lifecycle - workspace initialization, MCP server connections, agent execution, and evaluation - without coordination with other workers. Results are written to isolated directories and aggregated after all tasks complete. This architecture scales linearly with available compute resources and can support arbitrary parallelism levels by adjusting the worker count.
+Our scaffold is designed for efficient large-scale evaluation through concurrent task execution. The batch evaluation harness spawns multiple worker processes that independently run tasks in parallel, with each worker managing its own Docker container and agent instance. Each worker handles the complete lifecycle - workspace initialization, MCP server connections, agent execution, and evaluation - without coordination with other workers. Results are written to isolated directories and aggregated after all tasks complete. This architecture scales linearly with available compute resources and can support arbitrary parallelism levels by adjusting the worker count.
