@@ -4320,6 +4320,113 @@ header,
   }
 }
 
+/* ==================== Tool Details Expandable Styles ==================== */
+
+/* Tool details container - initially collapsed */
+.tool-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  margin: 8px 0;
+}
+
+/* Use checkbox hack to avoid page jumping */
+.tool-details-checkbox {
+  display: none;
+}
+
+.tool-details-checkbox:checked + .tool-details {
+  max-height: 1000px; /* Large enough to accommodate content */
+  transition: max-height 0.3s ease-in;
+}
+
+/* Tool header container - flexbox layout */
+.tool-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+/* Tool name styling */
+.tool-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Tool details toggle - just an arrow */
+.tool-details-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.tool-details-toggle:hover {
+  transform: scale(1.1);
+}
+
+.tool-details-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Arrow icon */
+.tool-details-toggle::after {
+  content: "▼";
+  font-size: 12px;
+  color: #6b7280;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.tool-details-toggle:hover::after {
+  color: #374151;
+}
+
+/* Rotate arrow when checkbox is checked */
+.tool-details-checkbox:checked + .tool-details + .tool-header .tool-details-toggle::after,
+.tool-details-checkbox:checked ~ .tool-header .tool-details-toggle::after {
+  transform: rotate(180deg);
+}
+
+/* Make the entire result-box clickable */
+.result-box, .error-box {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* Hover effect for clickable boxes */
+.result-box:hover, .error-box:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles for tool header */
+[data-theme="dark"] .tool-name,
+.dark .tool-name,
+html[data-theme="dark"] .tool-name {
+  color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .tool-details-toggle::after,
+.dark .tool-details-toggle::after,
+html[data-theme="dark"] .tool-details-toggle::after {
+  color: #9ca3af !important;
+}
+
+[data-theme="dark"] .tool-details-toggle:hover::after,
+.dark .tool-details-toggle:hover::after,
+html[data-theme="dark"] .tool-details-toggle:hover::after {
+  color: #d1d5db !important;
+}
+
 /* ==================== Contributors Page Styles ==================== */
 
 /* Contributors container */
@@ -4751,3 +4858,4 @@ html[data-theme="dark"] .acknowledgements-section p {
     color: #d1d5db;
   }
 }
+
