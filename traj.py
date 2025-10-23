@@ -206,6 +206,13 @@ def main(args):
                                                     }
                                                     # print(msg_tool_call)
                                                     # exit()
+                                                elif "overlong_tool_output" in msg_tool_call['function']['name']:
+                                                    tool_call_id = msg_tool_call['id']
+                                                    tool_calls[tool_call_id] = {
+                                                        "server_name": "overlong_tool_output",
+                                                        "function_name": "",
+                                                        "arguments": msg_tool_call['function']['arguments'],
+                                                    }
                                                 elif "overlong" in msg_tool_call['function']['name']:
                                                     # dst.write(f"<div className=\"tool-call-box\">\n")
                                                     # dst.write(f"{icon_map['overlong_tool_output']} `{msg_tool_call['function']['name'].replace("local-", "").replace("tooloutput", "tool_output")}`\n\n")
