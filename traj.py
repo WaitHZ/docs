@@ -314,7 +314,12 @@ def main(args):
                                     tool_result_counter[0] += 1
                                     tool_result_id = f"tool-result-{task_id}-{tool_result_counter[0]}"
                                     
-                                    dst.write(f"<div className=\"result-box\" id=\"{tool_result_id}\">\n" if tooloutput_type == "normal_tool_output" else f"<div className=\"error-box\" id=\"{tool_result_id}\">\n")
+                                    if tooloutput_type == "overlong_tool_output":
+                                        dst.write(f"<div className=\"overlong-box\" id=\"{tool_result_id}\">\n")
+                                    elif tooloutput_type == "tool_name_not_found" or tooloutput_type == "error_in_tool_call":
+                                        dst.write(f"<div className=\"error-box\" id=\"{tool_result_id}\">\n")
+                                    else:
+                                        dst.write(f"<div className=\"result-box\" id=\"{tool_result_id}\">\n")
 
                                     if tooloutput_type == "normal_tool_output":
                                         try:
@@ -369,7 +374,6 @@ def main(args):
                                         server_name = tool_call["server_name"]
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
-                                        dst.write(f"<div className=\"overlong-box\" id=\"{tool_result_id}\">\n")
                                         dst.write(f"<div className=\"tool-header\">\n")
                                         dst.write(f"  <div className=\"tool-name\">⚠️ `{server_function_name}` (overlong tool output)</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
@@ -381,7 +385,6 @@ def main(args):
                                         else:
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n\n")
-                                        dst.write(f"</div>\n")
                                         dst.write(f"</div>\n")
                                     elif tooloutput_type == "tool_name_not_found":
                                         server_name = tool_call["server_name"]
