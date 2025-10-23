@@ -128,8 +128,6 @@ def main(args):
             if os.path.exists(log_dir) and len(os.listdir(log_dir)) > 0 and task_id in checked_tasks:
             # if os.path.exists(log_dir) and len(os.listdir(log_dir)) > 0:
 
-                dst.write("We use superscripts to indicate which turn a message belongs to. Since the model may invoke multiple tools in parallel, adjacent tool calls may belong to the same turn.\n")
-
                 dst.write(f"\n<AccordionGroup>\n")
 
                 for log_file in sorted(os.listdir(log_dir)):
@@ -175,7 +173,10 @@ def main(args):
                                     if "tool_calls" in msg:
                                         if not (msg["content"] == "" or msg["content"] is None or msg["content"] == "null"):
                                             dst.write(f"<div className=\"thinking-box\">\n")
-                                            dst.write(f"🧐`Agent`<sup>{turn_num}</sup>&nbsp;\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}")}\n</div>\n\n")
+                                            dst.write(f"🧐`Agent`\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}")}\n</div>\n\n")
+                                        else:
+                                            dst.write(f"<div className=\"thinking-box\">\n")
+                                            dst.write(f"🧐`Agent`\n\n{'(agent see the tool output but do not think explicitly)'}\n</div>\n\n")
 
                                         parallel_tool_call_num = len(msg["tool_calls"])
                                         for msg_tool_call in msg["tool_calls"]:
@@ -301,7 +302,7 @@ def main(args):
                                                 raise NotImplementedError(f"Unsupported tool call type: {msg_tool_call['type']}")
                                     else:
                                         dst.write(f"<div className=\"thinking-box\">\n")
-                                        dst.write(f"🧐`Agent`<sup>{turn_num}</sup>\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}").replace("<", "[").replace(">", ']')}\n</div>\n\n")
+                                        dst.write(f"🧐`Agent`\n\n{msg['content'].strip().replace("{", r"\{").replace("}", r"\}").replace("<", "[").replace(">", ']')}\n</div>\n\n")
                                 elif msg["role"] == "tool":
                                     tooloutput_type = categorize_tool_output(msg['content'])
                                     tool_call_id = msg["tool_call_id"]
@@ -336,7 +337,7 @@ def main(args):
 
                                         # dst.write(f"🔍`tool result`\n")
                                         dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">{icon_map[server_name]} `{server_function_name}`<sup>{turn_num}</sup></div>\n" if server_name in icon_map else f"  <div className=\"tool-name\">🛠 `{server_function_name}`</div>\n")
+                                        dst.write(f"  <div className=\"tool-name\">{icon_map[server_name]} `{server_function_name}`</div>\n" if server_name in icon_map else f"  <div className=\"tool-name\">🛠 `{server_function_name}`</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
@@ -353,7 +354,7 @@ def main(args):
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
                                         dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">❌ `{server_function_name}`<sup>{turn_num}</sup></div>\n")
+                                        dst.write(f"  <div className=\"tool-name\">❌ `{server_function_name}`</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
@@ -369,7 +370,7 @@ def main(args):
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
                                         dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">⚠️ `{server_function_name}`<sup>{turn_num}</sup></div>\n")
+                                        dst.write(f"  <div className=\"tool-name\">⚠️ `{server_function_name}`</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
@@ -385,7 +386,7 @@ def main(args):
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
                                         dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">❓ `{server_function_name}`<sup>{turn_num}</sup></div>\n")
+                                        dst.write(f"  <div className=\"tool-name\">❓ `{server_function_name}`</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
