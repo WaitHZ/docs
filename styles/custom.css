@@ -213,47 +213,28 @@ html[data-theme="dark"] .file-tree a:hover {
   line-height: 1.5;
 }
 
-/* JSON代码块滚动样式 */
+/* JSON代码块滚动样式 - 保留功能但隐藏滚动条 */
 .tool-call-box pre,
 .result-box pre,
 .tool-call-box code,
 .result-box code {
   max-height: 288px; /* 约12行的高度 */
-  overflow-y: auto;
+  overflow-y: auto; /* 保留滚动功能 */
   font-size: 13px;
   line-height: 1.4;
+  /* 隐藏滚动条但保留滚动功能 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
-/* 自定义滚动条样式 - 只应用于代码块 */
+/* 隐藏Webkit浏览器的滚动条 */
 .tool-call-box pre::-webkit-scrollbar,
 .result-box pre::-webkit-scrollbar,
 .tool-call-box code::-webkit-scrollbar,
 .result-box code::-webkit-scrollbar {
-  width: 6px;
+  display: none;
 }
 
-.tool-call-box pre::-webkit-scrollbar-track,
-.result-box pre::-webkit-scrollbar-track,
-.tool-call-box code::-webkit-scrollbar-track,
-.result-box code::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-}
-
-.tool-call-box pre::-webkit-scrollbar-thumb,
-.result-box pre::-webkit-scrollbar-thumb,
-.tool-call-box code::-webkit-scrollbar-thumb,
-.result-box code::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
-}
-
-.tool-call-box pre::-webkit-scrollbar-thumb:hover,
-.result-box pre::-webkit-scrollbar-thumb:hover,
-.tool-call-box code::-webkit-scrollbar-thumb:hover,
-.result-box code::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.5);
-}
 
 .task-completed-box {
   background: #fff3e0;
@@ -326,28 +307,6 @@ html[data-theme="dark"] .task-completed-box {
 }
 
 /* 深色模式下的滚动条样式 - 只应用于代码块 */
-@media (prefers-color-scheme: dark) {
-  .tool-call-box pre::-webkit-scrollbar-track,
-  .result-box pre::-webkit-scrollbar-track,
-  .tool-call-box code::-webkit-scrollbar-track,
-  .result-box code::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  
-  .tool-call-box pre::-webkit-scrollbar-thumb,
-  .result-box pre::-webkit-scrollbar-thumb,
-  .tool-call-box code::-webkit-scrollbar-thumb,
-  .result-box code::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-  }
-  
-  .tool-call-box pre::-webkit-scrollbar-thumb:hover,
-  .result-box pre::-webkit-scrollbar-thumb:hover,
-  .tool-call-box code::-webkit-scrollbar-thumb:hover,
-  .result-box code::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
-  }
-}
 
 /* 服务器表格样式 - 默认样式 */
 .server-table {
@@ -3358,6 +3317,12 @@ html[data-theme="dark"] .homepage-footer p {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* 第二行显示3个任务，每个更宽 */
+.task-showcase-row:last-child {
+  grid-template-columns: repeat(3, 1fr);
   margin-bottom: 0;
 }
 
@@ -3451,12 +3416,20 @@ html[data-theme="dark"] .homepage-footer p {
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
+  
+  .task-showcase-row:last-child {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 900px) {
   .task-showcase-row {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+  }
+  
+  .task-showcase-row:last-child {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
