@@ -337,7 +337,7 @@ def main(args):
 
                                         # dst.write(f"🔍`tool result`\n")
                                         dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">{icon_map[server_name]} `{server_function_name}`</div>\n" if server_name in icon_map else f"  <div className=\"tool-name\">🛠 `{server_function_name}`</div>\n")
+                                        dst.write(f"  <div className=\"tool-name\">{icon_map[server_name]} `{server_function_name}` (success)</div>\n" if server_name in icon_map else f"  <div className=\"tool-name\">🛠 `{server_function_name}`</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
@@ -354,23 +354,7 @@ def main(args):
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
                                         dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">❌ `{server_function_name}`</div>\n")
-                                        dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
-                                        dst.write(f"</div>\n")
-                                        dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
-                                        dst.write(f"<div className=\"tool-details\">\n")
-                                        if server_name == "python-execute":
-                                            dst.write(f"```python\n{tool_call["code"]} code\n```\n")
-                                        else:
-                                            dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
-                                        dst.write(f"```json error_message\n{msg['content'].split(":")[0]}\n```\n\n")
-                                        dst.write(f"</div>\n")
-                                    elif tooloutput_type == "overlong_tool_output":
-                                        server_name = tool_call["server_name"]
-                                        function_name = tool_call["function_name"]
-                                        server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
-                                        dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">⚠️ `{server_function_name}`</div>\n")
+                                        dst.write(f"  <div className=\"tool-name\">❌ `{server_function_name}` (error in tool call)</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
@@ -381,12 +365,30 @@ def main(args):
                                             dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
                                         dst.write(f"```json error_message\n{msg['content']}\n```\n\n")
                                         dst.write(f"</div>\n")
+                                    elif tooloutput_type == "overlong_tool_output":
+                                        server_name = tool_call["server_name"]
+                                        function_name = tool_call["function_name"]
+                                        server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
+                                        dst.write(f"<div className=\"overlong-box\" id=\"{tool_result_id}\">\n")
+                                        dst.write(f"<div className=\"tool-header\">\n")
+                                        dst.write(f"  <div className=\"tool-name\">⚠️ `{server_function_name}` (overlong tool output)</div>\n")
+                                        dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
+                                        dst.write(f"</div>\n")
+                                        dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
+                                        dst.write(f"<div className=\"tool-details\">\n")
+                                        if server_name == "python-execute":
+                                            dst.write(f"```python\n{tool_call["code"]} code\n```\n")
+                                        else:
+                                            dst.write(f"```json arguments\n{tool_call["arguments"]}\n```\n")
+                                        dst.write(f"```json error_message\n{msg['content']}\n```\n\n")
+                                        dst.write(f"</div>\n")
+                                        dst.write(f"</div>\n")
                                     elif tooloutput_type == "tool_name_not_found":
                                         server_name = tool_call["server_name"]
                                         function_name = tool_call["function_name"]
                                         server_function_name = f"{server_name} {function_name}" if function_name != "" else server_name
                                         dst.write(f"<div className=\"tool-header\">\n")
-                                        dst.write(f"  <div className=\"tool-name\">❓ `{server_function_name}`</div>\n")
+                                        dst.write(f"  <div className=\"tool-name\">❓ `{server_function_name}` (tool not found)</div>\n")
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
