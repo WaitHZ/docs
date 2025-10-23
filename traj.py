@@ -121,6 +121,8 @@ def main(args):
             #     # 如果没有 frontmatter，添加一个
             #     dst.write("---\nmode: wide\n---\n\n" + content)
 
+            dst.write(f"{content}\n")
+
             log_dir = f_prefix + "/"
 
             if os.path.exists(log_dir) and len(os.listdir(log_dir)) > 0 and task_id in checked_tasks:
