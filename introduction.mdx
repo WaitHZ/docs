@@ -164,7 +164,7 @@ mode: "custom"
         <div className="task-card-header">
           <div className="task-category campus">🎓 Campus & Study</div>
         </div>
-        <h3 className="task-title">Canvas Homework Grader</h3>
+        <h3 className="task-title">Canvas Homework Grader Python</h3>
         <p className="task-description">Grade Homework2 by downloading latest Python submissions from email, running them to check for errors, and assigning 10 (pass) or 0 (fail) in Canvas based on correctness.</p>
       </a>
       
@@ -186,6 +186,65 @@ mode: "custom"
     </div>
   </div>
 </div>
+
+{/* Video Showcase Section */}
+<div className="video-showcase-section">
+  <div className="video-container">
+    <video 
+      id="showcase-video" 
+      className="showcase-video" 
+      controls 
+      preload="metadata"
+      poster=""
+    >
+      <source src="/videos/1.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+<script dangerouslySetInnerHTML={{
+  __html: `
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.getElementById('showcase-video');
+      const taskCards = document.querySelectorAll('.task-showcase-card');
+      
+      // Video sources array corresponding to task order
+      const videoSources = [
+        '/videos/1.mp4', // NVIDIA Market
+        '/videos/2.mp4', // Travel Expense Reimbursement  
+        '/videos/3.mp4', // HuggingFace Upload
+        '/videos/4.mp4', // Woocommerce Product Recall
+        '/videos/5.mp4', // Canvas Homework Grader Python
+        '/videos/6.mp4', // Latex Prompt Box
+        '/videos/7.mp4'  // Inter Final Performance Analysis
+      ];
+      
+      // Function to change video source
+      function changeVideo(index) {
+        if (video && videoSources[index]) {
+          video.src = videoSources[index];
+          video.load(); // Reload the video with new source
+        }
+      }
+      
+      // Add hover event listeners to task cards
+      taskCards.forEach((card, index) => {
+        card.addEventListener('mouseenter', function() {
+          changeVideo(index);
+        });
+      });
+      
+      // Reset to first video when mouse leaves the task showcase area
+      const taskShowcaseContainer = document.querySelector('.task-showcase-container');
+      if (taskShowcaseContainer) {
+        taskShowcaseContainer.addEventListener('mouseleave', function() {
+          changeVideo(0);
+        });
+      }
+    });
+  `
+}} />
 
 {/* Footer Section */}
 <div className="homepage-footer">
