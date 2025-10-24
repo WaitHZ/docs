@@ -346,14 +346,6 @@ def main(args):
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
-                                        
-                                        # Lazy loading placeholder
-                                        dst.write(f"<div className=\"tool-details-placeholder\">\n")
-                                        dst.write(f"  <div className=\"loading-spinner\">⏳</div>\n")
-                                        dst.write(f"  <div>Loading tool details...</div>\n")
-                                        dst.write(f"</div>\n")
-                                        
-                                        # Actual content (initially hidden)
                                         dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n\n")
@@ -371,14 +363,6 @@ def main(args):
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
-                                        
-                                        # Lazy loading placeholder
-                                        dst.write(f"<div className=\"tool-details-placeholder\">\n")
-                                        dst.write(f"  <div className=\"loading-spinner\">⏳</div>\n")
-                                        dst.write(f"  <div>Loading error details...</div>\n")
-                                        dst.write(f"</div>\n")
-                                        
-                                        # Actual content (initially hidden)
                                         dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
@@ -395,14 +379,6 @@ def main(args):
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
-                                        
-                                        # Lazy loading placeholder
-                                        dst.write(f"<div className=\"tool-details-placeholder\">\n")
-                                        dst.write(f"  <div className=\"loading-spinner\">⏳</div>\n")
-                                        dst.write(f"  <div>Loading overlong output...</div>\n")
-                                        dst.write(f"</div>\n")
-                                        
-                                        # Actual content (initially hidden)
                                         dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")
@@ -419,14 +395,6 @@ def main(args):
                                         dst.write(f"  <label for=\"{tool_result_id}-checkbox\" className=\"tool-details-toggle\"></label>\n")
                                         dst.write(f"</div>\n")
                                         dst.write(f"<input type=\"checkbox\" id=\"{tool_result_id}-checkbox\" className=\"tool-details-checkbox\" />\n")
-                                        
-                                        # Lazy loading placeholder
-                                        dst.write(f"<div className=\"tool-details-placeholder\">\n")
-                                        dst.write(f"  <div className=\"loading-spinner\">⏳</div>\n")
-                                        dst.write(f"  <div>Loading tool not found details...</div>\n")
-                                        dst.write(f"</div>\n")
-                                        
-                                        # Actual content (initially hidden)
                                         dst.write(f"<div className=\"tool-details\">\n")
                                         if server_name == "python-execute":
                                             dst.write(f"```python\n{tool_call["code"]} code\n```\n")

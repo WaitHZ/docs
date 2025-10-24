@@ -4340,32 +4340,14 @@ header,
   }
 }
 
-/* ==================== Tool Details Lazy Loading Styles ==================== */
+/* ==================== Tool Details Expandable Styles ==================== */
 
-/* Tool details container - initially collapsed and hidden */
+/* Tool details container - initially collapsed */
 .tool-details {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
   margin: 8px 0;
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* Lazy loading placeholder */
-.tool-details-placeholder {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-  margin: 8px 0;
-  opacity: 0;
-  visibility: hidden;
-  background: #f8f9fa;
-  border-radius: 4px;
-  padding: 8px;
-  text-align: center;
-  color: #6b7280;
-  font-size: 14px;
 }
 
 /* Use checkbox hack to avoid page jumping */
@@ -4373,103 +4355,9 @@ header,
   display: none;
 }
 
-/* When checked, show placeholder first */
-.tool-details-checkbox:checked + .tool-details-placeholder {
-  max-height: 60px;
-  opacity: 1;
-  visibility: visible;
-  transition: all 0.3s ease-in;
-}
-
-/* When checked, load actual content */
-.tool-details-checkbox:checked + .tool-details-placeholder + .tool-details {
+.tool-details-checkbox:checked + .tool-details {
   max-height: 1000px; /* Large enough to accommodate content */
-  opacity: 1;
-  visibility: visible;
-  transition: all 0.3s ease-in;
-}
-
-/* Hide placeholder when content is loaded */
-.tool-details-checkbox:checked + .tool-details-placeholder + .tool-details {
-  display: block;
-}
-
-.tool-details-checkbox:checked + .tool-details-placeholder {
-  display: none;
-}
-
-/* Loading spinner animation */
-.loading-spinner {
-  display: inline-block;
-  animation: spin 1s linear infinite;
-  margin-right: 8px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* General performance optimizations */
-.tool-details {
-  will-change: max-height, opacity;
-}
-
-.tool-details-placeholder {
-  will-change: max-height, opacity;
-}
-
-/* Reduce repaints */
-.result-box, .error-box, .overlong-box {
-  contain: layout style paint;
-}
-
-/* Virtual Scroll Styles */
-.virtual-scroll-container {
-  position: relative;
-  overflow: auto;
-}
-
-.virtual-scroll-viewport {
-  position: relative;
-  height: 100%;
-}
-
-.virtual-scroll-content {
-  position: relative;
-}
-
-/* Performance optimizations for large lists */
-.tools-container {
-  contain: layout style paint;
-}
-
-/* Lazy loading states */
-.tool-details[data-lazy="true"] {
-  display: none;
-}
-
-.tool-details[data-lazy="loaded"] {
-  display: block;
-}
-
-/* Reduce layout thrashing */
-.tool-header {
-  contain: layout;
-}
-
-.tool-name {
-  contain: layout style;
-}
-
-/* General rendering optimizations */
-.result-box, .error-box, .overlong-box {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-.tool-details {
-  transform: translateZ(0);
+  transition: max-height 0.3s ease-in;
 }
 
 /* Tool header container - flexbox layout */
