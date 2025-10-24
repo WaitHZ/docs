@@ -1,7 +1,7 @@
 import re
 import json
 import icon
-from icon2 import icon_map
+from icon2 import icon_map_new as icon_map
 
 icon_map["handle_overlong_tool_outputs"] = icon_map["overlong_tool_output"]
 icon_map["python_execute"] = icon_map["python-execute"]

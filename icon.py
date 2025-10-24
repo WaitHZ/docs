@@ -1,5 +1,6 @@
 icon_map_new = {
     "k8s": '<img src="/icons/k8s.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: \'inline-block\'}} />',
+    "excel": '<img src="/icons/excel.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: \'inline-block\'}} />',
     "git": '<img src="/icons/git.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: \'inline-block\'}} />',
     "huggingface": '<img src="/icons/hf.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: \'inline-block\'}} />',
     "google_forms": '<img src="/icons/google_forms.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: \'inline-block\'}} />',
