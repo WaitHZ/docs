@@ -4,7 +4,7 @@ import os
 # from tqdm import tqdm
 import json
 import re
-from icon import icon_map
+from icon import icon_map_new as icon_map
 
 icon_cnt = len(icon_map)
 
