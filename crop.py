@@ -9,7 +9,7 @@ def crop_video(
     bottom
 ):
     """
-    裁剪视频帧的范围以及每帧的上下部分。
+    裁剪视频帧的范围以及每帧的上下部分，并将输出分辨率同比缩小到原来2/3。
 
     Args:
         input_path (str): 输入视频文件路径
@@ -37,11 +37,18 @@ def crop_video(
     if start_frame < 0 or end_frame >= total_frames or start_frame > end_frame:
         raise ValueError(f"非法的帧范围: start_frame={start_frame}, end_frame={end_frame}, 总帧数={total_frames}")
 
-    # 获取输出视频参数
+    # 计算裁剪后帧的原始尺寸
     cropped_height = bottom - top
+    cropped_width = width
+
+    # 计算缩小2/3以后的分辨率，保持宽高比
+    scale = 2 / 3
+    scaled_width = int(cropped_width * scale)
+    scaled_height = int(cropped_height * scale)
+
     # 强制使用mp4v编码，部分平台h264不可用
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter(output_path, fourcc, fps, (width, cropped_height))
+    out = cv2.VideoWriter(output_path, fourcc, fps, (scaled_width, scaled_height))
 
     # 跳转到start_frame
     cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
@@ -52,7 +59,8 @@ def crop_video(
         if not ret:
             break
         cropped_frame = frame[top:bottom, :, :]
-        out.write(cropped_frame)
+        resized_frame = cv2.resize(cropped_frame, (scaled_width, scaled_height), interpolation=cv2.INTER_AREA)
+        out.write(resized_frame)
         current_frame += 1
 
     cap.release()
