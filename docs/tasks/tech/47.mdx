@@ -75,3 +75,305 @@ I'm trying to reproduce the experiments from a deep learning paper (paper.pdf). 
 
 ## Model Trajectory
 
+
+<AccordionGroup>
+<Accordion title="claude-4.5-sonnet">
+
+<Columns cols={3}>
+<Card title="Task Completion" icon="check">
+Completed
+</Card>
+<Card title="Tool Calls" icon="wrench">
+5
+</Card>
+<Card title="Turns" icon="arrows-rotate">
+6
+</Card>
+</Columns>
+
+<div className="thinking-box">
+🧐`Agent`
+
+I'll help you find the unofficial implementation repository with the most stars on GitHub for the paper. Let me start by reading the paper to understand what we're looking for.
+</div>
+
+<div className="result-box" id="tool-result-47-432">
+<div className="tool-header">
+  <div className="tool-name"><img src="/icons/pdf.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: 'inline-block'}} /> `pdf-tools get_pdf_info` (success)</div>
+  <label for="tool-result-47-432-checkbox" className="tool-details-toggle"></label>
+</div>
+<input type="checkbox" id="tool-result-47-432-checkbox" className="tool-details-checkbox" />
+<div className="tool-details-placeholder">
+  <div className="loading-spinner">⏳</div>
+  <div>Loading tool details...</div>
+</div>
+<div className="tool-details">
+```json arguments
+{
+	"pdf_file_path": "/workspace/dumps/workspace/paper.pdf"
+}
+
+```
+
+```json output_result
+PDF file information:
+Total pages: 14
+Title: 
+Author: 
+Creator: LaTeX with hyperref
+Creation date: Unknown
+
+```
+
+</div>
+</div>
+
+<div className="thinking-box">
+🧐`Agent`
+
+(agent see the tool output but do not think explicitly)
+</div>
+
+<div className="result-box" id="tool-result-47-433">
+<div className="tool-header">
+  <div className="tool-name"><img src="/icons/pdf.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: 'inline-block'}} /> `pdf-tools read_pdf_pages` (success)</div>
+  <label for="tool-result-47-433-checkbox" className="tool-details-toggle"></label>
+</div>
+<input type="checkbox" id="tool-result-47-433-checkbox" className="tool-details-checkbox" />
+<div className="tool-details-placeholder">
+  <div className="loading-spinner">⏳</div>
+  <div>Loading tool details...</div>
+</div>
+<div className="tool-details">
+```json arguments
+{
+	"pdf_file_path": "/workspace/dumps/workspace/paper.pdf",
+	"start_page": 1,
+	"end_page": 2
+}
+
+```
+
+```json output_result
+PDF total pages: 14
+Extracted page range: 1-2
+
+=== Page 1 ===
+Mixture-of-Depths: Dynamically allocating
+compute in transformer-based language
+models
+David Raposo1*, Sam Ritter1, Blake Richards1,2, Timothy Lillicrap1, Peter Conway Humphreys1and Adam
+Santoro1*
+1Google DeepMind,2McGill University & Mila,*Equal Contribution
+Transformer-based language models spread FLOPs uniformly across input sequences. In this work we
+demonstrate that transformers can instead learn to dynamically allocate FLOPs (or compute ) to specific
+positions in a sequence, optimising the allocation along the sequence for different layers across the
+model depth. Our method enforces a total compute budget by capping the number of tokens ( 𝑘) that
+can participate in the self-attention and MLP computations at a given layer. The tokens to be processed
+are determined by the network using a top- 𝑘routing mechanism. Since 𝑘is defined a priori, this
+simple procedure uses a static computation graph with known tensor sizes, unlike other conditional
+computation techniques. Nevertheless, since the identities of the 𝑘tokens are fluid, this method can
+expend FLOPs non-uniformly across the time and model depth dimensions. Thus, compute expenditure
+is entirely predictable in sum total, but dynamic and context-sensitive at the token-level. Not only do
+models trained in this way learn to dynamically allocate compute, they do so efficiently. These models
+match baseline performance for equivalent FLOPS and wall-clock times to train, but require a fraction of
+the FLOPs per forward pass, and can be upwards of 50% faster to step during post-training sampling.
+1. Introduction
+Notallproblemsrequirethesameamountoftimeorefforttosolve. Analogously, inlanguagemodeling
+not all tokens and sequences require the same time or effort to accurately make a prediction. And
+yet, transformer models expend the same amount of compute per token in a forward pass. Ideally,
+transformers would use smaller total compute budgets by not spending compute unnecessarily.
+Conditional computation is a technique that tries to reduce total compute by expending it only
+when needed (Bengio et al., 2016; Bengio, 2013; Bengio et al., 2013). Various algorithms offer
+solutions to when and how much compute should be used (Ainslie et al., 2023; Bapna et al., 2020;
+Fedus et al., 2022). However, general formulations of this challenging problem may not work well with
+existing hardware constraints since they tend to introduce dynamic computation graphs (Dehghani
+et al., 2018; Graves, 2016). The most promising conditional computation methods may instead be
+those that are harmonious with our current hardware stack, which prioritizes static computation
+graphs, and known tensor sizes that are selected to maximize hardware utilization.
+Here we consider the problem of language modeling using a staticcompute budget that can be
+made less than that used by a vanilla transformer. The network must learn how to dynamically allocate
+the available compute by making decisions per-token, in each layer, about where to spend compute
+from the available budget. In our implementation total compute is user defined and unchanging
+prior to training, rather than being a function of the network’s on-the-fly decisions. Thus, hardware
+efficiency gains—such as reduced memory footprint, or reduced FLOPs per forward pass—can be
+anticipated and exploited ahead of time. As we will show, these gains can be had without sacrificing
+overall performance.
+Corresponding author(s): draposo@google.com, adamsantoro@google.com
+©2024 Google DeepMind. All rights reservedarXiv:2404.02258v1  [cs.LG]  2 Apr 2024
+
+=== Page 2 ===
+Mixture-of-Depths: Dynamically allocating compute in transformer-based language models
+We leverage an approach akin to Mixture of Experts (MoE) transformers, in which dynamic
+token-level routing decisions are made across the network depth. Departing from MoE, we choose
+to either apply a computation to a token (as would be the case for a standard transformer), or pass
+it through a residual connection (remaining unchanged and saving compute). Also in contrast to
+MoE, we apply this routing to both forward MLPs and multi-head attention. Since this therefore
+also impacts the keys and queries we process, the routing makes decisions not only about which
+tokens to update, but also which tokens are made available to attend to. We refer to this strategy
+as Mixture-of-Depths (MoD) to emphasize how individual tokens pass through different numbers of
+layers, or blocks, through the depth of the transformer (see figure 1).
+The MoD technique also allows one to trade-off performance with speed. On the one hand, one
+can train an MoD transformer that improves upon vanilla transformers by as much as 1.5%on the
+final log probability training objective for equivalent training FLOPs (isoFLOP), and while taking an
+equivalent amount of wall-clock time to train. On the other hand, one can train an MoD transformer
+that achieves training loss parity with an isoFLOP optimal vanilla transformer, but which uses a
+fraction of the FLOPs (upwards of 50%) per forward pass, and hence is faster to step. Together, these
+results imply that MoD transformers learn to route intelligently (i.e., skipping computations that are
+unnecessary) since they can achieve equal or better log probabilities per sequence despite a smaller
+FLOP footprint per forward pass.
+2. Background
+The transformer architecture has become the workhorse of a revolution in practical artificial in-
+telligence, bringing unprecedented capabilities at the cost of expensive training runs and serving
+procedures. This has spurred tremendous interest in making transformer architectures more effi-
+cient (Gupta and Agrawal, 2021; Tay et al., 2020). One of the promising approaches is conditional
+computation , whereby learned mechanisms determine when and how to expend computation. This
+terminology was introduced by Bengio (2013), and the concept was explored further over the next
+several years (Bengio et al., 2016, 2013; Cho and Bengio, 2014; Graves, 2016; Jernite et al., 2017;
+Wang et al., 2017).
+A wide variety of recent work has developed conditional computation methods for transformers.
+Some of this work focuses on "early exiting", that is, learning to decide when to end computation on
+a given token, allowing the token to skip any remaining transformer layers after the exit decision
+is made (Elbayad et al., 2019; Liu et al., 2021; Schuster et al., 2022). In MoD, unlike in early-exit
+methods, a token can skip middle layers, then be updated via self-attention with tokens that that
+have gone through all the middle layers. We speculate that this might be a useful property.
+Other work has developed methods for iterating transformer layers with shared weights for
+an adaptive number of steps (Dehghani et al., 2018; Simoulin and Crabbé, 2021). Bolya et al.
+(2023) developed a method for choosing tokens to merge when running inference on a trained vision
+transformer which notably requires no learning. Lei et al. (2023) make use of conditional computation
+in a fine tuning setting by building on adapter approaches (He et al., 2021) to learn to skip blocks of
+frozen pre-trained weights in favor of running only a small fine-tuned adapter.
+CoLT5 (Ainslie et al., 2023) uses conditional routing to select whether a given token will pass
+through a heavy or light pathway for each feedforward layer. Further, they use the same routing
+mechanism to select whether a token will attend to all other tokens or to a select few, as in Guo et al.
+(2022). Like MoD, CoLT5 uses soft top-k for making routing decisions. However, CoLT5 focuses on
+a encoder-decoder setting, and thus does need to contend with the problem of efficient sequential
+decoding given the non-causal nature of the top-k operation. In contrast, our current work with
+2
+```
+
+</div>
+</div>
+
+<div className="thinking-box">
+🧐`Agent`
+
+Great! This is the "Mixture-of-Depths" paper by Raposo et al. from Google DeepMind (arXiv:2404.02258). Now let me search GitHub for unofficial implementations of this paper.
+</div>
+
+<div className="result-box" id="tool-result-47-434">
+<div className="tool-header">
+  <div className="tool-name"><img src="/icons/github.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: 'inline-block'}} /> `github search_repositories` (success)</div>
+  <label for="tool-result-47-434-checkbox" className="tool-details-toggle"></label>
+</div>
+<input type="checkbox" id="tool-result-47-434-checkbox" className="tool-details-checkbox" />
+<div className="tool-details-placeholder">
+  <div className="loading-spinner">⏳</div>
+  <div>Loading tool details...</div>
+</div>
+<div className="tool-details">
+```json arguments
+{
+	"query": "mixture of depths transformer"
+}
+
+```
+
+```json output_result
+{"total_count":7,"incomplete_results":false,"items":[{"id":785664688,"name":"Mixture-of-depths","full_name":"astramind-ai/Mixture-of-depths","description":"Unofficial implementation for the paper \"Mixture-of-Depths: Dynamically allocating compute in transformer-based language models\"","html_url":"https://github.com/astramind-ai/Mixture-of-depths","language":"Python","stargazers_count":173,"forks_count":8,"open_issues_count":5,"updated_at":"2025-10-11T08:37:33Z","created_at":"2024-04-12T11:07:48Z","private":false,"fork":false,"archived":false,"default_branch":"main"},{"id":782269816,"name":"Mixture-of-Depths","full_name":"kyegomez/Mixture-of-Depths","description":"Implementation of the paper: \"Mixture-of-Depths: Dynamically allocating compute in transformer-based language models\"","html_url":"https://github.com/kyegomez/Mixture-of-Depths","language":"Python","stargazers_count":108,"forks_count":7,"open_issues_count":8,"updated_at":"2025-10-17T06:11:07Z","created_at":"2024-04-05T00:51:20Z","private":false,"fork":false,"archived":false,"default_branch":"main"},{"id":782847289,"name":"mixture-of-depths","full_name":"sramshetty/mixture-of-depths","description":"An unofficial implementation of \"Mixture-of-Depths: Dynamically allocating compute in transformer-based language models\"","html_url":"https://github.com/sramshetty/mixture-of-depths","language":"Python","stargazers_count":36,"forks_count":3,"open_issues_count":0,"updated_at":"2025-09-05T01:19:59Z","created_at":"2024-04-06T07:51:03Z","private":false,"fork":false,"archived":false,"default_branch":"main"},{"id":874565778,"name":"Router-Tuning-Mixture-of-Depths","full_name":"CASE-Lab-UMD/Router-Tuning-Mixture-of-Depths","description":"The open-source Mixture of Depths code and the official implementation of the paper \"Router-Tuning: A Simple and Effective Approach for Enabling Dynamic Depth in Transformers. (EMNLP 2025)\"","html_url":"https://github.com/CASE-Lab-UMD/Router-Tuning-Mixture-of-Depths","language":"Python","stargazers_count":16,"forks_count":3,"open_issues_count":0,"updated_at":"2025-10-01T23:31:40Z","created_at":"2024-10-18T04:11:52Z","topics":["deep-learning","large-language-models","machine-learning","mixture-of-depths","neural-network","parameter-efficient-fine-tuning"],"private":false,"fork":false,"archived":false,"default_branch":"main"},{"id":784596511,"name":"Mixture-of-Depths-Jax","full_name":"dtunai/Mixture-of-Depths-Jax","description":"Jax module for the paper: \"Mixture-of-Depths: Dynamically allocating compute in transformer-based language models\"","html_url":"https://github.com/dtunai/Mixture-of-Depths-Jax","language":"Python","stargazers_count":3,"forks_count":0,"open_issues_count":13,"updated_at":"2024-07-18T20:50:24Z","created_at":"2024-04-10T06:56:02Z","private":false,"fork":false,"archived":false,"default_branch":"main"},{"id":783121754,"name":"MoE-LLM","full_name":"eclouder/MoE-LLM","description":"Implementation of the paper: \"Mixture-of-Depths: Dynamically allocating compute in transformer-based language models\"","html_url":"https://github.com/eclouder/MoE-LLM","language":"Python","stargazers_count":2,"forks_count":0,"open_issues_count":0,"updated_at":"2024-04-22T08:48:24Z","created_at":"2024-04-07T02:04:36Z","private":false,"fork":false,"archived":false,"default_branch":"main"},{"id":809894170,"name":"MH-MoDE","full_name":"dav3794/MH-MoDE","description":"Implementation of Multi-Head Mixture-of-Depths-and-Experts Transformer for NLP course.","html_url":"https://github.com/dav3794/MH-MoDE","language":"Jupyter Notebook","stargazers_count":0,"forks_count":0,"open_issues_count":0,"updated_at":"2024-06-18T11:31:36Z","created_at":"2024-06-03T16:48:16Z","private":false,"fork":false,"archived":false,"default_branch":"main"}]}
+```
+
+</div>
+</div>
+
+<div className="thinking-box">
+🧐`Agent`
+
+Perfect! I found several unofficial implementations. The repository with the most stars is **astramind-ai/Mixture-of-depths** with 173 stars. Now let me read the existing result.json file and update it with this information.
+</div>
+
+<div className="result-box" id="tool-result-47-435">
+<div className="tool-header">
+  <div className="tool-name"><img src="/icons/filesystem.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: 'inline-block'}} /> `filesystem read_file` (success)</div>
+  <label for="tool-result-47-435-checkbox" className="tool-details-toggle"></label>
+</div>
+<input type="checkbox" id="tool-result-47-435-checkbox" className="tool-details-checkbox" />
+<div className="tool-details-placeholder">
+  <div className="loading-spinner">⏳</div>
+  <div>Loading tool details...</div>
+</div>
+<div className="tool-details">
+```json arguments
+{
+	"path": "/workspace/dumps/workspace/result.json"
+}
+
+```
+
+```json output_result
+{
+    "URL": ""
+}
+```
+
+</div>
+</div>
+
+<div className="thinking-box">
+🧐`Agent`
+
+Now I'll update the result.json file with the information about the most starred unofficial implementation repository.
+</div>
+
+<div className="result-box" id="tool-result-47-436">
+<div className="tool-header">
+  <div className="tool-name"><img src="/icons/filesystem.png" style={{height: "14px", width: "14px", margin: 0, padding: 0, display: 'inline-block'}} /> `filesystem write_file` (success)</div>
+  <label for="tool-result-47-436-checkbox" className="tool-details-toggle"></label>
+</div>
+<input type="checkbox" id="tool-result-47-436-checkbox" className="tool-details-checkbox" />
+<div className="tool-details-placeholder">
+  <div className="loading-spinner">⏳</div>
+  <div>Loading tool details...</div>
+</div>
+<div className="tool-details">
+```json arguments
+workspace/result.json
+{
+    "URL": "https://github.com/astramind-ai/Mixture-of-depths",
+    "repository_name": "astramind-ai/Mixture-of-depths",
+    "stars": 173,
+    "description": "Unofficial implementation for the paper \"Mixture-of-Depths: Dynamically allocating compute in transformer-based language models\"",
+    "language": "Python",
+    "paper_title": "Mixture-of-Depths: Dynamically allocating compute in transformer-based language models",
+    "paper_arxiv": "arXiv:2404.02258v1"
+}
+
+```
+
+```json output_result
+Successfully wrote to /workspace/dumps/workspace/result.json
+```
+
+</div>
+</div>
+
+<div className="thinking-box">
+🧐`Agent`
+
+Perfect! I've successfully completed the task. Here's what I found:
+
+**Paper**: "Mixture-of-Depths: Dynamically allocating compute in transformer-based language models" by Raposo et al. from Google DeepMind (arXiv:2404.02258v1)
+
+**Most Starred Unofficial Implementation**:
+- **Repository**: astramind-ai/Mixture-of-depths
+- **URL**: https://github.com/astramind-ai/Mixture-of-depths
+- **Stars**: 173 ⭐
+- **Language**: Python
+- **Description**: Unofficial implementation for the paper "Mixture-of-Depths: Dynamically allocating compute in transformer-based language models"
+
+I've updated the `result.json` file with this information, including the repository URL, name, star count, description, programming language, and paper details. This repository has significantly more stars than the other unofficial implementations (the second most starred has 108 stars).
+</div>
+
+</Accordion>
+
+</AccordionGroup>
