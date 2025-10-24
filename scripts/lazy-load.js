@@ -81,32 +81,29 @@
         }
     }
     
-    // Safari性能优化
-    if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
-        // 为Safari添加额外的性能优化
-        document.addEventListener('DOMContentLoaded', function() {
-            // 使用Intersection Observer来延迟加载不在视口中的内容
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            // 当工具结果进入视口时，预加载一些内容
-                            preloadToolContent(entry.target);
-                        }
-                    });
-                }, {
-                    rootMargin: '50px 0px',
-                    threshold: 0.1
+    // 通用性能优化
+    document.addEventListener('DOMContentLoaded', function() {
+        // 使用Intersection Observer来延迟加载不在视口中的内容
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        // 当工具结果进入视口时，预加载一些内容
+                        preloadToolContent(entry.target);
+                    }
                 });
-                
-                // 观察所有工具结果
-                const toolResults = document.querySelectorAll('.result-box, .error-box, .overlong-box');
-                toolResults.forEach(function(result) {
-                    observer.observe(result);
-                });
-            }
-        });
-    }
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.1
+            });
+            
+            // 观察所有工具结果
+            const toolResults = document.querySelectorAll('.result-box, .error-box, .overlong-box');
+            toolResults.forEach(function(result) {
+                observer.observe(result);
+            });
+        }
+    });
     
     function preloadToolContent(element) {
         // 预加载工具内容，但不显示

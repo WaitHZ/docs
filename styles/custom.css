@@ -4410,29 +4410,24 @@ header,
   100% { transform: rotate(360deg); }
 }
 
-/* Safari-specific optimizations */
-@supports (-webkit-appearance: none) {
-  .tool-details {
-    will-change: max-height, opacity;
-    transform: translateZ(0);
-  }
-  
-  .tool-details-placeholder {
-    will-change: max-height, opacity;
-    transform: translateZ(0);
-  }
-  
-  /* Reduce repaints in Safari */
-  .result-box, .error-box, .overlong-box {
-    contain: layout style paint;
-  }
+/* General performance optimizations */
+.tool-details {
+  will-change: max-height, opacity;
+}
+
+.tool-details-placeholder {
+  will-change: max-height, opacity;
+}
+
+/* Reduce repaints */
+.result-box, .error-box, .overlong-box {
+  contain: layout style paint;
 }
 
 /* Virtual Scroll Styles */
 .virtual-scroll-container {
   position: relative;
   overflow: auto;
-  -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
 }
 
 .virtual-scroll-viewport {
@@ -4467,19 +4462,14 @@ header,
   contain: layout style;
 }
 
-/* Optimize for Safari rendering */
-@supports (-webkit-appearance: none) {
-  .result-box, .error-box, .overlong-box {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  
-  .tool-details {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
+/* General rendering optimizations */
+.result-box, .error-box, .overlong-box {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.tool-details {
+  transform: translateZ(0);
 }
 
 /* Tool header container - flexbox layout */

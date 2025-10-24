@@ -2,7 +2,7 @@
 
 ## 🎯 问题描述
 
-在Safari浏览器中，当task页面展示大量traj（工具调用轨迹）时会出现严重的性能问题，主要表现为：
+当task页面展示大量traj（工具调用轨迹）时会出现性能问题，主要表现为：
 - 页面加载缓慢
 - 滚动卡顿
 - 内存占用过高
@@ -41,7 +41,7 @@
 - 动态加载/卸载DOM元素
 - 大幅减少DOM节点数量
 
-### 3. Safari特定优化
+### 3. 通用性能优化
 
 **CSS优化：**
 ```css
@@ -102,16 +102,16 @@ enableLazyLoading();
 enableVirtualScroll();
 ```
 
-### 3. Safari优化
+### 3. 渲染优化
 
 **自动检测：**
-- 自动检测Safari浏览器
-- 应用Safari特定的性能优化
+- 自动检测性能问题
+- 应用通用性能优化
 
 **手动启用：**
 ```javascript
 // 在浏览器控制台中执行
-optimizeForSafari();
+optimizeRendering();
 ```
 
 ## 📊 性能提升效果
@@ -126,7 +126,7 @@ optimizeForSafari();
 - **内存占用：** 减少 70-85%
 - **滚动流畅度：** 接近原生应用
 
-### Safari优化效果：
+### 渲染优化效果：
 - **渲染性能：** 提升 2-3倍
 - **动画流畅度：** 显著改善
 - **内存泄漏：** 基本消除
@@ -138,7 +138,7 @@ optimizeForSafari();
 页面右上角会显示性能优化控制面板，包含：
 - Enable Lazy Loading
 - Enable Virtual Scroll  
-- Optimize for Safari
+- Optimize Rendering
 - Hide
 
 ### 浏览器控制台
@@ -201,8 +201,8 @@ const VIRTUAL_SCROLL_THRESHOLD = 20; // 默认20个工具结果
    - 确认容器高度设置正确
    - 验证滚动事件监听器
 
-3. **Safari性能问题**
-   - 确认Safari版本支持相关CSS属性
+3. **渲染性能问题**
+   - 确认浏览器版本支持相关CSS属性
    - 检查硬件加速是否启用
    - 验证transform属性应用
 
