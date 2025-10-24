@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Performance Optimizer</title>
+    <style>
+        /* 内联关键CSS以避免额外的HTTP请求 */
+        .performance-optimizer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 12px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .performance-optimizer.show {
+            display: block;
+        }
+        
+        .optimizer-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 2px;
+        }
+        
+        .optimizer-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- 性能优化控制面板 -->
+    <div id="performance-optimizer" class="performance-optimizer">
+        <div>🚀 Performance Optimizer</div>
+        <button class="optimizer-button" onclick="enableLazyLoading()">Enable Lazy Loading</button>
+        <button class="optimizer-button" onclick="enableVirtualScroll()">Enable Virtual Scroll</button>
+        <button class="optimizer-button" onclick="optimizeForSafari()">Optimize for Safari</button>
+        <button class="optimizer-button" onclick="hideOptimizer()">Hide</button>
+    </div>
+
+    <script>
+        // 性能优化器
+        function showOptimizer() {
+            const optimizer = document.getElementById('performance-optimizer');
+            if (optimizer) {
+                optimizer.classList.add('show');
+            }
+        }
+        
+        function hideOptimizer() {
+            const optimizer = document.getElementById('performance-optimizer');
+            if (optimizer) {
+                optimizer.classList.remove('show');
+            }
+        }
+        
+        function enableLazyLoading() {
+            // 启用懒加载
+            const checkboxes = document.querySelectorAll('.tool-details-checkbox');
+            checkboxes.forEach(function(checkbox) {
+                if (!checkbox.dataset.lazyEnabled) {
+                    checkbox.dataset.lazyEnabled = 'true';
+                    // 这里会触发懒加载逻辑
+                }
+            });
+            console.log('Lazy loading enabled');
+        }
+        
+        function enableVirtualScroll() {
+            // 启用虚拟滚动
+            if (window.VirtualScroll) {
+                window.VirtualScroll.refresh();
+                console.log('Virtual scroll enabled');
+            }
+        }
+        
+        function optimizeForSafari() {
+            // Safari特定优化
+            if (navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+                // 减少重绘和重排
+                const toolResults = document.querySelectorAll('.result-box, .error-box, .overlong-box');
+                toolResults.forEach(function(result) {
+                    result.style.contain = 'layout style paint';
+                    result.style.willChange = 'transform';
+                });
+                
+                // 使用transform代替改变位置属性
+                const toolDetails = document.querySelectorAll('.tool-details');
+                toolDetails.forEach(function(detail) {
+                    detail.style.transform = 'translateZ(0)';
+                });
+                
+                console.log('Safari optimizations applied');
+            }
+        }
+        
+        // 检测性能问题并显示优化器
+        function detectPerformanceIssues() {
+            const toolResults = document.querySelectorAll('.result-box, .error-box, .overlong-box');
+            const toolDetails = document.querySelectorAll('.tool-details');
+            
+            // 如果工具结果很多，显示优化器
+            if (toolResults.length > 10 || toolDetails.length > 20) {
+                showOptimizer();
+            }
+        }
+        
+        // 页面加载完成后检测性能问题
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(detectPerformanceIssues, 1000);
+        });
+        
+        // 监听工具详情展开事件
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('tool-details-checkbox')) {
+                // 工具详情被展开，可以在这里添加性能监控
+                console.log('Tool details expanded:', e.target.id);
+            }
+        });
+    </script>
+</body>
+</html>
