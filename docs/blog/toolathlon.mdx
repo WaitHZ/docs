@@ -2,6 +2,10 @@
 title: "Introducing Toolathlon"
 ---
 
+<Tabs>
+
+<Tab title="English">
+
 Today, we’re excited to announce the very first release of Toolathlon — a benchmark designed to quantitatively evaluate how well LLM agents perform on long‑horizon tasks across diverse, realistic scenarios.
 
 ## Motivation
@@ -93,3 +97,80 @@ To make our evaluation more realistic and easy to use, we designed the toolathlo
 - **Parallel Execution**: Multiple processes batch run tasks, scalable linearly to additional computing resources, and ensuring stable and efficient large-scale evaluation.
 
 - **State preservation and verification**: Save the complete workspace after the task is completed, and use the script to compare the results with the expectations.
+
+</Tab>
+
+
+<Tab title="Chinese">
+
+今天，我们正式发布 Toolathlon 的首个版本——一个面向多样化真实场景与需求、用于定量评估 LLM 代理在长程任务中表现的基准测试。
+
+## Motivation
+
+在过去的半年多时间里，我们见证了各种大模型智能体能力的显著提升，它们在氛围编程（Vibe Coding）、深度研究（Deep Research）、信息浏览与检索（Browing）等领域已展现出长足的进步，并在上述领域中为用户带来了极大的便利。  
+
+然而，现实世界中的任务不仅限于这些领域。以下是几个简单的例子：  
+
+- 作为助教，你可能需要端到端地完成从邮箱下载学生的 Python 作业、依据评分手册运行程序、并在 Canvas 上打分；  
+- 作为在线商店店主，你可能需要从订单中查找存在问题的商品，并向相关用户发送包含定制谷歌问卷链接的邮件进行提醒；  
+- 作为网站开发者，你可能需要在 K8s 集群中部署服务，打开浏览器进行测试，并将测试报告同步到远程 GitHub 仓库进行归档。  
+
+这些任务并不复杂，事实上它们对于专业人士都很直接且易懂的，但是这些任务仍然是：1）需要仔细操作且很耗费精力的 2）对于非专业人士难以上手的 3）在真实世界中每天都大量存在的。
+
+另一方面，事实上现在我们已经具备了让 Agent 完成上述任务的核心要素：足够聪明的模型（Claude-4.5-Sonnet, GPT-5等），以及让模型连接到真实世界各类应用的能力（如 MCP、REST API、GUI 等）。因此一个自然的问题是——在这些复杂，真实且常见的长流程任务中，不同大模型的表现究竟如何？各个模型之间的差距有多大？它们是否真的能够在接收到一个任务指令（即便指令并不十分明确）后，准确地以我们期望的方式完成工作？  
+
+Toolathlon 正是为此而设计。我们基于多种常用的广泛收集了各种真实可能发生，并且用户确实有需要借助大模型智能体来解决（而非用户自己已经可以轻而易举的完成，或者用完全不真实的场景刻意刁难大模型）的场景需求并精心构建了 108 个任务。每个任务都配备了完全可验证的脚本，用于衡量任务的执行正误。大多数任务都建立在真实的初始状态之上，而不是让模型从空白文档或数据库开始。  
+
+通过这些任务，我们希望能够为评估当前模型的智能体能力带来新的洞察，并让Toolathlon成为指引 Agent 不断提升、更加符合真实场景需求的指南针。关于Toolathlon的详细信息，可以进一步参看站内的其他页面：[快速上手](https://toolathlon.xyz/docs/test)，[框架介绍](https://toolathlon.xyz/docs/intro)，[可用MCP](https://toolathlon.xyz/docs/selected)，[自定义工具](https://toolathlon.xyz/docs/self-impl)，[任务结构](https://toolathlon.xyz/docs/dataset)，以及[全部任务示例](https://toolathlon.xyz/docs/tasks/tech/17)。
+
+## Model Performance
+
+<img src="/figs/lb.png" alt="model_scores_comparison" style={{width: "100%", maxWidth: "800px", margin: "20px auto", display: "block"}} />
+
+上图结果均为模型在三次运行中的平均结果与误差条，所用agent scaffold均为Tooalthlon官方规定的基于openai-agent-sdk的框架。
+
+#### The Benchmark
+
+Toolathlon中的每个任务都包括了如下结构：
+
+```
+task/
+├── preprocess/             # 设定初始工作状态的代码 （可选）
+├── docs/                   # 任务指令
+    ├── task.md
+    └── agent_system_prompt.md
+├── initial_workspace/      # 本地初始工作状态的相关文件（可选）
+├── groundtruth_workspace/  # 标准答案相关文件（可选）
+├── evaluation/             # 测试任务正误的代码
+	├── main.py				# 主要评估脚本 
+	...
+├── ...                     # 其他所需资源（可选）
+└── task_config.json        # 设置该任务所需的工具与MCP服务器（可选）
+```
+
+其中可以看到每个任务都包含一个严格可执行的验证脚本。为了让这些任务可以被模型实际解决，我们改编了openai-agent-sdk这一智能体框架，并加入了多个MCP server和常用工具，使得模型可以在这一框架下实际操作这些应用程序完成任务。
+
+`task_config.json` 文件需要至少包含以下两个属性：
+
+- `needed_mcp_servers` 智能体可能用到的MCP服务器
+- `needed_local_tools` 智能体可能用到的我们自行实现的工具包
+
+## Task Examples
+
+
+## Toolathlon Framework
+
+为了让我们的测评更贴近真实并且易用，我们对toolathlon的框架进行了如下设计：
+
+- **支持多种语言模型**：通过标准化 API，比对 OpenAI、Anthropic、Google 及开源模型。  
+- **自主智能体设计**：一切功能都以“工具”形式提供，模型可通过提示自主管理执行。  
+- **错误处理**：工具出错时不会终止任务，而是返回错误信息，允许智能体自行重试或调整策略。  
+- **超长输出管理**：自动截断超长工具响应，并提供分页/搜索工具访问完整内容。  
+- **上下文与历史管理**：提供查询、删除和检索历史的工具，支持超过模型上下文限制的长任务。  
+- **容器化隔离**：每个任务可在独立的 Docker/Podman 容器中运行，保证任务间互不干扰。  
+- **并行执行**：多进程批量运行任务，线性扩展到更多计算资源，大规模评测稳定高效。  
+- **状态保存与验证**：任务结束后保存完整工作空间，用脚本对比结果与预期。  
+
+</Tab>
+
+</Tabs>
